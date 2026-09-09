@@ -117,7 +117,6 @@ export class HUDScene extends Phaser.Scene {
   }
   private renderComplete(): void {
     this.overlay.add(panel(this, 362, 100, 556, 535));
-    this.overlay.add(this.add.image(640, 169, 'snowball', 0).setScale(1));
     const cat = this.add.sprite(640, 170, 'snowball').play('snowball-victory').setScale(1); this.overlay.add(cat);
     this.overlay.add(text(this, 640, 224, 'STAGE CLEAR', 38, '#a56b4c').setOrigin(.5));
     this.overlay.add(text(this, 640, 271, 'GOOD CAT. BETTER DAYS.', 15).setOrigin(.5));

@@ -22,4 +22,12 @@ The interaction test uses deterministic player placement to isolate quests; it i
 
 Run `npm test` and `npm run build`. Browser scripts use Playwright and installed Edge by default; set `SNOWBALL_BROWSER` for another installed channel. Set `SNOWBALL_URL` to the running server. `npm run dev -- --mode test --port 5174` disables hot reload for stable tests. Run `npm run test:browser`, `npm run test:route`, and `npm run test:mobile` in another terminal. `node scripts/production-check.mjs` defaults to the production preview on port 4173.
 
-Screenshots and JSON results are saved in ignored `test-results/`. No remote deployment or Git push has been performed.
+Screenshots and JSON results are saved in ignored `test-results/`.
+
+## Public release and Snowball photo update
+
+- The source is committed to `tssA8/SnowballQuest` on GitHub. The `main` workflow runs the tests, builds the game and publishes to [GitHub Pages](https://tssa8.github.io/SnowballQuest/); no visitor account is required.
+- Photo revision `c35c6f0` was deployed successfully. The live player PNG's SHA-256 matches the local export, and the public manifest is version 3.
+- All 44 Snowball frames use the owner's photo references and retain their 64 × 64 cells, animation indices and bottom-center anchor. The original photographs remain outside the repository.
+- The production smoke test also passed against the public GitHub Pages URL: no sign-in, successful PNG/map loading and keyboard fish collection, no runtime/resource errors, and no development test access.
+- Release review found a static Snowball portrait behind the victory animation on the result panel. The duplicate image was removed; the result screenshot now shows a single crowned Snowball. The production build and existing browser integration passed again, including stage clear and replay.

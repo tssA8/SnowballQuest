@@ -26,7 +26,7 @@ These entries are a verification checklist, not a claim that a defect exists. Up
 ## Production artwork
 
 - [ ] Replace generated placeholders with normalized production assets from the approved twelve reference groups.
-- [ ] Re-export the full Snowball state set with consistent 64 × 64 cells, transparent background and a stable bottom-center anchor.
+- [x] Re-export the full Snowball state set with consistent 64 × 64 cells, transparent background and a stable bottom-center anchor. All 44 placeholder frames now follow the owner's seven photo references; see `SNOWBALL_IDENTITY.md`.
 - [ ] Export repeatable, separate parallax layers and inspect their horizontal seams.
 - [ ] Complete furniture and toy variants, all UI button states, collectible animation and restrained VFX.
 - [ ] Audit every replacement visually at integer display scales and update `ASSET_STATUS.md` with dimensions and readiness.
@@ -40,4 +40,4 @@ These entries are a verification checklist, not a claim that a defect exists. Up
 - [ ] Add stage transitions, unlock progression and map data for completed future stages.
 - [ ] Revisit remappable keyboard controls after Home input is proven.
 - [ ] Consider PWA offline installation only after core gameplay and deployment are stable.
-- [ ] Choose and explicitly publish to the user's preferred static host when requested.
+- [x] Publish to the user's preferred public host: [GitHub Pages](https://tssa8.github.io/SnowballQuest/). Pushes to `main` run tests and deploy automatically; visitors do not need an account.
