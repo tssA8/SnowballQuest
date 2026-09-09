@@ -45,6 +45,13 @@ Screenshots and JSON results are saved in ignored `test-results/`.
 - TypeScript/Vite build, full browser quest integration and mobile touch/rotation checks pass with the new sprites. Scenery, quests, physics and controls remain unchanged.
 - Re-exporting assets imports the curated master and updates native icons, preserving the corrected artwork. Manifest version 4 requests fresh images after deployment. See `SNOWBALL_COAT_EDIT.md` for the prompt and saved source assets.
 
+## iPhone release preparation
+
+- Source revision `584b4a9` passes [the iPhone Release archive check](https://github.com/tssA8/SnowballQuest/actions/runs/34329653150) on macOS with Xcode 26.3. This builds for `iphoneos` and validates the archive's bundle/version, arm64 architecture, bundled game, privacy manifest and uploader CLI. The archive is unsigned and is not an installable IPA.
+- The same revision passes [Android and iOS simulator builds](https://github.com/tssA8/SnowballQuest/actions/runs/34329523658) and [GitHub Pages deployment](https://github.com/tssA8/SnowballQuest/actions/runs/34329523540).
+- All 26 game/storage tests and eight signing-helper tests pass. The 1024-pixel iOS icon is exported as RGB without an alpha channel; decoded pixels match the source icon, and Android exports retain their existing formats.
+- The Apple bundle ID and App Store Connect app record have been created. Signing credentials and upload API access are still pending; no signed IPA, TestFlight upload or physical iPhone installation has been verified. See `IOS_RELEASE.md` for the release modes and required credentials.
+
 ## Public release and Snowball photo update
 
 - The source is committed to `tssA8/SnowballQuest` on GitHub. The `main` workflow runs the tests, builds the game and publishes to [GitHub Pages](https://tssa8.github.io/SnowballQuest/); no visitor account is required.
