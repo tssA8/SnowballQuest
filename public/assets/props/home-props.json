@@ -1,0 +1,272 @@
+{
+  "frames": {
+    "door": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 224
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 224
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 224
+      }
+    },
+    "checkpoint": {
+      "frame": {
+        "x": 130,
+        "y": 0,
+        "w": 64,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 128
+      }
+    },
+    "flag": {
+      "frame": {
+        "x": 196,
+        "y": 0,
+        "w": 64,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 128
+      }
+    },
+    "treat-box": {
+      "frame": {
+        "x": 262,
+        "y": 0,
+        "w": 96,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 96,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 96,
+        "h": 64
+      }
+    },
+    "cushion": {
+      "frame": {
+        "x": 360,
+        "y": 0,
+        "w": 128,
+        "h": 48
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 48
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 48
+      }
+    },
+    "plant": {
+      "frame": {
+        "x": 490,
+        "y": 0,
+        "w": 96,
+        "h": 128
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 96,
+        "h": 128
+      },
+      "sourceSize": {
+        "w": 96,
+        "h": 128
+      }
+    },
+    "cat-tree": {
+      "frame": {
+        "x": 588,
+        "y": 0,
+        "w": 160,
+        "h": 288
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 160,
+        "h": 288
+      },
+      "sourceSize": {
+        "w": 160,
+        "h": 288
+      }
+    },
+    "window": {
+      "frame": {
+        "x": 0,
+        "y": 290,
+        "w": 320,
+        "h": 288
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 320,
+        "h": 288
+      },
+      "sourceSize": {
+        "w": 320,
+        "h": 288
+      }
+    },
+    "sofa": {
+      "frame": {
+        "x": 322,
+        "y": 290,
+        "w": 288,
+        "h": 160
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 288,
+        "h": 160
+      },
+      "sourceSize": {
+        "w": 288,
+        "h": 160
+      }
+    },
+    "lamp": {
+      "frame": {
+        "x": 612,
+        "y": 290,
+        "w": 96,
+        "h": 224
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 96,
+        "h": 224
+      },
+      "sourceSize": {
+        "w": 96,
+        "h": 224
+      }
+    },
+    "shelf": {
+      "frame": {
+        "x": 710,
+        "y": 290,
+        "w": 128,
+        "h": 224
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 128,
+        "h": 224
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 224
+      }
+    },
+    "rug": {
+      "frame": {
+        "x": 0,
+        "y": 580,
+        "w": 256,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 256,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 64
+      }
+    },
+    "books": {
+      "frame": {
+        "x": 258,
+        "y": 580,
+        "w": 80,
+        "h": 64
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 80,
+        "h": 64
+      },
+      "sourceSize": {
+        "w": 80,
+        "h": 64
+      }
+    }
+  },
+  "meta": {
+    "image": "home-props.png",
+    "size": {
+      "w": 1024,
+      "h": 644
+    },
+    "scale": "1"
+  }
+}

@@ -1,0 +1,336 @@
+{
+  "version": 1,
+  "artStatus": "original-code-generated-placeholder",
+  "source": "src/game/art/Textures.ts",
+  "referenceInventory": "../../references/inventory.json",
+  "pixelArt": true,
+  "smoothing": false,
+  "textures": [
+    {
+      "key": "snowball",
+      "path": "player/snowball.png",
+      "width": 2816,
+      "height": 64,
+      "status": "placeholder-ready",
+      "origin": [
+        0.5,
+        1
+      ]
+    },
+    {
+      "key": "world",
+      "path": "tiles/world.png",
+      "width": 64,
+      "height": 32,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "feather",
+      "path": "toys/feather.png",
+      "width": 32,
+      "height": 32,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "yarn",
+      "path": "toys/yarn.png",
+      "width": 32,
+      "height": 32,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "bell-ball",
+      "path": "toys/bell-ball.png",
+      "width": 32,
+      "height": 32,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "plush",
+      "path": "toys/plush.png",
+      "width": 32,
+      "height": 32,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "scratch",
+      "path": "toys/scratch.png",
+      "width": 96,
+      "height": 64,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "tunnel",
+      "path": "toys/tunnel.png",
+      "width": 96,
+      "height": 64,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "wand",
+      "path": "toys/wand.png",
+      "width": 64,
+      "height": 128,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "spring",
+      "path": "toys/spring.png",
+      "width": 48,
+      "height": 48,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "toy-box",
+      "path": "toys/toy-box.png",
+      "width": 96,
+      "height": 64,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "mouse",
+      "path": "npcs/mouse.png",
+      "width": 48,
+      "height": 48,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "sleepy-cat",
+      "path": "npcs/sleepy-cat.png",
+      "width": 64,
+      "height": 64,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "vacuum",
+      "path": "npcs/vacuum.png",
+      "width": 64,
+      "height": 32,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "door",
+      "path": "props/door.png",
+      "width": 128,
+      "height": 224,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "checkpoint",
+      "path": "props/checkpoint.png",
+      "width": 64,
+      "height": 128,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "flag",
+      "path": "props/flag.png",
+      "width": 64,
+      "height": 128,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "treat-box",
+      "path": "props/treat-box.png",
+      "width": 96,
+      "height": 64,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "cushion",
+      "path": "props/cushion.png",
+      "width": 128,
+      "height": 48,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "plant",
+      "path": "props/plant.png",
+      "width": 96,
+      "height": 128,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "cat-tree",
+      "path": "props/cat-tree.png",
+      "width": 160,
+      "height": 288,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "window",
+      "path": "props/window.png",
+      "width": 320,
+      "height": 288,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "sofa",
+      "path": "props/sofa.png",
+      "width": 288,
+      "height": 160,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "lamp",
+      "path": "props/lamp.png",
+      "width": 96,
+      "height": 224,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "shelf",
+      "path": "props/shelf.png",
+      "width": 128,
+      "height": 224,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "rug",
+      "path": "props/rug.png",
+      "width": 256,
+      "height": 64,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "books",
+      "path": "props/books.png",
+      "width": 80,
+      "height": 64,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "fish",
+      "path": "items/fish.png",
+      "width": 32,
+      "height": 32,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "star",
+      "path": "items/star.png",
+      "width": 32,
+      "height": 32,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "key",
+      "path": "items/key.png",
+      "width": 32,
+      "height": 32,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "heart",
+      "path": "items/heart.png",
+      "width": 32,
+      "height": 32,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "crown",
+      "path": "items/crown.png",
+      "width": 32,
+      "height": 32,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "sparkle",
+      "path": "fx/sparkle.png",
+      "width": 16,
+      "height": 16,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "paw",
+      "path": "fx/paw.png",
+      "width": 32,
+      "height": 32,
+      "status": "placeholder-ready"
+    },
+    {
+      "key": "sky",
+      "path": "backgrounds/home/sky.png",
+      "width": 1024,
+      "height": 720,
+      "status": "placeholder-ready",
+      "repeat": "x"
+    },
+    {
+      "key": "far-city",
+      "path": "backgrounds/home/far-city.png",
+      "width": 1024,
+      "height": 720,
+      "status": "placeholder-ready",
+      "repeat": "x"
+    },
+    {
+      "key": "mid-buildings",
+      "path": "backgrounds/home/mid-buildings.png",
+      "width": 1024,
+      "height": 720,
+      "status": "placeholder-ready",
+      "repeat": "x"
+    },
+    {
+      "key": "near-houses",
+      "path": "backgrounds/home/near-houses.png",
+      "width": 1024,
+      "height": 720,
+      "status": "placeholder-ready",
+      "repeat": "x"
+    },
+    {
+      "key": "foreground",
+      "path": "backgrounds/home/foreground.png",
+      "width": 1024,
+      "height": 128,
+      "status": "placeholder-ready",
+      "repeat": "x"
+    }
+  ],
+  "atlases": [
+    {
+      "group": "toys",
+      "image": "toys/cat-toys.png",
+      "metadata": "toys/cat-toys.json",
+      "status": "placeholder-ready"
+    },
+    {
+      "group": "toys",
+      "image": "toys/feathers.png",
+      "metadata": "toys/feathers.json",
+      "status": "placeholder-ready"
+    },
+    {
+      "group": "npcs",
+      "image": "npcs/npcs.png",
+      "metadata": "npcs/npcs.json",
+      "status": "placeholder-ready"
+    },
+    {
+      "group": "props",
+      "image": "props/home-props.png",
+      "metadata": "props/home-props.json",
+      "status": "placeholder-ready"
+    },
+    {
+      "group": "items",
+      "image": "items/collectibles.png",
+      "metadata": "items/collectibles.json",
+      "status": "placeholder-ready"
+    },
+    {
+      "group": "fx",
+      "image": "fx/effects.png",
+      "metadata": "fx/effects.json",
+      "status": "placeholder-ready"
+    }
+  ],
+  "pendingGroups": [
+    "ui",
+    "title",
+    "mobile",
+    "ending"
+  ]
+}
