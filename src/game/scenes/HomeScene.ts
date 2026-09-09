@@ -24,7 +24,8 @@ export class HomeScene extends Phaser.Scene {
   private autosave = 0;
   private vacuum?: Phaser.Physics.Arcade.Sprite;
   private vacuumData?: LevelObject;
-  private onBlur = (): void => { if (this.mode === 'playing') this.setMode('paused'); };
+  private modeBeforePause: 'playing' | 'dialogue' = 'playing';
+  private onBlur = (): void => { this.pause(); this.controls.clear(); this.persist(); };
   constructor() { super('Home'); }
 
   create(): void {
@@ -89,6 +90,18 @@ export class HomeScene extends Phaser.Scene {
     else { this.physics.pause(); if (mode === 'paused') audio.stopMusic(); this.persist(); }
     this.events.emit('mode', mode);
   }
+  pause(): void {
+    if (this.mode !== 'playing' && this.mode !== 'dialogue') return;
+    this.modeBeforePause = this.mode;
+    this.setMode('paused');
+  }
+  resume(): void {
+    if (this.mode !== 'paused') return;
+    void audio.unlock();
+    this.setMode(this.modeBeforePause);
+    if (this.modeBeforePause === 'dialogue') audio.startMusic();
+  }
+  togglePause(): void { if (this.mode === 'paused') this.resume(); else this.pause(); }
   replay(): void { this.hearts = 5; this.elapsed = 0; save.resetRun({ x: this.level.spawn.x, y: this.level.spawn.y, id: 'start' }); this.scene.restart(); }
   menu(): void { this.persist(); this.scene.start('Menu'); }
   collect(id: string, type: string, x: number, y: number, secret?: string): void {
@@ -162,8 +175,7 @@ export class HomeScene extends Phaser.Scene {
   update(time: number, delta: number): void {
     if (!this.controls || !this.player) return;
     if (this.controls.consumePause()) {
-      if (this.mode === 'playing') this.setMode('paused');
-      else if (this.mode === 'paused') this.setMode('playing');
+      this.togglePause();
     }
     if (this.mode === 'dialogue') { if (this.controls.consumeInteract() || this.controls.consumeJump()) this.dialogue.next(); return; }
     if (this.mode !== 'playing') return;

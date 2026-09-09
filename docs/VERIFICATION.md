@@ -20,6 +20,14 @@ The interaction test uses deterministic player placement to isolate quests; it i
 - Ordinary first-play timing against the 3–5 minute target, all-collectible exploration and subjective jump feel.
 - Final normalized artwork replacing the explicitly documented placeholders.
 
+## Capacitor integration
+
+- Android and iOS SPM projects generated with Capacitor 8.5.1, with offline web assets, landscape layout and Snowball icons.
+- 26 unit tests pass, including 11 native-storage checks covering initialization ordering, sequential writes, failures and restart recovery.
+- Browser integration passes with dialogue pause/resume retaining and redrawing the same line, and Escape unable to resume a completed stage.
+- Edge touch/rotation emulation passes after integration: simultaneous movement/jump, independent release/cancel, pause and portrait layout.
+- Native builds and device tests are separate from the browser checks. See `MOBILE.md` for build commands, signing requirements and device coverage limits.
+
 Run `npm test` and `npm run build`. Browser scripts use Playwright and installed Edge by default; set `SNOWBALL_BROWSER` for another installed channel. Set `SNOWBALL_URL` to the running server. `npm run dev -- --mode test --port 5174` disables hot reload for stable tests. Run `npm run test:browser`, `npm run test:route`, and `npm run test:mobile` in another terminal. `node scripts/production-check.mjs` defaults to the production preview on port 4173.
 
 Screenshots and JSON results are saved in ignored `test-results/`.

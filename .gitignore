@@ -4,3 +4,8 @@ dist/
 test-results/
 *.log
 /ChatGPT Image *.png
+.mobile-tools/
+build/
+releases/
+*.jks
+*.keystore

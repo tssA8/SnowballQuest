@@ -10,6 +10,8 @@ Built with Phaser 3, TypeScript, Vite, Tiled JSON, Arcade Physics, Web Audio and
 
 ## Run locally
 
+Android and iOS app projects are included using Capacitor, with bundled offline assets, native saves and app lifecycle handling. See [mobile build and installation](docs/MOBILE.md). GitHub builds an Android development APK and an unsigned iOS simulator app; iPhone distribution requires Apple signing.
+
 Use Node.js 22.18 or newer so the test runner can import the small TypeScript data modules directly.
 
 ```sh
@@ -113,6 +115,6 @@ Time values are milliseconds. Collected IDs are deduplicated; unknown versions r
 
 ## Verification status
 
-`npm test` passes 15 map, save and player-controller checks. The production build, Edge quest integration, actual keyboard platform routes, mobile touch/rotation emulation and production-preview smoke test have passed. See `docs/VERIFICATION.md` for evidence, reproducible browser-test commands and the limits of these checks. Human playtesting remains necessary to tune feel and the 3–5 minute target.
+`npm test` passes 26 map, save, native-storage and player-controller checks. The production build, Edge quest integration, actual keyboard platform routes, mobile touch/rotation emulation and production-preview smoke test have passed. See `docs/VERIFICATION.md` for evidence, reproducible browser-test commands and the limits of these checks. Human playtesting remains necessary to tune feel and the 3–5 minute target.
 
 Real iPhone Safari and Android Chrome checks are tracked in `docs/TODO.md`. Desktop touch emulation can exercise pointer logic but does not replace testing on physical devices. Do not mark the complete MVP accepted until the remaining browser and mobile checks have passed.

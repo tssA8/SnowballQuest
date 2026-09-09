@@ -22,18 +22,21 @@ export class AudioSystem {
   private voices = 0;
   private destroyed = false;
   private away = false;
+  private nativeActive = true;
 
   constructor(settings: Partial<GameSettings> = {}) {
     this.settings = { music: 0.25, sfx: 0.65, reducedMotion: false, ...settings };
     window.addEventListener('blur', this.onBlur);
     window.addEventListener('focus', this.onFocus);
     document.addEventListener('visibilitychange', this.onVisibilityChange);
+    window.addEventListener('pointerdown', this.onGesture, { capture: true, passive: true });
+    window.addEventListener('keydown', this.onGesture, true);
   }
 
   get isUnlocked(): boolean { return this.context?.state === 'running'; }
 
   async unlock(): Promise<void> {
-    if (this.destroyed) return;
+    if (this.destroyed || this.away || !this.nativeActive) return;
     try {
       if (!this.context) {
         const Ctor = globalThis.AudioContext ??
@@ -46,12 +49,22 @@ export class AudioSystem {
         this.sfxBus.connect(this.context.destination);
         this.setSettings(this.settings);
       }
-      if (this.context.state === 'suspended') await this.context.resume();
+      if (this.context.state !== 'running' && this.context.state !== 'closed') await this.context.resume();
       if (this.musicRequested && !this.away) this.startMusic();
     } catch {
       // Browsers may reject audio until a fresh gesture; the next unlock can retry.
     }
   }
+
+  setAppActive(active: boolean): void {
+    this.nativeActive = active;
+    if (!active) {
+      this.stopTimer();
+      void this.context?.suspend().catch(() => undefined);
+    } else if (this.context) void this.unlock();
+  }
+
+  private onGesture = (): void => { void this.unlock(); };
 
   setSettings(settings: Partial<GameSettings>): void {
     this.settings = { ...this.settings, ...settings };
@@ -66,7 +79,7 @@ export class AudioSystem {
 
   startMusic(): void {
     this.musicRequested = true;
-    if (!this.isUnlocked || this.timer || this.away || this.destroyed) return;
+    if (!this.isUnlocked || this.timer || this.away || !this.nativeActive || this.destroyed) return;
     this.musicTick();
     this.timer = setInterval(() => this.musicTick(), 420);
   }
@@ -94,7 +107,7 @@ export class AudioSystem {
   }
 
   play(name: SoundName): void {
-    if (!this.isUnlocked || this.settings.sfx <= 0 || this.away) return;
+    if (!this.isUnlocked || this.settings.sfx <= 0 || this.away || !this.nativeActive) return;
     switch (name) {
       case 'jump': this.note(320, 0.16, 'triangle', 'sfx', 0, 0.7, 620); break;
       case 'land': this.note(105, 0.09, 'triangle', 'sfx', 0, 0.5, 72); break;
@@ -168,6 +181,8 @@ export class AudioSystem {
     window.removeEventListener('blur', this.onBlur);
     window.removeEventListener('focus', this.onFocus);
     document.removeEventListener('visibilitychange', this.onVisibilityChange);
+    window.removeEventListener('pointerdown', this.onGesture, true);
+    window.removeEventListener('keydown', this.onGesture, true);
     void this.context?.close().catch(() => undefined);
   }
 }

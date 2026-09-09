@@ -4,7 +4,14 @@ import { BootScene } from './game/scenes/BootScene';
 import { MenuScene } from './game/scenes/MenuScene';
 import { HomeScene } from './game/scenes/HomeScene';
 import { HUDScene } from './game/scenes/HUDScene';
+import { Capacitor } from '@capacitor/core';
+import { initializeServices } from './game/services';
+import { installNativeShell } from './platform/NativeShell';
 
+async function start(): Promise<void> {
+if (Capacitor.isNativePlatform()) document.documentElement.classList.add('native-app');
+// The menu must not observe defaults before a native saved run has loaded.
+await initializeServices();
 const game = new Phaser.Game({
   type: Phaser.AUTO, parent: 'game', width: 1280, height: 720,
   backgroundColor: '#e6d5b7', pixelArt: true, roundPixels: true,
@@ -29,3 +36,7 @@ if (parent) resizeObserver.observe(parent);
 game.events.once('destroy', () => { resizeObserver.disconnect(); cancelAnimationFrame(resizeFrame); });
 // Read-only browser-test access is excluded from production builds.
 if (import.meta.env.DEV) (window as unknown as { __snowball: Phaser.Game }).__snowball = game;
+void installNativeShell(game).catch(() => console.warn('Native lifecycle listener unavailable.'));
+}
+
+void start();

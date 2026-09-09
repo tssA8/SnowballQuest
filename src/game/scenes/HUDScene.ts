@@ -3,6 +3,7 @@ import { HomeScene, type GameMode } from './HomeScene';
 import { MobileControls } from '../ui/MobileControls';
 import { button, panel, text } from '../ui/widgets';
 import { audio, save } from '../services';
+import { Capacitor } from '@capacitor/core';
 
 export class HUDScene extends Phaser.Scene {
   private home!: HomeScene;
@@ -30,7 +31,7 @@ export class HUDScene extends Phaser.Scene {
     this.base.add(this.add.image(991, 54, 'star'));
     this.base.add(this.add.image(1096, 54, 'feather'));
     this.counts = [902, 1014, 1120].map(x => text(this, x, 45, '', 18)); this.base.add(this.counts);
-    const pause = button(this, 1225, 54, 'Ⅱ', () => this.home.setMode(this.home.mode === 'paused' ? 'playing' : 'paused'), 56, false);
+    const pause = button(this, 1225, 54, 'Ⅱ', () => this.home.togglePause(), 56, false);
     this.base.add(pause);
     const missionBox = panel(this, 26, 120, 305, 90, 0xffefd5, .9); this.base.add(missionBox);
     this.base.add(text(this, 42, 132, 'A LITTLE MISSION', 10, '#a27e60'));
@@ -68,7 +69,8 @@ export class HUDScene extends Phaser.Scene {
   }
   private renderMode(mode: GameMode): void {
     this.overlay.removeAll(true); this.mobile.setVisible(mode === 'playing');
-    if (mode === 'playing' || mode === 'dialogue') return;
+    if (mode === 'playing') return;
+    if (mode === 'dialogue') { this.renderDialogue(); return; }
     this.overlay.add(this.add.rectangle(640, 360, 1280, 720, 0x2d2c37, .68).setInteractive());
     if (mode === 'complete') this.renderComplete();
     else this.renderPause();
@@ -91,7 +93,7 @@ export class HUDScene extends Phaser.Scene {
     this.overlay.add(panel(this, 402, 110, 476, 526));
     this.overlay.add(text(this, 640, 144, 'A TINY PAUSE', 29).setOrigin(.5));
     this.overlay.add(text(this, 640, 183, 'The adventure can wait a moment.', 12, '#9a7e65').setOrigin(.5));
-    this.overlay.add(button(this, 640, 240, 'BACK TO ADVENTURE', () => this.home.setMode('playing'), 344));
+    this.overlay.add(button(this, 640, 240, 'BACK TO ADVENTURE', () => this.home.resume(), 344));
     const addSetting = (y: number, name: string, setting: 'music' | 'sfx'): void => {
       this.overlay.add(text(this, 452, y, name, 14));
       const value = text(this, 712, y, `${Math.round(save.data.settings[setting] * 100)}%`, 14).setOrigin(.5, 0);
@@ -108,10 +110,14 @@ export class HUDScene extends Phaser.Scene {
     this.overlay.add(button(this, 640, 414, `GENTLE EFFECTS: ${save.data.settings.reducedMotion ? 'ON' : 'OFF'}`, () => {
       save.setSettings({ reducedMotion: !save.data.settings.reducedMotion }); this.renderMode('paused');
     }, 344, false));
-    this.overlay.add(button(this, 554, 481, 'FULLSCREEN', () => {
+    if (Capacitor.isNativePlatform()) {
+      this.overlay.add(button(this, 640, 481, 'TITLE', () => this.home.menu(), 344, false));
+    } else {
+      this.overlay.add(button(this, 554, 481, 'FULLSCREEN', () => {
       if (this.scale.isFullscreen) this.scale.stopFullscreen(); else this.scale.startFullscreen();
     }, 170, false));
     this.overlay.add(button(this, 733, 481, 'TITLE', () => this.home.menu(), 170, false));
+    }
     this.overlay.add(button(this, 640, 548, 'RESTART HOME', () => this.home.replay(), 344, false));
     this.overlay.add(text(this, 640, 600, 'Progress saved at your last checkpoint.', 11, '#9a7e65').setOrigin(.5));
   }

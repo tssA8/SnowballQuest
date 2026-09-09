@@ -3,8 +3,10 @@ import { button, panel, text } from '../ui/widgets';
 import { audio, save } from '../services';
 
 export class MenuScene extends Phaser.Scene {
+  private chapterPanel?: Phaser.GameObjects.Container;
   constructor() { super('Menu'); }
   create(): void {
+    this.chapterPanel = undefined;
     this.cameras.main.setBackgroundColor(0xe5d3b1);
     const g = this.add.graphics();
     g.fillStyle(0xd9c5a1).fillRect(0, 500, 1280, 220);
@@ -50,12 +52,19 @@ export class MenuScene extends Phaser.Scene {
     this.input.keyboard?.once('keydown-ENTER', () => begin(!hasRun));
   }
   private chapters(): void {
+    if (this.chapterPanel?.active) return;
     const shade = this.add.rectangle(640, 360, 1280, 720, 0x2f2b36, .6).setInteractive();
     const content = this.add.container(0, 0, [shade, panel(this, 325, 104, 630, 518)]);
+    this.chapterPanel = content;
     content.add(text(this, 640, 145, 'SMALL PLACES. BIG DAYS.', 25).setOrigin(.5));
     const rows = ['01   HOME — THE EMPTY TREAT BOX', '02   ROOFTOPS — COMING LATER', '03   SNOWBALL CAFÉ — COMING LATER', '04   MOONLIGHT GARDEN — COMING LATER'];
     rows.forEach((row, i) => content.add(text(this, 387, 220 + i * 60, row, 17, i === 0 ? '#9e664e' : '#ac9e88')));
     content.add(button(this, 640, 525, 'BACK TO THE CUSHION', () => content.destroy(), 410));
     content.add(text(this, 640, 582, 'Home is ready to explore. The rest is still dreaming.', 11, '#9b836c').setOrigin(.5));
+  }
+  handleBack(): boolean {
+    if (!this.chapterPanel?.active) return false;
+    this.chapterPanel.destroy(); this.chapterPanel = undefined;
+    return true;
   }
 }

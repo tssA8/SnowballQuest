@@ -54,3 +54,4 @@ function atlas(group,name,keys){
 atlas('toys','cat-toys',groups.toys);atlas('toys','feathers',['feather']);atlas('npcs','npcs',groups.npcs);atlas('props','home-props',groups.props);atlas('items','collectibles',groups.items);atlas('fx','effects',groups.fx);
 save('manifest.json',JSON.stringify(manifest,null,2)+'\n');
 console.log(`Exported ${textures.size} original textures and 6 atlases to public/assets.`);
+export { Raster, png, textures };

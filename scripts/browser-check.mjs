@@ -20,6 +20,13 @@ try {
   await page.waitForTimeout(900);
   console.log('STATE', await page.evaluate(() => { const s=window.__snowball.scene.getScene('Home'); return {mode:s.mode, x:s.player.x,y:s.player.y,bodyY:s.player.body.y,grounded:s.player.grounded}; }));
   await page.screenshot({ path: 'test-results/home-intro.png', fullPage: true });
+  const introLine = await page.evaluate(() => window.__snowball.scene.getScene('Home').dialogue.line);
+  await page.keyboard.press('Escape');
+  await page.waitForFunction(() => window.__snowball.scene.getScene('Home').mode === 'paused');
+  await page.keyboard.press('Escape');
+  await page.waitForFunction(() => window.__snowball.scene.getScene('Home').mode === 'dialogue');
+  assert.equal(await page.evaluate(() => window.__snowball.scene.getScene('Home').dialogue.line), introLine, 'Pausing retains the current dialogue line');
+  assert(await page.evaluate(() => window.__snowball.scene.getScene('HUD').overlay.list.some(item => item.text === window.__snowball.scene.getScene('Home').dialogue.line)), 'Resume redraws the dialogue');
   await page.keyboard.press('KeyE'); await page.waitForTimeout(100); await page.keyboard.press('KeyE');
   await page.waitForTimeout(300);
   const before = await page.evaluate(() => window.__snowball.scene.getScene('Home').player.x);
@@ -72,6 +79,9 @@ try {
   await place(3720,640); await page.keyboard.down('Space'); await page.waitForTimeout(250); await page.keyboard.up('Space'); await page.waitForTimeout(500); assert.equal((await state()).stars,3);
   await place(3890,640); await page.waitForTimeout(400);assert.equal((await state()).mode,'complete');
   await page.screenshot({path:'test-results/stage-clear.png',fullPage:true});
+  await page.keyboard.press('Escape');
+  await page.waitForTimeout(80);
+  assert.equal((await state()).mode, 'complete', 'Pause cannot restart a completed run');
   const completed=await page.evaluate(()=>JSON.parse(localStorage.getItem('snowball-quest-save-v1')));
   assert.equal(completed.stages.home.completed,true); assert.equal(completed.stages.home.stars,3);
   const canvas=await page.locator('canvas').boundingBox();

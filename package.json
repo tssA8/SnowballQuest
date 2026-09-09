@@ -12,12 +12,23 @@
     "assets:export": "node scripts/export-assets.mjs",
     "test:browser": "node scripts/browser-check.mjs",
     "test:mobile": "node scripts/mobile-check.mjs",
-    "test:route": "node scripts/keyboard-route-check.mjs"
+    "test:route": "node scripts/keyboard-route-check.mjs",
+    "assets:mobile": "node scripts/mobile-assets.mjs",
+    "mobile:sync": "npm run build && cap sync",
+    "android:build": "npm run mobile:sync && node scripts/build-android.mjs",
+    "android:open": "cap open android",
+    "ios:open": "cap open ios"
   },
   "dependencies": {
+    "@capacitor/android": "8.5.1",
+    "@capacitor/app": "8.1.1",
+    "@capacitor/core": "8.5.1",
+    "@capacitor/ios": "8.5.1",
+    "@capacitor/preferences": "8.0.1",
     "phaser": "3.90.0"
   },
   "devDependencies": {
+    "@capacitor/cli": "8.5.1",
     "playwright": "^1.63.0",
     "typescript": "~5.9.2",
     "vite": "^7.1.5"

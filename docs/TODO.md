@@ -16,6 +16,9 @@ These entries are a verification checklist, not a claim that a defect exists. Up
 
 ## Real browser and mobile coverage
 
+- [x] Add Capacitor Android/iOS projects, offline assets, safe-area layout, lifecycle handling and native save recovery.
+- [ ] Complete signed iPhone/TestFlight distribution with the owner's Apple Developer account.
+
 - [ ] Desktop Chrome / Edge keyboard playthrough.
 - [ ] Desktop Safari playthrough and audio resume after interruption.
 - [ ] Physical iPhone Safari: safe areas, portrait/landscape rotation, multi-touch move+jump, move+interact, pointer release outside a button, sound gesture and local save.
