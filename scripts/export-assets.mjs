@@ -1,25 +1,15 @@
-/** Export the exact original runtime pixel drawings as drop-in PNGs and atlases.
- * No browser, network, raster editing, or third-party canvas dependency required.
+/** Export approved Snowball sprites alongside the original scenery drawings.
  * The canvas adapter implements the fillRect-only drawing contract in Textures.ts.
+ * The imported player master is authoritative and survives every re-export.
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import zlib from 'node:zlib';
 import ts from 'typescript';
+import { readPng } from './png-codec.mjs';
+import { Raster, png } from './pixel-raster.mjs';
 const root = path.resolve(import.meta.dirname, '..');
 const out = path.join(root, 'public/assets');
 const textures = new Map();
-class Raster {
-  constructor(width,height) {this.width=width;this.height=height;this.data=new Uint8Array(width*height*4);this.fillStyle='#000000';}
-  fillRect(x,y,w,h) {
-    const color=this.fillStyle.replace('#','');
-    const rgb=[0,2,4].map(i=>parseInt(color.slice(i,i+2),16));
-    const x0=Math.max(0,Math.round(x)),y0=Math.max(0,Math.round(y));
-    for(let yy=y0;yy<Math.min(this.height,Math.round(y+h));yy++)for(let xx=x0;xx<Math.min(this.width,Math.round(x+w));xx++) {
-      const offset=(yy*this.width+xx)*4;this.data.set([...rgb,255],offset);
-    }
-  }
-}
 const source=fs.readFileSync(path.join(root,'src/game/art/Textures.ts'),'utf8');
 const compiled=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.CommonJS}}).outputText;
 const module={exports:{}};new Function('exports','module',compiled)(module.exports,module);
@@ -27,21 +17,18 @@ const scene={textures:{exists:key=>textures.has(key),createCanvas:(key,w,h)=>{
   const raster=new Raster(w,h);textures.set(key,raster);return {context:raster,refresh(){},add(){}};
 }},anims:{exists(){return false;},create(){},generateFrameNumbers(){return [];}}};
 module.exports.createTextures(scene);
-function crc32(buffer){let crc=0xffffffff;for(const b of buffer){crc^=b;for(let i=0;i<8;i++)crc=(crc>>>1)^((crc&1)?0xedb88320:0);}return (crc^0xffffffff)>>>0;}
-function chunk(type,data){const name=Buffer.from(type);const buf=Buffer.alloc(data.length+12);buf.writeUInt32BE(data.length);name.copy(buf,4);data.copy(buf,8);buf.writeUInt32BE(crc32(Buffer.concat([name,data])),data.length+8);return buf;}
-function png(raster){
-  const header=Buffer.alloc(13);header.writeUInt32BE(raster.width);header.writeUInt32BE(raster.height,4);header[8]=8;header[9]=6;
-  const scan=Buffer.alloc((raster.width*4+1)*raster.height);for(let y=0;y<raster.height;y++)Buffer.from(raster.data.subarray(y*raster.width*4,(y+1)*raster.width*4)).copy(scan,y*(raster.width*4+1)+1);
-  return Buffer.concat([Buffer.from([137,80,78,71,13,10,26,10]),chunk('IHDR',header),chunk('IDAT',zlib.deflateSync(scan)),chunk('IEND',Buffer.alloc(0))]);
-}
+const playerSource = 'resources/art/snowball-runtime.png';
+const player = readPng(fs.readFileSync(path.join(root, playerSource)));
+if (player.width !== 2816 || player.height !== 64) throw new Error('Snowball master must contain 44 frames of 64 × 64');
+textures.set('snowball', player);
 const save=(relative,data)=>{const dest=path.join(out,relative);fs.mkdirSync(path.dirname(dest),{recursive:true});fs.writeFileSync(dest,data);};
 const groups={
   player:['snowball'],tiles:['world'],toys:['feather','yarn','bell-ball','plush','scratch','tunnel','wand','spring','toy-box'],
   npcs:['mouse','sleepy-cat','vacuum'],props:['door','checkpoint','flag','treat-box','cushion','plant','cat-tree','window','sofa','lamp','shelf','rug','books'],
   items:['fish','star','key','heart','crown'],fx:['sparkle','paw'],
 };
-const manifest={version:3,artStatus:'original-code-generated-placeholder',source:'src/game/art/Textures.ts',referenceInventory:'../../references/inventory.json',pixelArt:true,smoothing:false,textures:[],atlases:[],pendingGroups:['ui','title','mobile','ending']};
-for(const [group,keys] of Object.entries(groups))for(const key of keys){const raster=textures.get(key);const relative=`${group}/${key}.png`;save(relative,png(raster));manifest.textures.push({key,path:relative,width:raster.width,height:raster.height,status:'placeholder-ready',origin:key==='snowball'?[.5,1]:undefined});}
+const manifest={version:4,artStatus:'normalized-player-and-code-generated-scenery',source:'src/game/art/Textures.ts',referenceInventory:'../../references/inventory.json',pixelArt:true,smoothing:false,textures:[],atlases:[],pendingGroups:['ui','title','mobile','ending']};
+for(const [group,keys] of Object.entries(groups))for(const key of keys){const raster=textures.get(key);const relative=`${group}/${key}.png`;save(relative,png(raster));manifest.textures.push({key,path:relative,width:raster.width,height:raster.height,status:key==='snowball'?'normalized-style-reference':'placeholder-ready',source:key==='snowball'?playerSource:undefined,origin:key==='snowball'?[.5,1]:undefined});}
 for(const key of ['sky','far-city','mid-buildings','near-houses','foreground']){const raster=textures.get(key),relative=`backgrounds/home/${key}.png`;save(relative,png(raster));manifest.textures.push({key,path:relative,width:raster.width,height:raster.height,status:'placeholder-ready',repeat:'x'});}
 const playerFrames={};for(let i=0;i<44;i++)playerFrames[i]={frame:{x:i*64,y:0,w:64,h:64},rotated:false,trimmed:false,spriteSourceSize:{x:0,y:0,w:64,h:64},sourceSize:{w:64,h:64},pivot:{x:.5,y:1}};
 save('player/snowball.json',JSON.stringify({frames:playerFrames,meta:{image:'snowball.png',size:{w:2816,h:64},scale:'1'},animations:module.exports.SNOWBALL_ANIMATIONS},null,2));
@@ -53,5 +40,5 @@ function atlas(group,name,keys){
 }
 atlas('toys','cat-toys',groups.toys);atlas('toys','feathers',['feather']);atlas('npcs','npcs',groups.npcs);atlas('props','home-props',groups.props);atlas('items','collectibles',groups.items);atlas('fx','effects',groups.fx);
 save('manifest.json',JSON.stringify(manifest,null,2)+'\n');
-console.log(`Exported ${textures.size} original textures and 6 atlases to public/assets.`);
+console.log(`Exported the approved Snowball master, ${textures.size-1} scenery textures and 6 atlases to public/assets.`);
 export { Raster, png, textures };

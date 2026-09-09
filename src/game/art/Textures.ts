@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-/** Original, replaceable pixel art. Presentation-sheet pixels are never sampled. */
+/** Scenery drawings and legacy prototypes. The exporter imports the approved Snowball master. */
 export const PALETTE = {
   ink: '#493c48', deep: '#373845', shade: '#9c8581', fur: '#e9dac3', cream: '#fff1d8',
   white: '#fff8e8', pink: '#e89b9b', coral: '#d17c7d', rose: '#ac616d', gold: '#efbb66',
@@ -9,7 +9,7 @@ export const PALETTE = {
 } as const;
 const C = PALETTE;
 
-// Match Snowball's own photos rather than a generic breed color template.
+// Historical photo palette: current Snowball uses this coat with the original concept's shape.
 const SNOWBALL_COAT = {
   body: '#ebe5d8', bodyShade: '#cec6b9', white: '#faf5e9',
   face: '#d4cbbf', point: '#b2a79b', stripe: '#988d83', outline: '#746b68',

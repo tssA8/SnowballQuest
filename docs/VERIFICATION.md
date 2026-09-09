@@ -38,6 +38,13 @@ Run `npm test` and `npm run build`. Browser scripts use Playwright and installed
 
 Screenshots and JSON results are saved in ignored `test-results/`.
 
+## Original-shape coat update, 0.1.1
+
+- All 44 runtime frames are normalized from measured original-concept silhouettes with an ImageGen color edit. The import checks source size, pose-mask overlap, nonempty frames and no clipping. All frames use the same scale and bottom anchor.
+- The enlarged contact sheet, in-game player/HUD, title sleeping pose and native icon were visually inspected. The original rounded body, small face features and side-facing gait replace the earlier procedural cat.
+- TypeScript/Vite build, full browser quest integration and mobile touch/rotation checks pass with the new sprites. Scenery, quests, physics and controls remain unchanged.
+- Re-exporting assets imports the curated master and updates native icons, preserving the corrected artwork. Manifest version 4 requests fresh images after deployment. See `SNOWBALL_COAT_EDIT.md` for the prompt and saved source assets.
+
 ## Public release and Snowball photo update
 
 - The source is committed to `tssA8/SnowballQuest` on GitHub. The `main` workflow runs the tests, builds the game and publishes to [GitHub Pages](https://tssa8.github.io/SnowballQuest/); no visitor account is required.

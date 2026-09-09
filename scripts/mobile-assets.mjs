@@ -1,23 +1,34 @@
-// Extend the original code-drawn artwork into native app icons; no source photos.
+// Use the same approved Snowball master as the game for native app icons.
 import fs from 'node:fs';
 import path from 'node:path';
 import { Raster, png, textures } from './export-assets.mjs';
 
 const root = path.resolve(import.meta.dirname, '..');
 const cat = textures.get('snowball');
+const bounds = { left:64, top:64, right:0, bottom:0 };
+for (let y=0;y<64;y++) for (let x=0;x<64;x++) if (cat.data[(y*cat.width+36*64+x)*4+3]) {
+  bounds.left=Math.min(bounds.left,x);bounds.top=Math.min(bounds.top,y);bounds.right=Math.max(bounds.right,x);bounds.bottom=Math.max(bounds.bottom,y);
+}
+const catWidth=bounds.right-bounds.left+1,catHeight=bounds.bottom-bounds.top+1;
 function icon(size, transparent = false, adaptive = false) {
   const canvas = new Raster(size, size);
   if (!transparent) { canvas.fillStyle = '#e8d8b9'; canvas.fillRect(0, 0, size, size); }
   // Pixel-aligned fills keep the icon crisp, including small legacy launcher sizes.
-  const wanted = size * (adaptive ? .60 : .82) / 64;
+  const wanted = size * (adaptive ? .60 : .82) / Math.max(catWidth,catHeight);
   const scale = wanted < 1 ? wanted : Math.floor(wanted);
-  const x0 = Math.floor((size - 64 * scale) / 2);
-  const y0 = Math.floor((size - 64 * scale) / 2);
-  for (let y = 0; y < 64; y++) for (let x = 0; x < 64; x++) {
-    const source = (y * cat.width + 36 * 64 + x) * 4;
-    if (!cat.data[source + 3]) continue;
-    canvas.fillStyle = '#' + [...cat.data.slice(source, source + 3)].map(n => n.toString(16).padStart(2, '0')).join('');
-    canvas.fillRect(x0 + x * scale, y0 + y * scale, scale, scale);
+  const x0 = Math.floor((size - catWidth * scale) / 2);
+  const y0 = Math.floor((size - catHeight * scale) / 2);
+  for (let y = y0; y < y0 + catHeight * scale; y++) for (let x = x0; x < x0 + catWidth * scale; x++) {
+    const sx = bounds.left + Math.floor((x - x0) / scale), sy = bounds.top + Math.floor((y - y0) / scale);
+    const source = (sy * cat.width + 36 * 64 + sx) * 4;
+    const alpha = cat.data[source + 3] / 255;
+    if (!alpha) continue;
+    const destination = (y * size + x) * 4;
+    if (transparent) canvas.data.set(cat.data.subarray(source, source + 4), destination);
+    else {
+      for (let channel = 0; channel < 3; channel++) canvas.data[destination + channel] = Math.round(cat.data[source + channel] * alpha + canvas.data[destination + channel] * (1 - alpha));
+      canvas.data[destination + 3] = 255;
+    }
   }
   return png(canvas);
 }

@@ -1,0 +1,753 @@
+{
+  "method": "imagegen-rgb-with-original-alpha",
+  "frames": [
+    {
+      "frame": 0,
+      "group": "idle",
+      "source": [
+        453,
+        65,
+        76,
+        93
+      ],
+      "destination": [
+        14,
+        19,
+        36,
+        45
+      ],
+      "pixels": 1225
+    },
+    {
+      "frame": 1,
+      "group": "idle",
+      "source": [
+        532,
+        63,
+        66,
+        95
+      ],
+      "destination": [
+        16,
+        18,
+        32,
+        46
+      ],
+      "pixels": 1108
+    },
+    {
+      "frame": 2,
+      "group": "idle",
+      "source": [
+        668,
+        68,
+        68,
+        90
+      ],
+      "destination": [
+        15,
+        21,
+        33,
+        43
+      ],
+      "pixels": 1061
+    },
+    {
+      "frame": 3,
+      "group": "idle",
+      "source": [
+        599,
+        67,
+        70,
+        90
+      ],
+      "destination": [
+        15,
+        21,
+        34,
+        43
+      ],
+      "pixels": 1121
+    },
+    {
+      "frame": 4,
+      "group": "walk",
+      "source": [
+        964,
+        67,
+        80,
+        91
+      ],
+      "destination": [
+        13,
+        20,
+        38,
+        44
+      ],
+      "pixels": 1111
+    },
+    {
+      "frame": 5,
+      "group": "walk",
+      "source": [
+        1033,
+        71,
+        79,
+        85
+      ],
+      "destination": [
+        13,
+        23,
+        38,
+        41
+      ],
+      "pixels": 968
+    },
+    {
+      "frame": 6,
+      "group": "walk",
+      "source": [
+        1105,
+        67,
+        74,
+        90
+      ],
+      "destination": [
+        14,
+        21,
+        36,
+        43
+      ],
+      "pixels": 970
+    },
+    {
+      "frame": 7,
+      "group": "walk",
+      "source": [
+        1179,
+        69,
+        77,
+        87
+      ],
+      "destination": [
+        13,
+        22,
+        37,
+        42
+      ],
+      "pixels": 999
+    },
+    {
+      "frame": 8,
+      "group": "walk",
+      "source": [
+        1243,
+        65,
+        83,
+        94
+      ],
+      "destination": [
+        12,
+        19,
+        40,
+        45
+      ],
+      "pixels": 1030
+    },
+    {
+      "frame": 9,
+      "group": "walk",
+      "source": [
+        1314,
+        67,
+        82,
+        90
+      ],
+      "destination": [
+        12,
+        21,
+        39,
+        43
+      ],
+      "pixels": 977
+    },
+    {
+      "frame": 10,
+      "group": "run",
+      "source": [
+        22,
+        244,
+        94,
+        84
+      ],
+      "destination": [
+        9,
+        24,
+        45,
+        40
+      ],
+      "pixels": 1156
+    },
+    {
+      "frame": 11,
+      "group": "run",
+      "source": [
+        118,
+        243,
+        95,
+        85
+      ],
+      "destination": [
+        9,
+        23,
+        46,
+        41
+      ],
+      "pixels": 1171
+    },
+    {
+      "frame": 12,
+      "group": "run",
+      "source": [
+        216,
+        240,
+        84,
+        95
+      ],
+      "destination": [
+        12,
+        18,
+        40,
+        46
+      ],
+      "pixels": 1100
+    },
+    {
+      "frame": 13,
+      "group": "run",
+      "source": [
+        285,
+        246,
+        105,
+        89
+      ],
+      "destination": [
+        7,
+        21,
+        50,
+        43
+      ],
+      "pixels": 1150
+    },
+    {
+      "frame": 14,
+      "group": "run",
+      "source": [
+        382,
+        239,
+        88,
+        91
+      ],
+      "destination": [
+        11,
+        20,
+        42,
+        44
+      ],
+      "pixels": 1065
+    },
+    {
+      "frame": 15,
+      "group": "run",
+      "source": [
+        468,
+        241,
+        96,
+        88
+      ],
+      "destination": [
+        9,
+        22,
+        46,
+        42
+      ],
+      "pixels": 1204
+    },
+    {
+      "frame": 16,
+      "group": "jump-fall",
+      "source": [
+        16,
+        398,
+        87,
+        92
+      ],
+      "destination": [
+        11,
+        20,
+        42,
+        44
+      ],
+      "pixels": 1100
+    },
+    {
+      "frame": 17,
+      "group": "jump-fall",
+      "source": [
+        190,
+        386,
+        85,
+        91
+      ],
+      "destination": [
+        11,
+        20,
+        41,
+        44
+      ],
+      "pixels": 1004
+    },
+    {
+      "frame": 18,
+      "group": "jump-fall",
+      "source": [
+        338,
+        387,
+        94,
+        95
+      ],
+      "destination": [
+        9,
+        18,
+        45,
+        46
+      ],
+      "pixels": 1064
+    },
+    {
+      "frame": 19,
+      "group": "jump-fall",
+      "source": [
+        413,
+        417,
+        94,
+        86
+      ],
+      "destination": [
+        9,
+        23,
+        45,
+        41
+      ],
+      "pixels": 1088
+    },
+    {
+      "frame": 20,
+      "group": "land",
+      "source": [
+        1028,
+        419,
+        90,
+        74
+      ],
+      "destination": [
+        10,
+        28,
+        43,
+        36
+      ],
+      "pixels": 1036
+    },
+    {
+      "frame": 21,
+      "group": "land",
+      "source": [
+        1222,
+        412,
+        66,
+        85
+      ],
+      "destination": [
+        16,
+        23,
+        32,
+        41
+      ],
+      "pixels": 999
+    },
+    {
+      "frame": 22,
+      "group": "sit",
+      "source": [
+        24,
+        561,
+        70,
+        85
+      ],
+      "destination": [
+        15,
+        23,
+        34,
+        41
+      ],
+      "pixels": 1045
+    },
+    {
+      "frame": 23,
+      "group": "sit",
+      "source": [
+        273,
+        558,
+        74,
+        88
+      ],
+      "destination": [
+        14,
+        22,
+        36,
+        42
+      ],
+      "pixels": 1124
+    },
+    {
+      "frame": 24,
+      "group": "sleep",
+      "source": [
+        786,
+        581,
+        108,
+        66
+      ],
+      "destination": [
+        6,
+        32,
+        52,
+        32
+      ],
+      "pixels": 1230
+    },
+    {
+      "frame": 25,
+      "group": "sleep",
+      "source": [
+        900,
+        590,
+        95,
+        54
+      ],
+      "destination": [
+        9,
+        38,
+        46,
+        26
+      ],
+      "pixels": 910
+    },
+    {
+      "frame": 26,
+      "group": "sleep",
+      "source": [
+        1008,
+        580,
+        112,
+        65
+      ],
+      "destination": [
+        5,
+        33,
+        54,
+        31
+      ],
+      "pixels": 1229
+    },
+    {
+      "frame": 27,
+      "group": "sleep",
+      "source": [
+        1398,
+        578,
+        110,
+        64
+      ],
+      "destination": [
+        5,
+        33,
+        53,
+        31
+      ],
+      "pixels": 1296
+    },
+    {
+      "frame": 28,
+      "group": "interact",
+      "source": [
+        357,
+        705,
+        87,
+        80
+      ],
+      "destination": [
+        11,
+        26,
+        42,
+        38
+      ],
+      "pixels": 1049
+    },
+    {
+      "frame": 29,
+      "group": "interact",
+      "source": [
+        453,
+        704,
+        87,
+        81
+      ],
+      "destination": [
+        11,
+        25,
+        42,
+        39
+      ],
+      "pixels": 1052
+    },
+    {
+      "frame": 30,
+      "group": "interact",
+      "source": [
+        554,
+        699,
+        77,
+        86
+      ],
+      "destination": [
+        13,
+        23,
+        37,
+        41
+      ],
+      "pixels": 1140
+    },
+    {
+      "frame": 31,
+      "group": "interact",
+      "source": [
+        830,
+        696,
+        80,
+        89
+      ],
+      "destination": [
+        13,
+        21,
+        38,
+        43
+      ],
+      "pixels": 1226
+    },
+    {
+      "frame": 32,
+      "group": "celebrate",
+      "source": [
+        108,
+        830,
+        83,
+        83
+      ],
+      "destination": [
+        12,
+        24,
+        40,
+        40
+      ],
+      "pixels": 986
+    },
+    {
+      "frame": 33,
+      "group": "celebrate",
+      "source": [
+        306,
+        828,
+        82,
+        88
+      ],
+      "destination": [
+        12,
+        22,
+        39,
+        42
+      ],
+      "pixels": 1012
+    },
+    {
+      "frame": 34,
+      "group": "celebrate",
+      "source": [
+        388,
+        832,
+        68,
+        81
+      ],
+      "destination": [
+        15,
+        25,
+        33,
+        39
+      ],
+      "pixels": 805
+    },
+    {
+      "frame": 35,
+      "group": "celebrate",
+      "source": [
+        306,
+        828,
+        82,
+        88
+      ],
+      "destination": [
+        12,
+        22,
+        39,
+        42
+      ],
+      "pixels": 1012
+    },
+    {
+      "frame": 36,
+      "group": "victory",
+      "source": [
+        19,
+        828,
+        80,
+        84
+      ],
+      "destination": [
+        13,
+        24,
+        38,
+        40
+      ],
+      "pixels": 1029
+    },
+    {
+      "frame": 37,
+      "group": "victory",
+      "source": [
+        212,
+        827,
+        84,
+        89
+      ],
+      "destination": [
+        12,
+        21,
+        40,
+        43
+      ],
+      "pixels": 1169
+    },
+    {
+      "frame": 38,
+      "group": "victory",
+      "source": [
+        458,
+        827,
+        81,
+        88
+      ],
+      "destination": [
+        12,
+        22,
+        39,
+        42
+      ],
+      "pixels": 1086
+    },
+    {
+      "frame": 39,
+      "group": "victory",
+      "source": [
+        212,
+        827,
+        84,
+        89
+      ],
+      "destination": [
+        12,
+        21,
+        40,
+        43
+      ],
+      "pixels": 1169
+    },
+    {
+      "frame": 40,
+      "group": "stumble",
+      "source": [
+        575,
+        836,
+        99,
+        76
+      ],
+      "destination": [
+        8,
+        28,
+        48,
+        36
+      ],
+      "pixels": 1119
+    },
+    {
+      "frame": 41,
+      "group": "stumble",
+      "source": [
+        688,
+        853,
+        90,
+        62
+      ],
+      "destination": [
+        10,
+        34,
+        43,
+        30
+      ],
+      "pixels": 860
+    },
+    {
+      "frame": 42,
+      "group": "stumble",
+      "source": [
+        787,
+        853,
+        131,
+        60
+      ],
+      "destination": [
+        0,
+        35,
+        63,
+        29
+      ],
+      "pixels": 1287
+    },
+    {
+      "frame": 43,
+      "group": "stumble",
+      "source": [
+        688,
+        853,
+        90,
+        62
+      ],
+      "destination": [
+        10,
+        34,
+        43,
+        30
+      ],
+      "pixels": 860
+    }
+  ]
+}

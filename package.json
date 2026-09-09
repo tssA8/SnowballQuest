@@ -1,6 +1,6 @@
 {
   "name": "snowball-quest",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,6 +10,7 @@
     "test": "node --test --experimental-test-isolation=none tests/*.test.mjs",
     "assets:map": "node scripts/generate-map.mjs",
     "assets:export": "node scripts/export-assets.mjs",
+    "assets:player": "node scripts/normalize-snowball.mjs && npm run assets:mobile",
     "test:browser": "node scripts/browser-check.mjs",
     "test:mobile": "node scripts/mobile-check.mjs",
     "test:android": "node scripts/android-check.mjs",

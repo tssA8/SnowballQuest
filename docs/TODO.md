@@ -29,7 +29,7 @@ These entries are a verification checklist, not a claim that a defect exists. Up
 ## Production artwork
 
 - [ ] Replace generated placeholders with normalized production assets from the approved twelve reference groups.
-- [x] Re-export the full Snowball state set with consistent 64 × 64 cells, transparent background and a stable bottom-center anchor. All 44 placeholder frames now follow the owner's seven photo references; see `SNOWBALL_IDENTITY.md`.
+- [x] Normalize the full Snowball state set into 44 transparent 64 × 64 cells with a stable bottom-center anchor. The original concept defines the shape and poses; the photo-derived palette defines only the coat. See `SNOWBALL_IDENTITY.md`.
 - [ ] Export repeatable, separate parallax layers and inspect their horizontal seams.
 - [ ] Complete furniture and toy variants, all UI button states, collectible animation and restrained VFX.
 - [ ] Audit every replacement visually at integer display scales and update `ASSET_STATUS.md` with dimensions and readiness.

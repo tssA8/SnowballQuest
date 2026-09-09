@@ -1,6 +1,6 @@
 {
-  "version": 3,
-  "artStatus": "original-code-generated-placeholder",
+  "version": 4,
+  "artStatus": "normalized-player-and-code-generated-scenery",
   "source": "src/game/art/Textures.ts",
   "referenceInventory": "../../references/inventory.json",
   "pixelArt": true,
@@ -11,7 +11,8 @@
       "path": "player/snowball.png",
       "width": 2816,
       "height": 64,
-      "status": "placeholder-ready",
+      "status": "normalized-style-reference",
+      "source": "resources/art/snowball-runtime.png",
       "origin": [
         0.5,
         1

@@ -8,7 +8,7 @@ Built with Phaser 3, TypeScript, Vite, Tiled JSON, Arcade Physics, Web Audio and
 
 [Play Snowball Quest](https://tssa8.github.io/SnowballQuest/) — no account or installation required.
 
-[Download the Android preview APK](https://github.com/tssA8/SnowballQuest/releases/tag/v0.1.0-mobile-preview) — bundled offline game; Android 7+ with WebView 89+. iOS project and simulator build are included; installation on an iPhone requires Apple signing.
+[Download the Android preview APK](https://github.com/tssA8/SnowballQuest/releases/tag/v0.1.1-mobile-preview) — bundled offline game; Android 7+ with WebView 89+. iOS project and simulator build are included; installation on an iPhone requires Apple signing.
 
 ## Run locally
 
@@ -74,7 +74,7 @@ docs/TODO.md                Remaining art, validation and later stages
 
 ## Assets
 
-Snowball's individual appearance follows seven owner-provided photographs. See [the character reference notes](docs/SNOWBALL_IDENTITY.md) for her colors, face markings and body proportions.
+Snowball retains the original player design's round face, compact body and poses. Only the coat and markings use the owner's photo-derived palette. See [the character reference notes](docs/SNOWBALL_IDENTITY.md) and [normalized animation sheet](resources/art/snowball-contact-sheet.png).
 
 The twelve supplied artwork groups define the approved direction. Presentation sheets are treated as **reference-only** unless they can be extracted reliably; printed dimensions are not trusted as atlas coordinates. The first runtime pack uses original generated placeholders with consistent dimensions, transparent sprite backgrounds and stable bottom-center anchors. These interfaces allow production artwork to be replaced without changing game logic. See `docs/ASSET_STATUS.md` for the actual intake inventory and extraction decisions.
 
