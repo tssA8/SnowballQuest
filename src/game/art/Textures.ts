@@ -9,10 +9,12 @@ export const PALETTE = {
 } as const;
 const C = PALETTE;
 
-// Snowball's Siamese points are separate from the shared room/NPC palette.
-const SIAMESE = {
-  body: '#f0dfc5', bodyShade: '#d7c2a7', chest: '#fff1d8',
-  point: '#615052', pointLight: '#826b66', pointDark: '#433842', eye: '#62bce8',
+// Match Snowball's own photos rather than a generic breed color template.
+const SNOWBALL_COAT = {
+  body: '#ebe5d8', bodyShade: '#cec6b9', white: '#faf5e9',
+  face: '#d4cbbf', point: '#b2a79b', stripe: '#988d83', outline: '#746b68',
+  ear: '#d4aaa3', earLight: '#ead0c3', nose: '#594c49',
+  eye: '#a8cbd9', eyeLight: '#d5e7eb', eyeLine: '#504951',
 } as const;
 type Draw = (p: Pixels) => void;
 
@@ -98,7 +100,7 @@ function crown(p: Pixels, x: number, y: number) {
 }
 
 function snowball(p: Pixels, frame: number) {
-  const S = SIAMESE;
+  const S = SNOWBALL_COAT;
   const asleep = frame >= 24 && frame < 28;
   const sitting = frame >= 22 && frame < 24;
   const moving = frame >= 4 && frame < 16;
@@ -109,51 +111,70 @@ function snowball(p: Pixels, frame: number) {
   const bob = moving ? [0,-1,-1,0,0,0][phase] : celebrating ? -(frame % 2) : 0;
   const b = bob + (squash ? 2 : 0);
   if (asleep) {
-    p.ellipse(4,19,24,12,C.ink); p.ellipse(5,18,22,11,S.bodyShade); p.ellipse(7,18,18,9,S.body);
-    p.ellipse(17,23,12,8,C.ink); p.ellipse(18,23,10,7,S.point);
-    p.poly([[18,24],[18,19],[23,24]],S.pointDark); p.poly([[19,23],[19,21],[22,24]],S.pointLight);
-    p.line(23,26,26,26,S.pointDark); p.rect(27,27,1,1,C.rose);
-    p.ellipse(3,26,18,5,C.ink); p.ellipse(4,26,17,4,S.point); p.rect(7,27,8,1,S.pointLight);
-    p.rect(21,29,7,2,S.pointLight); if (frame % 2) p.rect(12,19,6,1,S.chest);
+    p.ellipse(4,19,24,12,S.outline); p.ellipse(5,18,22,11,S.bodyShade); p.ellipse(7,18,18,9,S.body);
+    p.ellipse(17,23,12,8,S.outline); p.ellipse(18,23,10,7,S.face);
+    p.poly([[18,24],[18,19],[23,24]],S.point); p.poly([[19,23],[19,21],[22,24]],S.ear);
+    p.ellipse(21,26,8,4,S.white); p.line(23,26,26,26,S.outline); p.rect(27,27,1,1,S.nose);
+    p.ellipse(3,26,18,5,S.outline); p.ellipse(4,26,17,4,S.point); p.rect(7,27,8,1,S.face);
+    p.rect(21,29,7,2,S.body); if (frame % 2) p.rect(12,19,6,1,S.white);
     return;
   }
-  // Solid dark tail; no tabby rings.
-  p.line(9,25+b,4,19+b,C.ink,4); p.line(4,19+b,4,13+b,C.ink,4);
+  // The photos do not resolve a complete tail pattern: keep its gray shading simple.
+  p.line(9,25+b,4,19+b,S.outline,4); p.line(4,19+b,4,13+b,S.outline,4);
   p.line(8,25+b,5,19+b,S.point,2); p.line(5,19+b,5,14+b,S.point,2);
-  p.rect(5,14+b,1,5,S.pointLight);
-  p.ellipse(sitting?10:8,16+b,sitting?15:19,squash?13:14,C.ink);
-  p.ellipse(sitting?11:9,17+b,sitting?13:17,squash?10:12,S.body);
-  p.ellipse(9,21+b,7,7,S.bodyShade); p.ellipse(14,18+b,11,10,S.chest);
-  // Feet end on the same baseline; motion moves toes horizontally, never the anchor.
+  p.rect(5,14+b,1,5,S.face);
+  p.ellipse(sitting?9:7,16+b,sitting?17:21,squash?13:14,S.outline);
+  p.ellipse(sitting?10:8,17+b,sitting?15:19,squash?10:12,S.body);
+  p.ellipse(8,21+b,8,7,S.bodyShade); p.ellipse(13,18+b,12,11,S.white);
+  // Round pale paws retain the 64 px bottom baseline and existing animation indices.
   const step = moving ? [-2,0,2,2,0,-2][phase] : 0;
-  const footY = leaping ? 27 : 29;
-  p.frame(9+step,footY,7,3,S.point,C.ink,1); p.frame(21-step,footY,7,3,S.point,C.ink,1);
-  p.rect(11+step,footY+1,3,1,S.pointLight); p.rect(23-step,footY+1,3,1,S.pointLight);
-  const hy = 7 + b;
-  p.poly([[12,hy+8],[12,hy-2],[14,hy-3],[20,hy+4],[24,hy+3],[27,hy-3],[29,hy-2],[30,hy+10]],C.ink);
-  p.poly([[13,hy+6],[13,hy],[15,hy-1],[19,hy+5],[26,hy+5],[28,hy-1],[29,hy],[29,hy+9]],S.point);
-  p.poly([[14,hy+1],[17,hy+4],[14,hy+5]],S.pointLight); p.poly([[27,hy+4],[28,hy+1],[28,hy+6]],S.pointLight);
-  p.rect(14,hy+3,1,2,C.pink); p.rect(28,hy+3,1,2,C.pink);
-  p.ellipse(10,hy+4,22,18,C.ink); p.ellipse(11,hy+4,20,17,S.body);
-  p.rect(10,hy+12,2,5,S.body); p.rect(30,hy+12,2,4,S.body);
-  // One continuous face mask instead of forehead stripes and cheek patches.
-  p.ellipse(13,hy+6,18,14,S.pointLight); p.ellipse(14,hy+8,17,11,S.point);
-  p.ellipse(18,hy+14,10,5,S.pointLight);
-  const blink = frame === 3 || sitting && frame % 2 === 1 || frame >= 40;
-  if (blink) { p.line(16,hy+12,19,hy+12,C.ink); p.line(25,hy+12,28,hy+12,C.ink); }
-  else {
-    p.rect(16,hy+11,4,3,C.ink); p.rect(25,hy+11,4,3,C.ink);
-    p.rect(17,hy+12,2,2,S.eye); p.rect(26,hy+12,2,2,S.eye);
-    p.rect(17,hy+11,1,2,C.ink); p.rect(26,hy+11,1,2,C.ink);
-    p.rect(18,hy+11,1,1,C.white); p.rect(27,hy+11,1,1,C.white);
-    p.rect(16,hy+10,4,1,S.pointDark); p.rect(25,hy+10,4,1,S.pointDark);
+  const footY = leaping ? 26 : 28;
+  for (const x of [9+step,21-step]) {
+    p.ellipse(x,footY,7,4,S.outline); p.ellipse(x+1,footY,5,3,S.body);
+    p.rect(x+2,footY+2,3,1,S.bodyShade);
   }
-  p.rect(22,hy+14,2,1,C.rose); p.rect(22,hy+15,1,1,C.ink);
-  p.line(20,hy+16,21,hy+17,C.ink); p.line(23,hy+17,24,hy+16,C.ink);
-  p.rect(12,hy+15,3,1,S.bodyShade); p.rect(29,hy+16,3,1,S.bodyShade);
-  p.rect(13,hy+19,2,2,S.chest); p.rect(17,hy+20,3,2,S.chest); p.rect(26,hy+19,2,2,S.chest);
-  if (frame >= 28 && frame < 32) { p.frame(27,22-frame%2*2,5,5,S.point,C.ink,1); }
-  if (celebrating) { p.frame(8,20+b,5,6,S.point,C.ink,1); if (frame >= 36) crown(p,16,0); }
+  if (sitting) {
+    p.ellipse(13,23,5,7,S.bodyShade); p.ellipse(14,23,4,7,S.body);
+    p.ellipse(23,23,5,7,S.bodyShade); p.ellipse(24,23,4,7,S.body);
+  }
+  const hy = 5 + b;
+  p.poly([[11,hy+6],[11,hy-2],[13,hy-3],[19,hy+3],[24,hy+3],[28,hy-3],[30,hy-2],[31,hy+7]],S.outline);
+  p.poly([[12,hy+5],[12,hy-1],[14,hy],[18,hy+4],[25,hy+4],[29,hy-1],[30,hy],[30,hy+7]],S.face);
+  p.poly([[13,hy],[17,hy+4],[13,hy+5]],S.ear); p.poly([[26,hy+4],[29,hy],[29,hy+5]],S.ear);
+  p.rect(13,hy+1,1,3,S.earLight); p.rect(28,hy+2,1,3,S.earLight);
+  p.ellipse(9,hy+3,23,17,S.outline); p.ellipse(10,hy+3,21,16,S.body);
+  p.rect(9,hy+10,2,5,S.body); p.rect(30,hy+10,2,5,S.body);
+  // Photo 4 anchors the pale face; photo 7 anchors the gray bridge and blue eyes.
+  p.ellipse(12,hy+7,9,8,S.face); p.ellipse(23,hy+7,8,8,S.face);
+  p.poly([[20,hy+6],[23,hy+6],[25,hy+13],[22,hy+15],[19,hy+12]],S.point);
+  p.ellipse(15,hy+13,15,6,S.white);
+  // Snowball's own narrow forehead and cheek markings stay soft and localized.
+  p.line(16,hy+4,19,hy+7,S.stripe);
+  p.line(21,hy+4,21,hy+8,S.stripe);
+  p.line(26,hy+4,23,hy+7,S.stripe);
+  p.rect(11,hy+12,3,1,S.point); p.rect(10,hy+15,3,1,S.point);
+  p.rect(29,hy+12,2,1,S.point); p.rect(29,hy+15,3,1,S.point);
+  const blink = frame === 3 || sitting && frame % 2 === 1 || frame >= 40;
+  if (blink) {
+    p.line(14,hy+11,18,hy+12,S.outline); p.line(24,hy+12,28,hy+11,S.outline);
+  } else {
+    for (const x of [13,24]) {
+      p.ellipse(x,hy+8,7,7,S.eyeLine); p.ellipse(x+1,hy+9,5,5,S.eye);
+      p.rect(x+3,hy+10,2,3,S.eyeLine); p.rect(x+2,hy+9,1,1,S.white);
+      p.rect(x+2,hy+13,2,1,S.eyeLight);
+    }
+  }
+  p.poly([[21,hy+14],[24,hy+14],[22,hy+16]],S.nose);
+  p.rect(22,hy+16,1,1,S.outline);
+  p.line(20,hy+17,21,hy+18,S.outline); p.line(23,hy+18,24,hy+17,S.outline);
+  p.rect(11,hy+17,4,1,S.white); p.rect(28,hy+17,4,1,S.white);
+  if (frame >= 28 && frame < 32) {
+    p.ellipse(26,22-frame%2*2,6,6,S.outline); p.ellipse(27,22-frame%2*2,4,5,S.body);
+  }
+  if (celebrating) {
+    p.ellipse(7,20+b,6,7,S.outline); p.ellipse(8,20+b,4,6,S.body);
+    if (frame >= 36) crown(p,16,0);
+  }
 }
 
 /** The sleeping neighbor is a separate cat, not Snowball's sleep animation. */

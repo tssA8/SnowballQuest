@@ -40,7 +40,7 @@ const groups={
   npcs:['mouse','sleepy-cat','vacuum'],props:['door','checkpoint','flag','treat-box','cushion','plant','cat-tree','window','sofa','lamp','shelf','rug','books'],
   items:['fish','star','key','heart','crown'],fx:['sparkle','paw'],
 };
-const manifest={version:2,artStatus:'original-code-generated-placeholder',source:'src/game/art/Textures.ts',referenceInventory:'../../references/inventory.json',pixelArt:true,smoothing:false,textures:[],atlases:[],pendingGroups:['ui','title','mobile','ending']};
+const manifest={version:3,artStatus:'original-code-generated-placeholder',source:'src/game/art/Textures.ts',referenceInventory:'../../references/inventory.json',pixelArt:true,smoothing:false,textures:[],atlases:[],pendingGroups:['ui','title','mobile','ending']};
 for(const [group,keys] of Object.entries(groups))for(const key of keys){const raster=textures.get(key);const relative=`${group}/${key}.png`;save(relative,png(raster));manifest.textures.push({key,path:relative,width:raster.width,height:raster.height,status:'placeholder-ready',origin:key==='snowball'?[.5,1]:undefined});}
 for(const key of ['sky','far-city','mid-buildings','near-houses','foreground']){const raster=textures.get(key),relative=`backgrounds/home/${key}.png`;save(relative,png(raster));manifest.textures.push({key,path:relative,width:raster.width,height:raster.height,status:'placeholder-ready',repeat:'x'});}
 const playerFrames={};for(let i=0;i<44;i++)playerFrames[i]={frame:{x:i*64,y:0,w:64,h:64},rotated:false,trimmed:false,spriteSourceSize:{x:0,y:0,w:64,h:64},sourceSize:{w:64,h:64},pivot:{x:.5,y:1}};

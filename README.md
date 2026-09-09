@@ -1,6 +1,6 @@
 # Snowball Quest
 
-A cozy browser platformer starring Snowball, a slightly unimpressed Siamese cat with cream fur, dark points and blue eyes. This repository implements the first vertical slice, **HOME — THE EMPTY TREAT BOX**: explore the apartment, return a tiny toy to its owner, find the balcony key, open the treat box, and follow the sunset to the flag. Later stages remain outside the initial slice.
+A cozy browser platformer starring Snowball, a slightly unimpressed Siamese cat with ivory fur, soft gray markings and ice-blue eyes, based on her owner's photos. This repository implements the first vertical slice, **HOME — THE EMPTY TREAT BOX**: explore the apartment, return a tiny toy to its owner, find the balcony key, open the treat box, and follow the sunset to the flag. Later stages remain outside the initial slice.
 
 Built with Phaser 3, TypeScript, Vite, Tiled JSON, Arcade Physics, Web Audio and localStorage. The game renders at 1280 × 720 with nearest-neighbor pixel art; the Home world is 4096 × 768. The target first-play duration is 3–5 minutes, to be confirmed through playtesting.
 
@@ -69,6 +69,8 @@ docs/TODO.md                Remaining art, validation and later stages
 ```
 
 ## Assets
+
+Snowball's individual appearance follows seven owner-provided photographs. See [the character reference notes](docs/SNOWBALL_IDENTITY.md) for her colors, face markings and body proportions.
 
 The twelve supplied artwork groups define the approved direction. Presentation sheets are treated as **reference-only** unless they can be extracted reliably; printed dimensions are not trusted as atlas coordinates. The first runtime pack uses original generated placeholders with consistent dimensions, transparent sprite backgrounds and stable bottom-center anchors. These interfaces allow production artwork to be replaced without changing game logic. See `docs/ASSET_STATUS.md` for the actual intake inventory and extraction decisions.
 

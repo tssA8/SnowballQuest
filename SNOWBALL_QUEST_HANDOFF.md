@@ -37,12 +37,13 @@ The main fantasy is:
 
 Visual identity:
 
-- Siamese cat with a pale cream body (owner clarification, 2026-09-09)
-- Solid darker ears, a continuous face mask, paws, and tail; no tabby forehead stripes or tail rings
+- Snowball is the owner's Siamese cat, with a pale cream/ivory body and soft gray-beige points (seven owner photos, 2026-09-09)
+- Follow her actual pale face, gray nose bridge, narrow forehead/cheek markings, white muzzle and light paws; see `docs/SNOWBALL_IDENTITY.md`
+- Keep the tail shading restrained because the photos do not show its complete pattern
 - Round, compact body
 - Slightly unimpressed / sleepy facial expression
 - Pink inner ears
-- Large expressive blue eyes
+- Large round ice-blue eyes, dark eye rims and a small dark triangular nose
 - Soft retro pixel-art shading
 - Clear silhouette at small sizes
 
