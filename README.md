@@ -14,6 +14,8 @@ Built with Phaser 3, TypeScript, Vite, Tiled JSON, Arcade Physics, Web Audio and
 
 Android and iOS app projects are included using Capacitor, with bundled offline assets, native saves and app lifecycle handling. See [mobile build and installation](docs/MOBILE.md). GitHub builds an Android development APK and an unsigned iOS simulator app; iPhone distribution requires Apple signing.
 
+The manual [iOS release workflow](docs/IOS_RELEASE.md) can check a Release archive for iPhone, export a signed IPA, or upload it to TestFlight once the owner's signing credentials are configured.
+
 Use Node.js 22.18 or newer so the test runner can import the small TypeScript data modules directly.
 
 ```sh

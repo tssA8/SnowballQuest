@@ -10,7 +10,7 @@ for (let y=0;y<64;y++) for (let x=0;x<64;x++) if (cat.data[(y*cat.width+36*64+x)
   bounds.left=Math.min(bounds.left,x);bounds.top=Math.min(bounds.top,y);bounds.right=Math.max(bounds.right,x);bounds.bottom=Math.max(bounds.bottom,y);
 }
 const catWidth=bounds.right-bounds.left+1,catHeight=bounds.bottom-bounds.top+1;
-function icon(size, transparent = false, adaptive = false) {
+function icon(size, transparent = false, adaptive = false, alpha = true) {
   const canvas = new Raster(size, size);
   if (!transparent) { canvas.fillStyle = '#e8d8b9'; canvas.fillRect(0, 0, size, size); }
   // Pixel-aligned fills keep the icon crisp, including small legacy launcher sizes.
@@ -30,7 +30,7 @@ function icon(size, transparent = false, adaptive = false) {
       canvas.data[destination + 3] = 255;
     }
   }
-  return png(canvas);
+  return png(canvas, { alpha });
 }
 function write(relative, bytes) {
   const destination = path.join(root, relative);
@@ -43,7 +43,8 @@ for (const [density, size, foreground] of [['mdpi',48,108], ['hdpi',72,162], ['x
   write(`${directory}/ic_launcher_round.png`, icon(size));
   write(`${directory}/ic_launcher_foreground.png`, icon(foreground, true, true));
 }
-write('ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png', icon(1024));
+// App Store artwork is fully opaque RGB; Android adaptive icons retain alpha.
+write('ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png', icon(1024, false, false, false));
 write('resources/icon.png', icon(1024));
 // Replace Capacitor's default splash artwork with the game's own quiet background.
 const splash = new Raster(64, 64); splash.fillStyle = '#242633'; splash.fillRect(0, 0, 64, 64);

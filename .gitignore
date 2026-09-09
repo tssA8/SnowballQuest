@@ -9,3 +9,9 @@ build/
 releases/
 *.jks
 *.keystore
+.apple-signing/
+*.p8
+*.p12
+*.mobileprovision
+*.certSigningRequest
+__pycache__/

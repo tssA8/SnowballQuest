@@ -41,9 +41,11 @@ Open `ios/App/App.xcodeproj`, select the App target and choose your Apple develo
 
 The GitHub build produces an unsigned simulator `.app`, **not an iPhone-installable IPA**. TestFlight/App Store distribution needs the owner's Apple Developer account, signing configuration and submission. Physical iPhone touch, safe-area, audio interruption and performance tests remain necessary.
 
+The separate manual **Prepare or upload iOS release** workflow supports a Release device archive check, a signed App Store IPA, and TestFlight upload. See [iPhone release setup](IOS_RELEASE.md) for the modes and required signing credentials. Its default `check` mode needs no Apple credentials and does not publish a build.
+
 ## Updates and GitHub
 
-`npm run mobile:sync` rebuilds and updates both native projects. `npm run assets:mobile` regenerates native icons and splash backgrounds from the code-drawn art. `npm run android:open` opens Android Studio.
+`npm run mobile:sync` rebuilds and updates both native projects. `npm run assets:mobile` regenerates native icons from the approved player master and the splash backgrounds. The iOS app icon uses opaque RGB encoding; Android adaptive icons retain transparency. `npm run android:open` opens Android Studio.
 
 The **Build mobile apps** workflow runs on pushes to `main` or manual dispatch. It uploads an Android development APK and an unsigned iOS simulator archive after successful builds. Download artifacts from that workflow run. GitHub Pages continues to deploy the browser game independently; website updates do not replace assets in an installed app.
 
