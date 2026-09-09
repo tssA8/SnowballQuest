@@ -81,7 +81,8 @@ export class HUDScene extends Phaser.Scene {
     hit.on('pointerup', () => this.home.dialogue.next());
     this.overlay.add(hit);
     this.overlay.add(panel(this, 235, 471, 810, 191, 0xffefd5));
-    this.overlay.add(this.add.image(291, 567, d.speaker.includes('MOUSE') ? 'mouse' : 'snowball').setScale(1));
+    const portraitKey = d.speaker.includes('MOUSE') ? 'mouse' : d.speaker === 'PROFESSIONAL NAPPER' ? 'sleepy-cat' : 'snowball';
+    this.overlay.add(this.add.image(291, 567, portraitKey).setScale(1));
     this.overlay.add(text(this, 341, 494, d.speaker, 12, '#a46652').setLetterSpacing(2));
     this.overlay.add(text(this, 341, 526, this.home.dialogue.line, 18));
     this.overlay.add(text(this, 1019, 629, `E / SPACE / TAP TO CONTINUE  ${this.home.dialogue.index + 1}/${d.lines.length}`, 10, '#9c8064').setOrigin(1, 0));

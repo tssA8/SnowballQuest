@@ -1,6 +1,6 @@
 # Snowball Quest
 
-A cozy browser platformer starring a slightly unimpressed cat. This repository implements the first vertical slice, **HOME — THE EMPTY TREAT BOX**: explore the apartment, return a tiny toy to its owner, find the balcony key, open the treat box, and follow the sunset to the flag. Later stages remain outside the initial slice.
+A cozy browser platformer starring Snowball, a slightly unimpressed Siamese cat with cream fur, dark points and blue eyes. This repository implements the first vertical slice, **HOME — THE EMPTY TREAT BOX**: explore the apartment, return a tiny toy to its owner, find the balcony key, open the treat box, and follow the sunset to the flag. Later stages remain outside the initial slice.
 
 Built with Phaser 3, TypeScript, Vite, Tiled JSON, Arcade Physics, Web Audio and localStorage. The game renders at 1280 × 720 with nearest-neighbor pixel art; the Home world is 4096 × 768. The target first-play duration is 3–5 minutes, to be confirmed through playtesting.
 

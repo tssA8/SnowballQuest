@@ -10,7 +10,7 @@
 
 ## 1. Product Vision
 
-Build a short, charming, story-driven 2D side-scrolling pixel game starring **Snowball**, a cream-gray cat inspired by the reference photo.
+Build a short, charming, story-driven 2D side-scrolling pixel game starring **Snowball**, a Siamese cat inspired by the reference photo.
 
 The game should feel like a compact 16-bit platform adventure rather than a combat game.
 
@@ -37,12 +37,12 @@ The main fantasy is:
 
 Visual identity:
 
-- Cream / light gray cat
-- Slightly darker ears, face markings, forehead stripes, paws, and tail
+- Siamese cat with a pale cream body (owner clarification, 2026-09-09)
+- Solid darker ears, a continuous face mask, paws, and tail; no tabby forehead stripes or tail rings
 - Round, compact body
 - Slightly unimpressed / sleepy facial expression
 - Pink inner ears
-- Large expressive eyes
+- Large expressive blue eyes
 - Soft retro pixel-art shading
 - Clear silhouette at small sizes
 
@@ -2110,7 +2110,7 @@ GPT-6 must NOT:
 
 The user should be able to open a URL and immediately experience:
 
-> A tiny cream-gray cat wakes up in a cozy room, walks into a glowing pixel city, gathers golden fish, helps strange little animals, discovers hidden rooms, and eventually returns home wearing a crown.
+> A tiny Siamese cat wakes up in a cozy room, walks into a glowing pixel city, gathers golden fish, helps strange little animals, discovers hidden rooms, and eventually returns home wearing a crown.
 
 The final emotional tone should be:
 

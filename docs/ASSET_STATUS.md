@@ -31,7 +31,9 @@ No crop coordinates were invented. A PNG's alpha-capable format alone does not e
 
 ## Playable placeholder artwork
 
-`src/game/art/Textures.ts` creates **original code-drawn pixel textures**, using the references for the cream/gray cat, coral furnishings, moss plants, outlined collectibles, and warm city palette. These are deliberate, correctly sized placeholders; they are not claimed to be extracted approved production sprites.
+`src/game/art/Textures.ts` creates **original code-drawn pixel textures**, using the references for the Siamese cat, coral furnishings, moss plants, outlined collectibles, and warm city palette. These are deliberate, correctly sized placeholders; they are not claimed to be extracted approved production sprites.
+
+Owner correction (2026-09-09): **Snowball is a Siamese cat.** The initial placeholder incorrectly used tabby forehead/cheek stripes and tail rings. All 44 Snowball frames now use a cream body, a continuous dark face mask, dark ears/paws/tail and blue eyes. The game, title, HUD and dialogue/result portraits share this corrected sheet. The sleeping neighbor has its own drawing and retains its separate appearance. The manifest version is included in image URLs so refreshed games request the corrected artwork instead of a cached prior sheet.
 
 The drawing layer uses integer rectangle fills, scanline ellipses/polygons and pixel lines. No image smoothing, source-image slicing, external font raster dependency, or generated all-in-one background is used. The exporter creates PNG files; the game loads those files through `src/game/art/AssetLoader.ts`. `registerAnimations` registers shared Snowball animations once.
 

@@ -8,6 +8,12 @@ export const PALETTE = {
   green: '#6f8664', moss: '#96a276', leaf: '#b7b984', blue: '#7c9aab', lavender: '#a799b0',
 } as const;
 const C = PALETTE;
+
+// Snowball's Siamese points are separate from the shared room/NPC palette.
+const SIAMESE = {
+  body: '#f0dfc5', bodyShade: '#d7c2a7', chest: '#fff1d8',
+  point: '#615052', pointLight: '#826b66', pointDark: '#433842', eye: '#62bce8',
+} as const;
 type Draw = (p: Pixels) => void;
 
 /** All primitives resolve to integer rectangles, including ellipse and polygon edges. */
@@ -92,6 +98,7 @@ function crown(p: Pixels, x: number, y: number) {
 }
 
 function snowball(p: Pixels, frame: number) {
+  const S = SIAMESE;
   const asleep = frame >= 24 && frame < 28;
   const sitting = frame >= 22 && frame < 24;
   const moving = frame >= 4 && frame < 16;
@@ -102,50 +109,61 @@ function snowball(p: Pixels, frame: number) {
   const bob = moving ? [0,-1,-1,0,0,0][phase] : celebrating ? -(frame % 2) : 0;
   const b = bob + (squash ? 2 : 0);
   if (asleep) {
-    p.ellipse(4,19,24,12,C.ink); p.ellipse(5,18,22,11,C.fur); p.ellipse(12,18,13,8,C.shade);
-    p.ellipse(17,23,12,8,C.ink); p.ellipse(18,23,10,7,C.cream);
-    p.poly([[18,24],[18,19],[23,24]],C.ink); p.poly([[19,23],[19,21],[22,24]],C.pink);
-    p.line(23,26,26,26,C.ink); p.rect(27,27,1,1,C.coral);
-    p.ellipse(3,26,18,5,C.ink); p.ellipse(4,26,17,4,C.shade); p.rect(7,27,8,1,C.fur);
-    p.rect(21,29,7,2,C.cream); if (frame % 2) p.rect(12,19,6,1,C.fur);
+    p.ellipse(4,19,24,12,C.ink); p.ellipse(5,18,22,11,S.bodyShade); p.ellipse(7,18,18,9,S.body);
+    p.ellipse(17,23,12,8,C.ink); p.ellipse(18,23,10,7,S.point);
+    p.poly([[18,24],[18,19],[23,24]],S.pointDark); p.poly([[19,23],[19,21],[22,24]],S.pointLight);
+    p.line(23,26,26,26,S.pointDark); p.rect(27,27,1,1,C.rose);
+    p.ellipse(3,26,18,5,C.ink); p.ellipse(4,26,17,4,S.point); p.rect(7,27,8,1,S.pointLight);
+    p.rect(21,29,7,2,S.pointLight); if (frame % 2) p.rect(12,19,6,1,S.chest);
     return;
   }
-  // Upturned gray-striped tail, kept separate from the body silhouette.
+  // Solid dark tail; no tabby rings.
   p.line(9,25+b,4,19+b,C.ink,4); p.line(4,19+b,4,13+b,C.ink,4);
-  p.line(8,25+b,5,19+b,C.shade,2); p.line(5,19+b,5,14+b,C.shade,2);
-  p.rect(5,15+b,2,2,C.fur); p.rect(5,20+b,2,2,C.fur);
+  p.line(8,25+b,5,19+b,S.point,2); p.line(5,19+b,5,14+b,S.point,2);
+  p.rect(5,14+b,1,5,S.pointLight);
   p.ellipse(sitting?10:8,16+b,sitting?15:19,squash?13:14,C.ink);
-  p.ellipse(sitting?11:9,17+b,sitting?13:17,squash?10:12,C.fur);
-  p.ellipse(9,18+b,8,9,C.shade); p.ellipse(14,18+b,11,10,C.cream);
+  p.ellipse(sitting?11:9,17+b,sitting?13:17,squash?10:12,S.body);
+  p.ellipse(9,21+b,7,7,S.bodyShade); p.ellipse(14,18+b,11,10,S.chest);
   // Feet end on the same baseline; motion moves toes horizontally, never the anchor.
   const step = moving ? [-2,0,2,2,0,-2][phase] : 0;
   const footY = leaping ? 27 : 29;
-  p.frame(9+step,footY,7,3,C.fur,C.ink,1); p.frame(21-step,footY,7,3,C.cream,C.ink,1);
-  p.rect(11+step,footY+1,3,1,C.shade); p.rect(23-step,footY+1,3,1,C.fur);
+  p.frame(9+step,footY,7,3,S.point,C.ink,1); p.frame(21-step,footY,7,3,S.point,C.ink,1);
+  p.rect(11+step,footY+1,3,1,S.pointLight); p.rect(23-step,footY+1,3,1,S.pointLight);
   const hy = 7 + b;
   p.poly([[12,hy+8],[12,hy-2],[14,hy-3],[20,hy+4],[24,hy+3],[27,hy-3],[29,hy-2],[30,hy+10]],C.ink);
-  p.poly([[13,hy+6],[13,hy],[15,hy-1],[19,hy+5],[26,hy+5],[28,hy-1],[29,hy],[29,hy+9]],C.fur);
-  p.poly([[14,hy+1],[17,hy+4],[14,hy+5]],C.pink); p.poly([[27,hy+4],[28,hy+1],[28,hy+6]],C.pink);
-  p.ellipse(10,hy+4,22,18,C.ink); p.ellipse(11,hy+4,20,17,C.fur);
-  p.rect(10,hy+12,2,5,C.fur); p.rect(30,hy+12,2,4,C.fur);
-  p.ellipse(13,hy+5,10,8,C.shade); p.rect(18,hy+5,2,5,C.fur); p.rect(22,hy+4,2,4,C.shade);
-  p.ellipse(13,hy+12,17,8,C.cream); p.ellipse(11,hy+10,7,7,C.fur);
+  p.poly([[13,hy+6],[13,hy],[15,hy-1],[19,hy+5],[26,hy+5],[28,hy-1],[29,hy],[29,hy+9]],S.point);
+  p.poly([[14,hy+1],[17,hy+4],[14,hy+5]],S.pointLight); p.poly([[27,hy+4],[28,hy+1],[28,hy+6]],S.pointLight);
+  p.rect(14,hy+3,1,2,C.pink); p.rect(28,hy+3,1,2,C.pink);
+  p.ellipse(10,hy+4,22,18,C.ink); p.ellipse(11,hy+4,20,17,S.body);
+  p.rect(10,hy+12,2,5,S.body); p.rect(30,hy+12,2,4,S.body);
+  // One continuous face mask instead of forehead stripes and cheek patches.
+  p.ellipse(13,hy+6,18,14,S.pointLight); p.ellipse(14,hy+8,17,11,S.point);
+  p.ellipse(18,hy+14,10,5,S.pointLight);
   const blink = frame === 3 || sitting && frame % 2 === 1 || frame >= 40;
   if (blink) { p.line(16,hy+12,19,hy+12,C.ink); p.line(25,hy+12,28,hy+12,C.ink); }
   else {
     p.rect(16,hy+11,4,3,C.ink); p.rect(25,hy+11,4,3,C.ink);
-    p.rect(17,hy+12,2,2,C.blue); p.rect(26,hy+12,2,2,C.blue);
+    p.rect(17,hy+12,2,2,S.eye); p.rect(26,hy+12,2,2,S.eye);
     p.rect(17,hy+11,1,2,C.ink); p.rect(26,hy+11,1,2,C.ink);
     p.rect(18,hy+11,1,1,C.white); p.rect(27,hy+11,1,1,C.white);
-    p.rect(16,hy+10,4,1,C.shade); p.rect(25,hy+10,4,1,C.shade);
+    p.rect(16,hy+10,4,1,S.pointDark); p.rect(25,hy+10,4,1,S.pointDark);
   }
   p.rect(22,hy+14,2,1,C.rose); p.rect(22,hy+15,1,1,C.ink);
   p.line(20,hy+16,21,hy+17,C.ink); p.line(23,hy+17,24,hy+16,C.ink);
-  p.rect(14,hy+15,3,1,C.pink); p.rect(27,hy+15,3,1,C.pink);
-  p.rect(10,hy+14,3,1,C.shade); p.rect(10,hy+17,3,1,C.shade); p.rect(29,hy+17,3,1,C.shade);
-  p.rect(13,hy+19,2,2,C.cream); p.rect(17,hy+20,3,2,C.cream); p.rect(26,hy+19,2,2,C.cream);
-  if (frame >= 28 && frame < 32) { p.frame(27,22-frame%2*2,5,5,C.cream,C.ink,1); }
-  if (celebrating) { p.frame(8,20+b,5,6,C.cream,C.ink,1); if (frame >= 36) crown(p,16,0); }
+  p.rect(12,hy+15,3,1,S.bodyShade); p.rect(29,hy+16,3,1,S.bodyShade);
+  p.rect(13,hy+19,2,2,S.chest); p.rect(17,hy+20,3,2,S.chest); p.rect(26,hy+19,2,2,S.chest);
+  if (frame >= 28 && frame < 32) { p.frame(27,22-frame%2*2,5,5,S.point,C.ink,1); }
+  if (celebrating) { p.frame(8,20+b,5,6,S.point,C.ink,1); if (frame >= 36) crown(p,16,0); }
+}
+
+/** The sleeping neighbor is a separate cat, not Snowball's sleep animation. */
+function sleepyNeighbor(p: Pixels) {
+  p.ellipse(4,19,24,12,C.ink); p.ellipse(5,18,22,11,C.fur); p.ellipse(12,18,13,8,C.shade);
+  p.ellipse(17,23,12,8,C.ink); p.ellipse(18,23,10,7,C.cream);
+  p.poly([[18,24],[18,19],[23,24]],C.ink); p.poly([[19,23],[19,21],[22,24]],C.pink);
+  p.line(23,26,26,26,C.ink); p.rect(27,27,1,1,C.coral);
+  p.ellipse(3,26,18,5,C.ink); p.ellipse(4,26,17,4,C.shade); p.rect(7,27,8,1,C.fur);
+  p.rect(21,29,7,2,C.cream);
 }
 
 function paw(p: Pixels, x: number, y: number, s: number, color: string) {
@@ -342,7 +360,7 @@ export function createTextures(scene: Phaser.Scene): void {
     if(key==='fish')fish(p);else if(key==='star')star(p);else if(key==='feather')feather(p);
     else if(key==='key'){p.ellipse(7,1,19,19,C.woodDark);p.ellipse(8,2,17,17,C.gold);p.ellipse(12,5,9,10,C.woodDark);p.ellipse(13,6,7,8,C.goldLight);p.frame(13,17,7,15,C.gold,C.woodDark,1);p.rect(18,24,7,4,C.woodDark);p.rect(19,24,5,2,C.gold);p.rect(18,29,5,3,C.gold);}
     else if(key==='heart'){p.poly([[2,7],[6,3],[12,3],[16,7],[20,3],[27,3],[31,8],[30,16],[16,30],[2,16]],C.rose);p.poly([[4,8],[7,5],[11,5],[16,10],[21,5],[26,5],[29,9],[27,16],[16,27],[5,16]],C.pink);p.rect(7,7,4,4,C.cream);}
-    else if(key==='plant')plant(p);else if(key==='sleepy-cat')snowball(new Pixels(p.ctx,0,0,2),24);
+    else if(key==='plant')plant(p);else if(key==='sleepy-cat')sleepyNeighbor(new Pixels(p.ctx,0,0,2));
     else if(['sky','far-city','mid-buildings','near-houses','foreground'].includes(key))backgrounds(new Pixels(p.ctx,0,0,1,w),key);
     else if(key==='crown')crown(new Pixels(p.ctx,3,4,2),0,0);
     else if(key==='paw')paw(p,4,7,2,C.cream);

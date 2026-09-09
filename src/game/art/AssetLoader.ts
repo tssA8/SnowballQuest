@@ -8,7 +8,7 @@ import { registerAnimations } from './Textures';
  */
 export function preloadAssets(scene: Phaser.Scene): void {
   for (const asset of manifest.textures) {
-    const url = `assets/${asset.path}`;
+    const url = `assets/${asset.path}?v=${manifest.version}`;
     if (asset.key === 'snowball') {
       scene.load.spritesheet(asset.key, url, { frameWidth: 64, frameHeight: 64 });
     } else {

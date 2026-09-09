@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "artStatus": "original-code-generated-placeholder",
   "source": "src/game/art/Textures.ts",
   "referenceInventory": "../../references/inventory.json",
