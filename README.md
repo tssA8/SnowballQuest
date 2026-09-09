@@ -103,6 +103,6 @@ Time values are milliseconds. Collected IDs are deduplicated; unknown versions r
 
 ## Verification status
 
-`npm test` covers save validation, mission behavior and the Home map's objective dependencies, collectible counts, supported spawn/tunnel arrivals and conservative jump reachability. `npm run build` checks TypeScript and creates the production bundle. Browser playtesting is still needed to verify feel, camera composition, every interactive flow and audio behavior; geometric tests cannot establish playability on their own.
+`npm test` passes 15 map, save and player-controller checks. The production build, Edge quest integration, actual keyboard platform routes, mobile touch/rotation emulation and production-preview smoke test have passed. See `docs/VERIFICATION.md` for evidence, reproducible browser-test commands and the limits of these checks. Human playtesting remains necessary to tune feel and the 3–5 minute target.
 
 Real iPhone Safari and Android Chrome checks are tracked in `docs/TODO.md`. Desktop touch emulation can exercise pointer logic but does not replace testing on physical devices. Do not mark the complete MVP accepted until the remaining browser and mobile checks have passed.
