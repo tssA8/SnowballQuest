@@ -1,0 +1,114 @@
+[
+  {
+    "reference": "00-overview.png",
+    "original": "ChatGPT Image 2026年9月9日 上午11_13_14.png",
+    "width": 1536,
+    "height": 1024,
+    "status": "reference-only",
+    "sha256": "887C86B1070C79F40C0AD708ED8B5260F9C7D09872D227BBBC3CC0556D461FEA"
+  },
+  {
+    "reference": "01-player.png",
+    "original": "ChatGPT Image 2026年9月9日 上午11_13_21.png",
+    "width": 1536,
+    "height": 1024,
+    "status": "reference-only",
+    "sha256": "22AF48E3C93D00196E78DD678E943EA465035EAF58E7AF2BC39E3A010E7A3819"
+  },
+  {
+    "reference": "02-toys.png",
+    "original": "ChatGPT Image 2026年9月9日 上午11_13_27.png",
+    "width": 1536,
+    "height": 1024,
+    "status": "reference-only",
+    "sha256": "CFC0C4FE65E7D532D80A727F552E89BF57E905E825C122D37D64373913BFE42D"
+  },
+  {
+    "reference": "04-tileset.png",
+    "original": "ChatGPT Image 2026年9月9日 上午11_13_32.png",
+    "width": 1536,
+    "height": 1024,
+    "status": "reference-only",
+    "sha256": "3B01CCCF653209EFC3501A6649BCA557D6CD6AD011D50B9761700CF99F254126"
+  },
+  {
+    "reference": "06-background-alternate.png",
+    "original": "ChatGPT Image 2026年9月9日 上午11_13_38.png",
+    "width": 1536,
+    "height": 1024,
+    "status": "reference-only",
+    "sha256": "35664F1B9EB48751BDD476B324A6EF81BB84400067CB9A257641E9816EF9BC57"
+  },
+  {
+    "reference": "03-npcs.png",
+    "original": "ChatGPT Image 2026年9月9日 上午11_13_44.png",
+    "width": 1536,
+    "height": 1024,
+    "status": "reference-only",
+    "sha256": "0401432F1A901CC660529BBDBAE56EE047613A08132FC53A670D3D302CF76585"
+  },
+  {
+    "reference": "05-home-props.png",
+    "original": "ChatGPT Image 2026年9月9日 上午11_13_50.png",
+    "width": 1536,
+    "height": 1024,
+    "status": "reference-only",
+    "sha256": "3C100B14A0D01946BD220C6A889622321E0548D802D9329180C90F82CEE2256D"
+  },
+  {
+    "reference": "06-background.png",
+    "original": "ChatGPT Image 2026年9月9日 上午11_13_55.png",
+    "width": 1536,
+    "height": 1024,
+    "status": "reference-only",
+    "sha256": "F444F91967544E1C9F8BBB622980BB3321B2253787C569D08D5C40545425FD92"
+  },
+  {
+    "reference": "07-collectibles.png",
+    "original": "ChatGPT Image 2026年9月9日 上午11_14_00.png",
+    "width": 1536,
+    "height": 1024,
+    "status": "reference-only",
+    "sha256": "7AE12458E5FF03C9FD447E5E0648824AA63018886B81F9868AEA856A1734554D"
+  },
+  {
+    "reference": "08-vfx.png",
+    "original": "ChatGPT Image 2026年9月9日 上午11_14_05.png",
+    "width": 1536,
+    "height": 1024,
+    "status": "reference-only",
+    "sha256": "92D65445D3472118140D4DCC9B26579660362EBE23D14911B992F0E7C87C27CB"
+  },
+  {
+    "reference": "09-ui.png",
+    "original": "ChatGPT Image 2026年9月9日 上午11_14_10.png",
+    "width": 1536,
+    "height": 1024,
+    "status": "reference-only",
+    "sha256": "7F51802A1EB4E5EE4CCAC1D97FB93E9367ED7B5062376BE188D76D92AB6A6F6A"
+  },
+  {
+    "reference": "10-title-map.png",
+    "original": "ChatGPT Image 2026年9月9日 上午11_14_16.png",
+    "width": 1536,
+    "height": 1024,
+    "status": "reference-only",
+    "sha256": "6D3D248724B712723A33A613123D05A1F88FE33F8031B5021BE857329B251C3F"
+  },
+  {
+    "reference": "11-mobile-controls.png",
+    "original": "ChatGPT Image 2026年9月9日 上午11_14_21.png",
+    "width": 1536,
+    "height": 1024,
+    "status": "reference-only",
+    "sha256": "E017D69DD509FFB271788728DDF394CB99FC44CCCC93F9D3E67AFA18B4E42303"
+  },
+  {
+    "reference": "12-ending.png",
+    "original": "ChatGPT Image 2026年9月9日 上午11_14_27.png",
+    "width": 1536,
+    "height": 1024,
+    "status": "reference-only",
+    "sha256": "F589AEAE0A6D708C7B1863DC5FD01624C75E5995A4F058688216D74201FB7453"
+  }
+]
