@@ -12,6 +12,7 @@
     "assets:export": "node scripts/export-assets.mjs",
     "test:browser": "node scripts/browser-check.mjs",
     "test:mobile": "node scripts/mobile-check.mjs",
+    "test:android": "node scripts/android-check.mjs",
     "test:route": "node scripts/keyboard-route-check.mjs",
     "assets:mobile": "node scripts/mobile-assets.mjs",
     "mobile:sync": "npm run build && cap sync",

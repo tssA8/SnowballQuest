@@ -13,6 +13,8 @@ Capacitor 8.5.1 packages the existing Home chapter with app ID `io.github.tssa8.
 
 ## Android
 
+The [Android 0.1.0 mobile preview](https://github.com/tssA8/SnowballQuest/releases/tag/v0.1.0-mobile-preview) provides the tested APK as a public download. It is a development preview for direct installation, not a Play Store release. Browser play remains available on GitHub Pages.
+
 Use Node 22+, JDK 21 and Android SDK platform 36. Set `ANDROID_HOME` and `JAVA_HOME`, or configure `android/local.properties`. SDK paths and signing keys are ignored by Git.
 
 ```sh
@@ -45,8 +47,12 @@ The GitHub build produces an unsigned simulator `.app`, **not an iPhone-installa
 
 The **Build mobile apps** workflow runs on pushes to `main` or manual dispatch. It uploads an Android development APK and an unsigned iOS simulator archive after successful builds. Download artifacts from that workflow run. GitHub Pages continues to deploy the browser game independently; website updates do not replace assets in an installed app.
 
+The public preview APK comes from successful mobile build `34322675991`, game revision `cbd7783`, with SHA-256 `d5c6b3e3f2c0202c05b6c37d0a8772696388ec9ae2883418ac9526ecc71d511c`. Later documentation/test commits do not change the game bundled in that preview.
+
 App progress and website progress are separate and device-local. Native saves survive ordinary restarts and compatible updates; uninstalling the app removes them. There is no account, telemetry or cloud sync.
 
 ## Verification
 
 The 26 unit checks include native read ordering, queued writes, write failures and recovery after restart. Browser checks include dialogue pause/resume and protecting the completed-stage state. Native build and device results are recorded in `VERIFICATION.md`; browser touch emulation alone does not certify iOS.
+
+With the development APK installed on a dedicated Android test device and `adb` available, run `npm run test:android`. Set `SNOWBALL_ANDROID_DEVICE` if multiple devices are connected. This starts a fresh game run, exercises the bundled production WebView offline, tests touch and Back/Home behavior, and removes the test run's WebView recovery copies to verify that a cold restart restores native Preferences. It writes screenshots and a JSON report to ignored `test-results/`. Use a test installation whose progress can be replaced.

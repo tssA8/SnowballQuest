@@ -8,6 +8,8 @@ Built with Phaser 3, TypeScript, Vite, Tiled JSON, Arcade Physics, Web Audio and
 
 [Play Snowball Quest](https://tssa8.github.io/SnowballQuest/) — no account or installation required.
 
+[Download the Android preview APK](https://github.com/tssA8/SnowballQuest/releases/tag/v0.1.0-mobile-preview) — bundled offline game; Android 7+ with WebView 89+. iOS project and simulator build are included; installation on an iPhone requires Apple signing.
+
 ## Run locally
 
 Android and iOS app projects are included using Capacitor, with bundled offline assets, native saves and app lifecycle handling. See [mobile build and installation](docs/MOBILE.md). GitHub builds an Android development APK and an unsigned iOS simulator app; iPhone distribution requires Apple signing.
