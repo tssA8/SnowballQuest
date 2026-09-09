@@ -4,6 +4,10 @@ A cozy browser platformer starring a slightly unimpressed cat. This repository i
 
 Built with Phaser 3, TypeScript, Vite, Tiled JSON, Arcade Physics, Web Audio and localStorage. The game renders at 1280 × 720 with nearest-neighbor pixel art; the Home world is 4096 × 768. The target first-play duration is 3–5 minutes, to be confirmed through playtesting.
 
+## Play online
+
+[Play Snowball Quest](https://tssa8.github.io/SnowballQuest/) — no account or installation required.
+
 ## Run locally
 
 Use Node.js 22.18 or newer so the test runner can import the small TypeScript data modules directly.
@@ -22,7 +26,11 @@ npm run preview
 npm run assets:map
 ```
 
-`build` runs the TypeScript check and creates `dist/`; `preview` serves that production build. `assets:map` regenerates `public/assets/maps/home.json` from `scripts/generate-map.mjs`. Static hosting should publish `dist/`. This repository does not automatically publish to a hosting account.
+`build` runs the TypeScript check and creates `dist/`; `preview` serves that production build. `assets:map` regenerates `public/assets/maps/home.json` from `scripts/generate-map.mjs`. Static hosting should publish `dist/`.
+
+## Deployment
+
+GitHub Actions runs the existing tests, builds the game with Node.js 24, and publishes `dist/` to GitHub Pages on every push to `main`. The workflow can also be started manually from the Actions tab. The repository's Settings → Pages source must be **GitHub Actions**. Relative asset URLs support both the `/SnowballQuest/` project path and hosting at a domain root.
 
 ## Controls
 
