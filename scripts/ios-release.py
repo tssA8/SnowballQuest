@@ -39,6 +39,13 @@ def build_number(value):
     return str(value)
 
 
+def profile_uuid(value):
+    require(isinstance(value, str) and bool(re.fullmatch(r"[0-9A-Fa-f]{8}(?:-[0-9A-Fa-f]{4}){3}-[0-9A-Fa-f]{12}", value)),
+            "Provisioning profile UUID must use the standard hyphenated format.")
+    uuid.UUID(value)
+    return value  # Xcode's profile specifier must retain Apple's exact spelling/case.
+
+
 def validate_profile(profile, team, now=None):
     now = now or dt.datetime.now(dt.timezone.utc)
     expiry = profile.get("ExpirationDate")
@@ -57,10 +64,10 @@ def validate_profile(profile, team, now=None):
     require(entitlements.get("beta-reports-active") is True, "Profile is not enabled for App Store/TestFlight distribution.")
     require("iOS" in profile.get("Platform", []), "Profile is not for iOS.")
     require(bool(profile.get("DeveloperCertificates")), "Profile has no signing certificates.")
-    return str(uuid.UUID(profile.get("UUID", ""))).upper()
+    return profile_uuid(profile.get("UUID", ""))
 
 
-def patch_project(source, number, team=None, profile_uuid=None):
+def patch_project(source, number, team=None, profile_id=None):
     """Only edit the App target Release block, never project/SPM/Debug settings."""
     number = build_number(number)
     pattern = re.compile(r"(^\t\t[A-F0-9]{24} /\* Release \*/ = \{\n)(.*?)(^\t\t\};)", re.M | re.S)
@@ -71,9 +78,9 @@ def patch_project(source, number, team=None, profile_uuid=None):
     settings = {"CURRENT_PROJECT_VERSION": number}
     if team:
         require(bool(re.fullmatch(r"[A-Z0-9]{10}", team)), "APPLE_TEAM_ID must be a 10-character Team ID.")
-        profile_uuid = str(uuid.UUID(profile_uuid)).upper()
+        profile_id = profile_uuid(profile_id)
         settings.update(CODE_SIGN_STYLE="Manual", DEVELOPMENT_TEAM=json.dumps(team),
-                        CODE_SIGN_IDENTITY='"Apple Distribution"', PROVISIONING_PROFILE_SPECIFIER=json.dumps(profile_uuid))
+                        CODE_SIGN_IDENTITY='"Apple Distribution"', PROVISIONING_PROFILE_SPECIFIER=json.dumps(profile_id))
     body = match[2]
     for key, value in settings.items():
         line = f"\t\t\t\t{key} = {value};"

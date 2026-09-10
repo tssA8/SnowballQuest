@@ -29,6 +29,26 @@ class ReleaseTests(unittest.TestCase):
     def test_profile_allows_existing_prefix_distinct_from_team(self):
         self.assertEqual(release.validate_profile(self.profile, TEAM, NOW), UUID)
 
+    def test_profile_uuid_preserves_apples_case_in_validation_and_signing(self):
+        source = release.PROJECT.read_text(encoding="utf-8")
+        for identifier in (UUID.upper(), UUID.lower()):
+            with self.subTest(identifier=identifier):
+                self.profile["UUID"] = identifier
+                validated = release.validate_profile(self.profile, TEAM, NOW)
+                self.assertEqual(validated, identifier)
+                patched = release.patch_project(source, "3", TEAM, validated)
+                self.assertIn(f'PROVISIONING_PROFILE_SPECIFIER = "{identifier}";', patched)
+
+    def test_profile_uuid_rejects_malformed_or_non_filename_formats(self):
+        source = release.PROJECT.read_text(encoding="utf-8")
+        for identifier in ("not-a-uuid", "", None, UUID.replace("-", ""), f"urn:uuid:{UUID}", f"../{UUID}"):
+            with self.subTest(identifier=identifier):
+                self.profile["UUID"] = identifier
+                with self.assertRaises(ValueError):
+                    release.validate_profile(self.profile, TEAM, NOW)
+                with self.assertRaises(ValueError):
+                    release.patch_project(source, "3", TEAM, identifier)
+
     def test_profile_rejects_wrong_team_app_expiry_or_distribution(self):
         changes = [({"TeamIdentifier": ["OTHERTEAM1"]}, None),
                    ({"ExpirationDate": dt.datetime(2026, 9, 8)}, None),
