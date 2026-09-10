@@ -2,7 +2,7 @@
 
 The **Prepare or upload iOS release** GitHub Actions workflow builds the bundled game on macOS with Xcode 26.3. It is manual, runs only from `main`, and never uploads because of a source push. The existing mobile workflow continues to produce an unsigned simulator app.
 
-Open [the iOS release workflow](https://github.com/tssA8/SnowballQuest/actions/workflows/ios-release.yml), choose **Run workflow**, keep branch `main`, select a mode, and set an unused build number from 1 through 9999. The default is build `3`; increment after each accepted upload. The marketing version comes from `package.json` and the iOS project and must match.
+Open [the iOS release workflow](https://github.com/tssA8/SnowballQuest/actions/workflows/ios-release.yml), choose **Run workflow**, keep branch `main`, select a mode, and set an unused build number from 1 through 9999. Build `3` has been accepted by Apple; the default for the next upload is `4`. Increment after each accepted upload. The marketing version comes from `package.json` and the iOS project and must match.
 
 | Mode | Result | Apple credentials |
 | --- | --- | --- |
@@ -15,6 +15,8 @@ Open [the iOS release workflow](https://github.com/tssA8/SnowballQuest/actions/w
 ## One-time account setup
 
 The Apple account must have an active Developer Program membership and permission to manage certificates and this app. The Account Holder must resolve any outstanding Apple agreements in Apple's website. The workflow does not accept agreements, create or revoke certificates, or answer export-compliance questions.
+
+The owner approved `ITSAppUsesNonExemptEncryption=false` for the current offline game on 2026-09-10; this value is now in the iOS project. Build 0.1.1 (3), which was already uploaded before that source change, received the same declaration in App Store Connect. Reassess this setting if encryption-related functionality or dependencies change.
 
 Register the explicit bundle ID `io.github.tssa8.snowballquest`, then create the **Snowball Quest** app record with that bundle ID in App Store Connect. Reuse a valid **Apple Distribution** certificate and its private key, exported together as a password-protected `.p12`. Create an **App Store Connect** provisioning profile for the bundle ID using that same certificate. Development, ad hoc and enterprise profiles are rejected.
 
@@ -48,6 +50,6 @@ Signing settings and the chosen build number are applied temporarily to the **Ap
 
 A successful upload means Apple accepted the binary transfer. Wait for App Store Connect processing, resolve any reported validation or export-compliance requirements in the account, then select the build in TestFlight. This workflow does not invite testers or submit an external testing/App Store review. External TestFlight access may require Apple's beta review; internal testing requires eligible App Store Connect users.
 
-Local helper tests work without Apple access: `python -m unittest discover -s tests -p test_ios_release.py`. On macOS, after `npm ci`, `npm run build` and `npx cap sync ios`, the equivalent default build check is `python3 scripts/ios-release.py --mode check --build-number 3`.
+Local helper tests work without Apple access: `python -m unittest discover -s tests -p test_ios_release.py`. On macOS, after `npm ci`, `npm run build` and `npx cap sync ios`, the equivalent default build check is `python3 scripts/ios-release.py --mode check --build-number 4`.
 
 Sources: [GitHub's certificate installation guidance](https://docs.github.com/en/actions/how-tos/deploy/deploy-to-third-party-platforms/sign-xcode-applications), [Apple's upload-build guidance](https://developer.apple.com/help/app-store-connect/manage-builds/upload-builds/), [Apple's API-key authentication and altool key location](https://developer.apple.com/documentation/technotes/tn3147-migrating-to-the-latest-notarization-tool).

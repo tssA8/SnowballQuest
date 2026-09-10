@@ -243,7 +243,7 @@ def execute(mode, number):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mode", choices=("check", "archive", "testflight"), default="check")
-    parser.add_argument("--build-number", type=build_number, default="3")
+    parser.add_argument("--build-number", type=build_number, default="4")
     args = parser.parse_args()
     execute(args.mode, args.build_number)
 
