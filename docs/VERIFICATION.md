@@ -54,7 +54,8 @@ Screenshots and JSON results are saved in ignored `test-results/`.
 - [Signed release run 34430046017](https://github.com/tssA8/SnowballQuest/actions/runs/34430046017), from `cb49937`, passed all 14 release-helper tests, 26 game/storage tests, the web build, signed iPhone archive/export and TestFlight upload for **0.1.1 (3)**. The successful run uses a dedicated Developer API key in GitHub Secrets; the bootstrap Admin key stays local.
 - Apple processing returned `VALID`. After the owner explicitly approved the no-non-exempt-encryption declaration on 2026-09-10, the build became `READY_FOR_BETA_TESTING` internally and `READY_FOR_BETA_SUBMISSION` externally. `ITSAppUsesNonExemptEncryption=false` records the same declaration for future builds of the current app; reassess it if app encryption changes.
 - The signed IPA was downloaded to ignored `releases/ios/snowball-quest-0.1.1-build-3.ipa` (1,414,299 bytes). Its SHA-256 is `3f0618df1ad5f550dbfc9c8e646fe39ebc9330775c8c3a773c1b50d52db5b6d2`, matching the CI checksum. The downloaded artifact ZIP also matched GitHub's artifact digest. TestFlight expires this build on 2026-12-09 UTC.
-- Physical iPhone installation and play, tester invitations and external beta review have not yet been verified. See `IOS_RELEASE.md` for the release modes and required credentials. Signing files remain in ignored private local storage.
+- On 2026-09-10, the account owner explicitly approved and was invited to `Snowball Quest Internal`. App Store Connect confirms one internal tester with status `Invited` and one build, **0.1.1 (3)**, in the group.
+- Physical iPhone installation and play and external beta review have not yet been verified. See `IOS_RELEASE.md` for the release modes and required credentials. Signing files remain in ignored private local storage.
 
 ## Public release and Snowball photo update
 
