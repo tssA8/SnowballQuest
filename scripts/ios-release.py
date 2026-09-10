@@ -20,6 +20,13 @@ import uuid
 ROOT = Path(__file__).resolve().parents[1]
 PROJECT = ROOT / "ios/App/App.xcodeproj/project.pbxproj"
 BUNDLE = "io.github.tssa8.snowballquest"
+SECURITY_SUBCOMMANDS = frozenset({"cms", "create-keychain", "set-keychain-settings", "unlock-keychain", "import",
+                                "set-key-partition-list", "list-keychains", "find-identity", "delete-keychain"})
+SECURITY_FAILURE_REASONS = (
+    (b"MAC verification failed", "PKCS12 MAC verification failed; check the password and macOS-compatible PKCS12 encoding."),
+    (b"User interaction is not allowed.", "Security requires user interaction; check the temporary keychain unlock and access settings."),
+    (b"The specified keychain could not be found.", "The temporary signing keychain could not be found."),
+)
 
 
 def require(condition, message):
@@ -81,7 +88,18 @@ def patch_project(source, number, team=None, profile_uuid=None):
 def run(args, private=False, check=True):
     result = subprocess.run([str(a) for a in args], cwd=ROOT, capture_output=private)
     if check and result.returncode:
-        raise RuntimeError(f"{Path(args[0]).name} operation failed (exit {result.returncode}); private command arguments are omitted.")
+        operation = Path(args[0]).name
+        reason = ""
+        if private and operation == "security":
+            if len(args) > 1 and args[1] in SECURITY_SUBCOMMANDS:
+                operation += f" {args[1]}"
+            # Match known phrases internally; never include captured output or other arguments.
+            output = (result.stdout or b"") + (result.stderr or b"")
+            for marker, explanation in SECURITY_FAILURE_REASONS:
+                if marker in output:
+                    reason = f" {explanation}"
+                    break
+        raise RuntimeError(f"{operation} operation failed (exit {result.returncode}); private command arguments and output are omitted.{reason}")
     return result
 
 

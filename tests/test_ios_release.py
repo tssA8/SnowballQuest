@@ -108,6 +108,49 @@ class ReleaseTests(unittest.TestCase):
                 release.private_file(key, b"replacement")
             self.assertEqual(key.read_bytes(), b"original key")
 
+    def test_private_security_failures_identify_only_allowlisted_subcommand(self):
+        for command in release.SECURITY_SUBCOMMANDS:
+            args = ["security", command, "/private/hidden-signing.p12", "-P", "hidden-password"]
+            result = subprocess.CompletedProcess(args, 1, b"hidden stdout", b"hidden stderr")
+            with self.subTest(command=command), patch.object(release.subprocess, "run", return_value=result) as invoke:
+                with self.assertRaises(RuntimeError) as error:
+                    release.run(args, private=True)
+                message = str(error.exception)
+                self.assertIn(f"security {command} operation failed (exit 1)", message)
+                self.assertNotIn("hidden", message)
+                self.assertNotIn("/private/", message)
+                self.assertTrue(invoke.call_args.kwargs["capture_output"])
+
+    def test_private_security_mac_failure_uses_fixed_safe_explanation(self):
+        args = ["security", "import", "/private/secret.p12", "-P", "super-secret-password"]
+        result = subprocess.CompletedProcess(args, 1, b"secret private key bytes",
+            b"security: SecKeychainItemImport: MAC verification failed during PKCS12 import (wrong password?)\n"
+            b"arbitrary appended output: super-secret-password /private/secret.p12")
+        with patch.object(release.subprocess, "run", return_value=result):
+            with self.assertRaises(RuntimeError) as error:
+                release.run(args, private=True)
+        message = str(error.exception)
+        self.assertIn("security import operation failed", message)
+        self.assertIn("PKCS12 MAC verification failed", message)
+        for private in ("super-secret-password", "/private/", "secret private key", "arbitrary", "SecKeychainItemImport"):
+            self.assertNotIn(private, message)
+
+    def test_private_unknown_security_subcommand_and_output_stay_suppressed(self):
+        args = ["security", "private-command-name", "private-password"]
+        result = subprocess.CompletedProcess(args, 1, b"private stdout", b"unexpected private stderr")
+        with patch.object(release.subprocess, "run", return_value=result):
+            with self.assertRaises(RuntimeError) as error:
+                release.run(args, private=True)
+        self.assertEqual(str(error.exception),
+            "security operation failed (exit 1); private command arguments and output are omitted.")
+
+    def test_private_success_and_unchecked_failure_still_return_result(self):
+        args = ["security", "find-identity", "private-keychain"]
+        for code, check in ((0, True), (1, False)):
+            result = subprocess.CompletedProcess(args, code, b"private result", b"")
+            with self.subTest(code=code), patch.object(release.subprocess, "run", return_value=result):
+                self.assertIs(release.run(args, private=True, check=check), result)
+
 
 if __name__ == "__main__":
     unittest.main()
