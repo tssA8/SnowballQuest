@@ -18,7 +18,11 @@ The Apple account must have an active Developer Program membership and permissio
 
 Register the explicit bundle ID `io.github.tssa8.snowballquest`, then create the **Snowball Quest** app record with that bundle ID in App Store Connect. Reuse a valid **Apple Distribution** certificate and its private key, exported together as a password-protected `.p12`. Create an **App Store Connect** provisioning profile for the bundle ID using that same certificate. Development, ad hoc and enterprise profiles are rejected.
 
-For uploads, an authorized account administrator can create an App Store Connect **team API key** with permission to upload builds for the app. Save the Key ID, Issuer ID and downloaded `.p8` privately. This workflow expects a team key, not an individual key. Apple account passwords and two-factor codes are not used by CI.
+For CI uploads, have an authorized account administrator create a dedicated App Store Connect **team API key with the Developer role**. Developer permissions are sufficient to upload binaries; this workflow does not manage external testers. [Apple's upload role requirements](https://developer.apple.com/help/app-store-connect/manage-builds/upload-builds/)
+
+Team API keys cover **all apps in the team**, regardless of their role; the key cannot be restricted to Snowball Quest alone. Save its Key ID, Issuer ID and downloaded `.p8` privately. This workflow expects a team key, not an individual key. [Apple's team API key guidance](https://developer.apple.com/documentation/appstoreconnectapi/creating-api-keys-for-app-store-connect-api)
+
+If a separate **Admin** API key is used for initial certificate, profile or app setup, keep that bootstrap key locally in private storage. Do not put the Admin key in GitHub Actions secrets; the three `APP_STORE_CONNECT_*` secrets below belong to the dedicated Developer upload key. Apple account passwords and two-factor codes are not used by CI.
 
 ## GitHub Actions secrets
 

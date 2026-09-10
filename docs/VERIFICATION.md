@@ -50,7 +50,8 @@ Screenshots and JSON results are saved in ignored `test-results/`.
 - Source revision `584b4a9` passes [the iPhone Release archive check](https://github.com/tssA8/SnowballQuest/actions/runs/34329653150) on macOS with Xcode 26.3. This builds for `iphoneos` and validates the archive's bundle/version, arm64 architecture, bundled game, privacy manifest and uploader CLI. The archive is unsigned and is not an installable IPA.
 - The same revision passes [Android and iOS simulator builds](https://github.com/tssA8/SnowballQuest/actions/runs/34329523658) and [GitHub Pages deployment](https://github.com/tssA8/SnowballQuest/actions/runs/34329523540).
 - All 26 game/storage tests and eight signing-helper tests pass. The 1024-pixel iOS icon is exported as RGB without an alpha channel; decoded pixels match the source icon, and Android exports retain their existing formats.
-- The Apple bundle ID and App Store Connect app record have been created. Signing credentials and upload API access are still pending; no signed IPA, TestFlight upload or physical iPhone installation has been verified. See `IOS_RELEASE.md` for the release modes and required credentials.
+- The Apple bundle ID and App Store Connect app record have been created, and team API access is approved. On 2026-09-10, an Apple Distribution certificate and App Store provisioning profile were created for this bundle ID. Their Team ID, distribution entitlements, matching private key and encrypted P12 were validated locally; the certificate and profile expire on 2027-09-10.
+- The dedicated Developer upload key and GitHub Secrets setup are still pending. No signed IPA, TestFlight upload or physical iPhone installation has been verified. See `IOS_RELEASE.md` for the release modes and required credentials. Signing credentials remain in ignored private local storage.
 
 ## Public release and Snowball photo update
 
