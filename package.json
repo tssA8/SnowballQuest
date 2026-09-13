@@ -1,6 +1,6 @@
 {
   "name": "snowball-quest",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -16,10 +16,10 @@
     "test:android": "node scripts/android-check.mjs",
     "test:route": "node scripts/keyboard-route-check.mjs",
     "assets:mobile": "node scripts/mobile-assets.mjs",
-    "mobile:sync": "npm run build && cap sync",
+    "mobile:sync": "npm run build && cap sync android",
     "android:build": "npm run mobile:sync && node scripts/build-android.mjs",
     "android:open": "cap open android",
-    "ios:open": "cap open ios"
+    "ios:open": "open ios/App/App.xcodeproj"
   },
   "dependencies": {
     "@capacitor/android": "8.5.1",

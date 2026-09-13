@@ -1,8 +1,8 @@
 # iPhone archives and TestFlight
 
-The **Prepare or upload iOS release** GitHub Actions workflow builds the bundled game on macOS with Xcode 26.3. It is manual, runs only from `main`, and never uploads because of a source push. The existing mobile workflow continues to produce an unsigned simulator app.
+The **Prepare or upload iOS release** GitHub Actions workflow builds the app on macOS with Xcode 26.3. It is manual, accepts `main` or `feature/native-swift-ios`, and never uploads because of a source push. On the native branch it builds Swift/SpriteKit directly, runs Swift and iPhone tests, and verifies that the archive contains no bundled web game or Capacitor framework. The existing mobile workflow also detects the native project and skips Capacitor sync for iOS.
 
-Open [the iOS release workflow](https://github.com/tssA8/SnowballQuest/actions/workflows/ios-release.yml), choose **Run workflow**, keep branch `main`, select a mode, and set an unused build number from 1 through 9999. Build `3` has been accepted by Apple; the default for the next upload is `4`. Increment after each accepted upload. The marketing version comes from `package.json` and the iOS project and must match.
+Open [the iOS release workflow](https://github.com/tssA8/SnowballQuest/actions/workflows/ios-release.yml), choose **Run workflow**, select branch `feature/native-swift-ios` for the Swift app, choose a mode, and set an unused build number from 1 through 9999. Build `3` was the previous web-based app; the first native upload uses `4`, version `0.3.0`. Increment after each accepted upload. The marketing version comes from `package.json` and the iOS project and must match.
 
 | Mode | Result | Apple credentials |
 | --- | --- | --- |
@@ -10,7 +10,7 @@ Open [the iOS release workflow](https://github.com/tssA8/SnowballQuest/actions/w
 | `archive` | Apple Distribution signed App Store IPA and SHA-256 checksum | Signing certificate, profile and Team ID |
 | `testflight` | Same IPA plus upload to App Store Connect | Signing credentials plus App Store Connect team API key |
 
-`check` is a compilation check. Its unsigned archive is **not an installable IPA**, does not validate signing, and is discarded after the run. An App Store IPA is intended for Apple's distribution pipeline, not direct installation from a website. Signed IPA artifacts contain exactly the IPA and checksum, expire after seven days, and do not include private keys, standalone signing files or complete build directories. The IPA necessarily contains its public signing information and embedded provisioning profile.
+`check` creates a compilation archive after the tests. Its unsigned archive is **not an installable IPA**, does not validate signing, and is discarded after the run. An App Store IPA is intended for Apple's distribution pipeline, not direct installation from a website. Signed artifacts contain the IPA, checksum and, when availability is confirmed, a TestFlight status report. They expire after seven days and do not include private keys, standalone signing files or complete build directories. The IPA necessarily contains its public signing information and embedded provisioning profile.
 
 ## One-time account setup
 
@@ -48,8 +48,8 @@ Signing settings and the chosen build number are applied temporarily to the **Ap
 
 ## After upload
 
-A successful upload means Apple accepted the binary transfer. Wait for App Store Connect processing, resolve any reported validation or export-compliance requirements in the account, then select the build in TestFlight. This workflow does not invite testers or submit an external testing/App Store review. External TestFlight access may require Apple's beta review; internal testing requires eligible App Store Connect users.
+A successful binary upload means Apple accepted the transfer. On the native branch, `scripts/testflight-status.py` then waits up to 15 minutes for processing to become `VALID`, associates the build with the existing **Snowball Quest Internal** group, and confirms `IN_BETA_TESTING`. It writes `releases/ios/testflight-status.json` only after this verification. A timeout must be investigated before attempting another upload with the same build number. The helper does not create groups, invite testers, change notifications or submit external testing/App Store review. Internal testing still requires an eligible App Store Connect user to accept the existing TestFlight invitation.
 
-Local helper tests work without Apple access: `python -m unittest discover -s tests -p test_ios_release.py`. On macOS, after `npm ci`, `npm run build` and `npx cap sync ios`, the equivalent default build check is `python3 scripts/ios-release.py --mode check --build-number 4`.
+Local signing-helper tests work without Apple access: `python -m unittest discover -s tests -p test_ios_release.py`. The status helper additionally needs `cryptography` and is tested with `python -m unittest discover -s tests -p test_testflight_status.py`. On macOS the native archive check is `python3 scripts/ios-release.py --mode check --build-number 4`; no npm build or Capacitor sync is needed. Run the App scheme's tests first, or use the CI workflow which enforces that order.
 
 Sources: [GitHub's certificate installation guidance](https://docs.github.com/en/actions/how-tos/deploy/deploy-to-third-party-platforms/sign-xcode-applications), [Apple's upload-build guidance](https://developer.apple.com/help/app-store-connect/manage-builds/upload-builds/), [Apple's API-key authentication and altool key location](https://developer.apple.com/documentation/technotes/tn3147-migrating-to-the-latest-notarization-tool).

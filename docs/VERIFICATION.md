@@ -1,3 +1,13 @@
+# Swift iOS 驗證 — 2026-09-13 / 0.3.0
+
+分支：`feature/native-swift-ios`。原生 Swift 程式、Xcode 專案、七關資源和自動測試已建立；此段在首次上傳前記錄，目前 macOS 編譯、iPhone 模擬器與 TestFlight 驗證仍待執行，不能視為已發行。
+
+- 本機 88 項網頁回歸測試通過，網頁與 Android 的 Phaser 程式保留。
+- 87 個 PNG／JSON 資源已匯入原生 bundle，65 個 manifest 項目及 17 張水平圖集的尺寸／影格數驗證一致。
+- 原生測試覆蓋規則與存檔遷移、關卡載入、觸控區域、集氣釋放／取消、暫停與背景恢復。模擬器會保留七關截圖供檢視。
+- 角色移動與碰撞直接在 Swift 運算；場景使用 SpriteKit，介面使用 UIKit。Release 驗證會拒絕包含 Capacitor 或 `public/index.html` 的 native archive。
+- 舊版 TestFlight 0.1.1 (3) 與下方網頁測試結果不代表新版 Swift app 已通過。實體 iPhone 的持續幀率、溫度與手感仍需安裝後驗收。
+
 # 七關冒險驗證 — 2026-09-13 / 0.2.0
 
 - 88 項自動測試通過：七關地圖、三階段魔王、集氣取消、補血、元素能力、原生儲存與 v1 → v2 遷移。

@@ -17,3 +17,7 @@ releases/
 __pycache__/
 work/
 .npm-cache/
+.build/
+DerivedData/
+*.xcresult/
+xcuserdata/

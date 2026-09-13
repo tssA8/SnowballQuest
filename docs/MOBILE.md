@@ -1,6 +1,6 @@
 # Android and iOS apps
 
-Capacitor 8.5.1 packages the existing Home chapter with app ID `io.github.tssa8.snowballquest`, version `0.1.1` (build 2).
+This branch uses Swift/SpriteKit for iOS and Capacitor 8.5.1 for Android. Both keep app ID `io.github.tssa8.snowballquest`. The Swift app is version 0.3.0; the older public Android 0.1.1 preview remains available separately. See [Native iOS](NATIVE_IOS.md) for the current Swift implementation.
 
 ## Included
 
@@ -22,22 +22,20 @@ npm ci
 npm run android:build
 ```
 
-This builds the web game, synchronizes native assets and copies the development APK to `releases/snowball-quest-0.1.1-android-debug.apk`. Android 7+ and Android System WebView 89+ are required; keep WebView current. The Windows helper can use a workspace-only JDK in `.mobile-tools/jdk-21*`; this optional tool directory is not committed.
+This builds the web game, synchronizes Android assets and copies the development APK into `releases/` using the version from `package.json`. Android 7+ and Android System WebView 89+ are required; keep WebView current. The Windows helper can use a workspace-only JDK in `.mobile-tools/jdk-21*`; this optional tool directory is not committed.
 
 The APK uses a development signing key, not a Play Store release key. Fresh CI runners or different computers may use different development keys. Production updates need a stable private signing key. Do not uninstall an existing app merely to change signatures without preserving its progress first.
 
 ## iOS
 
-The project uses Swift Package Manager, targets iOS 15+, and includes the Preferences privacy manifest in the app's resources. On a Mac with Xcode 26+:
+The native project uses SpriteKit, UIKit and a local Swift package, targets iOS 15+, and includes a UserDefaults privacy manifest. On a Mac with Xcode 26.3:
 
 ```sh
-npm ci
-npm run build
-npx cap sync ios
-npm run ios:open
+swift test --package-path ios/NativeCore
+open ios/App/App.xcodeproj
 ```
 
-Open `ios/App/App.xcodeproj`, select the App target and choose your Apple development team and iPhone. Run sync on the Mac before building so dependency paths match that environment.
+Select the App scheme and an iPhone simulator to run the native tests. For a physical iPhone, choose your Apple development team. Do not run Capacitor sync on this Swift iOS project; all assets and the local package are already committed.
 
 The GitHub build produces an unsigned simulator `.app`, **not an iPhone-installable IPA**. TestFlight/App Store distribution needs the owner's Apple Developer account, signing configuration and submission. Physical iPhone touch, safe-area, audio interruption and performance tests remain necessary.
 
@@ -45,7 +43,7 @@ The separate manual **Prepare or upload iOS release** workflow supports a Releas
 
 ## Updates and GitHub
 
-`npm run mobile:sync` rebuilds and updates both native projects. `npm run assets:mobile` regenerates native icons from the approved player master and the splash backgrounds. The iOS app icon uses opaque RGB encoding; Android adaptive icons retain transparency. `npm run android:open` opens Android Studio.
+`npm run mobile:sync` rebuilds the web game and updates Android only. `python3 scripts/prepare-native-assets.py` imports updated PNG/JSON resources for Swift iOS. `npm run assets:mobile` regenerates native icons from the approved player master and the splash backgrounds. The iOS app icon uses opaque RGB encoding; Android adaptive icons retain transparency. `npm run android:open` opens Android Studio.
 
 The **Build mobile apps** workflow runs on pushes to `main` or manual dispatch. It uploads an Android development APK and an unsigned iOS simulator archive after successful builds. Download artifacts from that workflow run. GitHub Pages continues to deploy the browser game independently; website updates do not replace assets in an installed app.
 

@@ -143,7 +143,11 @@ def archive_command(path, signed):
     return command
 
 
-def validate_archive(path, number):
+def native_project():
+    return "SNOWBALL_NATIVE_ENGINE = YES;" in PROJECT.read_text(encoding="utf-8")
+
+
+def validate_archive(path, number, native=None):
     info_path = path / "Products/Applications/App.app/Info.plist"
     with info_path.open("rb") as handle:
         info = plistlib.load(handle)
@@ -154,7 +158,25 @@ def validate_archive(path, number):
     require(info.get("DTPlatformName") == "iphoneos", "Archive is not an iPhone device build.")
     require(info.get("CFBundleSupportedPlatforms") == ["iPhoneOS"], "Unexpected archived platform.")
     require("arm64" in info.get("UIRequiredDeviceCapabilities", []), "Archive must declare arm64 support.")
-    require((info_path.parent / "public/index.html").is_file(), "Archive is missing the bundled web game.")
+    native = native_project() if native is None else native
+    if native:
+        require(info.get("SnowballEngine") == "SpriteKit", "Native archive must identify the SpriteKit engine.")
+        require(not (info_path.parent / "public/index.html").exists(), "Native archive must not contain the old web game.")
+        executable_name = info.get("CFBundleExecutable")
+        require(isinstance(executable_name, str) and bool(re.fullmatch(r"[A-Za-z0-9_.-]+", executable_name))
+                and executable_name not in (".", ".."), "Archived executable name is invalid.")
+        executable = info_path.parent / executable_name
+        require(executable.is_file(), "Native archive has no app executable.")
+        linkage = run(["otool", "-L", executable], private=True).stdout
+        require(b"/SpriteKit.framework/" in linkage, "Native executable does not link to SpriteKit.")
+        require(b"Capacitor" not in linkage, "Native executable still links to Capacitor.")
+        assets = info_path.parent / "GameAssets"
+        require((assets / "adventure/manifest.json").is_file(), "Native archive is missing the game art manifest.")
+        for stage in ("home", "rooftop", "basement", "parking", "foundations", "floor13", "nightark"):
+            require((assets / f"maps/{stage}.json").is_file(), f"Native archive is missing the {stage} level.")
+    else:
+        require(info.get("SnowballEngine") != "SpriteKit", "Expected a web archive but found a native engine marker.")
+        require((info_path.parent / "public/index.html").is_file(), "Archive is missing the bundled web game.")
     require((info_path.parent / "PrivacyInfo.xcprivacy").is_file(), "Archive is missing the app privacy manifest.")
     return info
 

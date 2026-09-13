@@ -2,7 +2,9 @@
 import copy
 import datetime as dt
 import importlib.util
+import json
 from pathlib import Path
+import plistlib
 import subprocess
 import tempfile
 import unittest
@@ -100,6 +102,77 @@ class ReleaseTests(unittest.TestCase):
             self.assertIn("archive", command)
             self.assertEqual("CODE_SIGNING_ALLOWED=NO" in command, not signed)
             self.assertFalse(any("PROVISIONING_PROFILE" in value for value in command))
+
+    def make_archive(self, folder, native):
+        archive = Path(folder) / "SnowballQuest.xcarchive"
+        app = archive / "Products/Applications/App.app"
+        app.mkdir(parents=True)
+        info = {"CFBundleIdentifier": release.BUNDLE, "CFBundleVersion": "4",
+                "CFBundleShortVersionString": json.loads((ROOT / "package.json").read_text())["version"],
+                "DTPlatformName": "iphoneos", "CFBundleSupportedPlatforms": ["iPhoneOS"],
+                "UIRequiredDeviceCapabilities": ["arm64"], "CFBundleExecutable": "App"}
+        (app / "PrivacyInfo.xcprivacy").write_bytes(b"privacy")
+        if native:
+            info["SnowballEngine"] = "SpriteKit"
+            (app / "App").write_bytes(b"native executable")
+            for file in ["adventure/manifest.json", *(f"maps/{name}.json" for name in
+                         ("home", "rooftop", "basement", "parking", "foundations", "floor13", "nightark"))]:
+                target = app / "GameAssets" / file
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text("{}")
+        else:
+            (app / "public").mkdir()
+            (app / "public/index.html").write_text("bundled web game")
+        (app / "Info.plist").write_bytes(plistlib.dumps(info))
+        return archive, app
+
+    def test_native_archive_requires_real_spritekit_link_and_complete_campaign(self):
+        with tempfile.TemporaryDirectory() as folder:
+            archive, app = self.make_archive(folder, native=True)
+            linkage = subprocess.CompletedProcess([], 0, b"/System/Library/Frameworks/SpriteKit.framework/SpriteKit", b"")
+            with patch.object(release, "run", return_value=linkage) as command:
+                self.assertEqual(release.validate_archive(archive, "4", native=True)["SnowballEngine"], "SpriteKit")
+                self.assertEqual(command.call_args.args[0], ["otool", "-L", app / "App"])
+                self.assertTrue(command.call_args.kwargs["private"])
+                (app / "GameAssets/maps/nightark.json").unlink()
+                with self.assertRaisesRegex(ValueError, "nightark level"):
+                    release.validate_archive(archive, "4", native=True)
+
+    def test_native_archive_rejects_missing_spritekit_or_capacitor_link(self):
+        with tempfile.TemporaryDirectory() as folder:
+            archive, _ = self.make_archive(folder, native=True)
+            for linkage in (b"/UIKit.framework/UIKit", b"/SpriteKit.framework/SpriteKit\n/Capacitor.framework/Capacitor"):
+                with self.subTest(linkage=linkage), patch.object(release, "run",
+                        return_value=subprocess.CompletedProcess([], 0, linkage, b"")), self.assertRaises(ValueError):
+                    release.validate_archive(archive, "4", native=True)
+
+    def test_native_archive_rejects_bundled_web_game_and_wrong_engine(self):
+        with tempfile.TemporaryDirectory() as folder:
+            archive, app = self.make_archive(folder, native=True)
+            (app / "public").mkdir()
+            (app / "public/index.html").write_text("old web game")
+            with self.assertRaisesRegex(ValueError, "old web game"):
+                release.validate_archive(archive, "4", native=True)
+            with self.assertRaisesRegex(ValueError, "native engine marker"):
+                release.validate_archive(archive, "4", native=False)
+
+    def test_legacy_web_archive_validation_remains_available(self):
+        with tempfile.TemporaryDirectory() as folder:
+            archive, _ = self.make_archive(folder, native=False)
+            with patch.object(release, "run", side_effect=AssertionError("Web archive must not inspect native linkage")):
+                self.assertEqual(release.validate_archive(archive, "4", native=False)["CFBundleIdentifier"], release.BUNDLE)
+            with self.assertRaisesRegex(ValueError, "SpriteKit engine"):
+                release.validate_archive(archive, "4", native=True)
+
+    def test_native_archive_rejects_unsafe_executable_name_before_inspection(self):
+        with tempfile.TemporaryDirectory() as folder:
+            archive, app = self.make_archive(folder, native=True)
+            info = plistlib.loads((app / "Info.plist").read_bytes())
+            for name in ("../outside", ".", "..", "", None):
+                info["CFBundleExecutable"] = name if name is not None else []
+                (app / "Info.plist").write_bytes(plistlib.dumps(info))
+                with self.subTest(name=name), self.assertRaisesRegex(ValueError, "executable name"):
+                    release.validate_archive(archive, "4", native=True)
 
     def test_failed_archive_restores_original_project_bytes(self):
         original = release.PROJECT.read_text(encoding="utf-8").replace("\n", "\r\n").encode()

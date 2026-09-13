@@ -1,5 +1,7 @@
 # Snowball Quest
 
+此分支 `feature/native-swift-ios` 的 iPhone 版本已改用 **Swift、SpriteKit 與 UIKit**。原生遊戲、測試及建置方式見 [Swift iOS 說明](docs/NATIVE_IOS.md)。網頁與 Android 保留 Phaser；本分支不會自動更新 GitHub Pages。TestFlight 的實際驗證狀態見 [VERIFICATION.md](docs/VERIFICATION.md)。
+
 《雪球的祕密出勤》是一款 Phaser 橫向動作冒險遊戲。奶油灰、藍眼睛、表情有點厭世的雪球，從沙發底下的警報一路前往永夜方舟，與七位魔王和解，再邀請大家一起回家。
 
 目前提供**七關可遊玩的完整出勤流程、五種元素、補血罐頭、集氣攻擊、循序解鎖與自由巡邏**。角色戰鬥仍使用整理過的關鍵姿勢；後六關場景以 Phaser 圖形組成，尚未替換成完整的正式背景美術。完整設計目標與目前實作的差異見 [七關實作說明](docs/CAMPAIGN.md)；[PHASE1.md](docs/PHASE1.md) 保留第一關原型的歷史紀錄。
@@ -8,7 +10,7 @@
 
 [GitHub Pages 遊戲網址](https://tssa8.github.io/SnowballQuest/) — 發布版本以最近一次成功的 Pages 工作流程為準。
 
-[舊版 Android 0.1.1 預覽 APK](https://github.com/tssA8/SnowballQuest/releases/tag/v0.1.1-mobile-preview) 是先前的行動版發行包，**不包含這次七關更新**。目前原始碼保留 Capacitor Android／iOS 專案、離線素材、原生存檔與生命週期處理；重新打包方式見 [MOBILE.md](docs/MOBILE.md)。iPhone 安裝需 Apple 簽章，[iOS 發布流程](docs/IOS_RELEASE.md) 支援設定簽章後建立 IPA／TestFlight。
+[舊版 Android 0.1.1 預覽 APK](https://github.com/tssA8/SnowballQuest/releases/tag/v0.1.1-mobile-preview) 是先前的行動版發行包，**不包含這次七關更新**。Android 使用 Capacitor，iOS 在此分支改用原生 Swift；重新打包方式見 [MOBILE.md](docs/MOBILE.md)。iPhone 安裝需 Apple 簽章，[iOS 發布流程](docs/IOS_RELEASE.md) 支援建立 IPA、上傳 TestFlight 及確認 Apple 處理狀態。
 
 ## 本機啟動
 
