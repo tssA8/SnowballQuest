@@ -643,7 +643,9 @@ final class GameScene: SKScene {
         for checkpoint in world.checkpoints where checkpoint.x > CGFloat(runSave.checkpointX) + 30 {
             if abs(player.position.x - checkpoint.x) < 42 && abs(player.position.y - checkpoint.y) < 90 {
                 runSave.checkpointX = Double(checkpoint.x); runSave.checkpointY = 768 - Double(checkpoint.y)
-                _ = heal(); persist(); toast("腳印已記住進度 · 生命與能量回復")
+                hearts = store.state.maxHearts; energy = store.state.maxEnergy
+                sparkle(player.position, color: UIColor(hex: 0x95e8b7)); feedback(.heal)
+                persist(); publishHUD(); toast("腳印已記住進度 · 生命與能量全滿")
             }
         }
     }

@@ -32,6 +32,7 @@ final class GameViewController: UIViewController, GameSceneDelegate {
     private var latestFruit: Fruit?
     private var previousEnergy: Double?
     private var lastEnergyCost = 0
+    private var clearedDefeatedInput = false
     private var hasShownFruit = false
     private var hasAppeared = false
     private var leaving = false
@@ -95,6 +96,7 @@ final class GameViewController: UIViewController, GameSceneDelegate {
 
     private func loadGame() {
         pendingContinuation = nil
+        clearedDefeatedInput = false
         previousEnergy = nil
         lastEnergyCost = 0
         game = GameScene(stage: stage, store: store)
@@ -271,6 +273,12 @@ final class GameViewController: UIViewController, GameSceneDelegate {
                 self.audioInterrupted = false
             }
         })
+        notifications.append(center.addObserver(forName: AVAudioSession.mediaServicesWereResetNotification, object: nil, queue: .main) { [weak self] _ in
+            guard let self else { return }
+            self.audioInterrupted = false
+            self.pauseForInterruption()
+            if UIApplication.shared.applicationState == .active { self.showPause() }
+        })
     }
 
     private func pauseForInterruption() {
@@ -328,6 +336,13 @@ final class GameViewController: UIViewController, GameSceneDelegate {
     }
 
     func gameScene(_ scene: GameScene, didUpdate hud: GameHUDState) {
+        if hud.hearts <= 0 && !clearedDefeatedInput {
+            // cancelCharge publishes HUD synchronously; mark this transition before clearing.
+            clearedDefeatedInput = true
+            clearInput()
+        } else if hud.hearts > 0 {
+            clearedDefeatedInput = false
+        }
         hearts.text = String(repeating: "♥", count: max(0, hud.hearts)) + String(repeating: "♡", count: max(0, hud.maxHearts - hud.hearts))
         hearts.accessibilityLabel = "生命"
         hearts.accessibilityValue = "\(hud.hearts) / \(hud.maxHearts) 顆心"

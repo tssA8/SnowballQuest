@@ -36,8 +36,10 @@ final class GameAudio {
                                                     object: session, queue: .main) { [weak self] _ in
             guard let self else { return }
             self.sessionActive = false
+            self.interrupted = false
             self.preparePlayers()
-            if self.musicRequested { self.startMusic(enabled: true) }
+            // Resume remains an explicit scene decision after the operating system resets audio.
+            self.musicRequested = false
         })
     }
 
