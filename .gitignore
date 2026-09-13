@@ -15,3 +15,5 @@ releases/
 *.mobileprovision
 *.certSigningRequest
 __pycache__/
+work/
+.npm-cache/

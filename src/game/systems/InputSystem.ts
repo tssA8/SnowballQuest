@@ -1,15 +1,17 @@
 import Phaser from 'phaser';
 
-export type InputAction = 'left' | 'right' | 'jump' | 'interact' | 'dash' | 'pause';
+export type InputAction = 'left' | 'right' | 'jump' | 'interact' | 'special' | 'switchFruit' | 'dash' | 'pause';
 export type TouchAction = Exclude<InputAction, 'pause'>;
 
 const KEY_ACTIONS: Readonly<Record<string, InputAction>> = {
   ArrowLeft: 'left', KeyA: 'left', ArrowRight: 'right', KeyD: 'right',
-  Space: 'jump', KeyE: 'interact', ShiftLeft: 'dash', ShiftRight: 'dash', Escape: 'pause',
+  Space: 'jump', KeyE: 'interact', KeyJ: 'interact', KeyK: 'special', KeyQ: 'switchFruit',
+  ShiftLeft: 'dash', ShiftRight: 'dash', Escape: 'pause',
 };
 
 /** One edge-triggered action queue shared by keyboard and independent touch pointers. */
 export class InputSystem {
+  revision = 0;
   private readonly keys = new Set<string>();
   private readonly touch = new Map<InputAction, Set<number>>();
   private readonly pressed = new Set<InputAction>();
@@ -51,6 +53,7 @@ export class InputSystem {
 
   get axis(): number { return Number(this.isDown('right')) - Number(this.isDown('left')); }
   get jumpHeld(): boolean { return this.isDown('jump'); }
+  get specialHeld(): boolean { return this.isDown('special'); }
   private consume(action: InputAction): boolean {
     const result = this.pressed.has(action);
     this.pressed.delete(action);
@@ -58,10 +61,13 @@ export class InputSystem {
   }
   consumeJump(): boolean { return this.consume('jump'); }
   consumeInteract(): boolean { return this.consume('interact'); }
+  consumeSpecial(): boolean { return this.consume('special'); }
+  consumeSwitchFruit(): boolean { return this.consume('switchFruit'); }
   consumeDash(): boolean { return this.consume('dash'); }
   consumePause(): boolean { return this.consume('pause'); }
 
   clear = (): void => {
+    this.revision++;
     this.keys.clear();
     this.touch.clear();
     this.pressed.clear();

@@ -22,17 +22,27 @@ export interface StageRecord {
   bestTime?: number;
 }
 export interface StageResult { fish: number; stars: number; secrets: number; time: number }
+export type FruitId = 'fire' | 'wind' | 'water' | 'lightning' | 'earth';
 export interface SaveData {
-  version: 1;
+  version: 2;
   currentStage: string;
   unlockedStages: string[];
   stages: Record<string, StageRecord>;
   settings: GameSettings;
   run: RunSave;
+  /** Phase-one rewards are separate from legacy exploration completion records. */
+  adventure: { fireUnlocked: boolean; wrenchJoined: boolean; attackBonus: number };
+  unlockedFruits: FruitId[];
+  unlockedSupport: string[];
+  bossBadges: string[];
+  maxHearts: number;
+  maxPurrEnergy: number;
+  legacyStages: Record<string, StageRecord>;
 }
 
 export const SAVE_KEY = 'snowball-quest-save-v1';
-const KNOWN_STAGES = ['home', 'rooftop', 'cafe', 'garden', 'ending'];
+const KNOWN_STAGES = ['home', 'rooftop', 'basement', 'parking', 'foundations', 'floor13', 'nightark'];
+const FRUITS: FruitId[] = ['fire', 'wind', 'water', 'lightning', 'earth'];
 const DEFAULT_CHECKPOINT: CheckpointSave = { x: 160, y: 640, id: 'start' };
 const MAX_TIME = 86400000;
 const unsafeKeys = new Set(['__proto__', 'constructor', 'prototype']);
@@ -54,8 +64,10 @@ function freshRun(checkpoint: CheckpointSave = DEFAULT_CHECKPOINT): RunSave {
 }
 export function createDefaultSave(): SaveData {
   return {
-    version: 1, currentStage: 'home', unlockedStages: ['home'], stages: {},
+    version: 2, currentStage: 'home', unlockedStages: ['home'], stages: {},
     settings: { music: 0.25, sfx: 0.65, reducedMotion: false }, run: freshRun(),
+    adventure: { fireUnlocked: false, wrenchJoined: false, attackBonus: 0 },
+    unlockedFruits: [], unlockedSupport: [], bossBadges: [], maxHearts: 5, maxPurrEnergy: 100, legacyStages: {},
   };
 }
 
@@ -63,7 +75,17 @@ export function createDefaultSave(): SaveData {
 export function validateSave(value: unknown): SaveData {
   const defaults = createDefaultSave();
   const source = record(value);
-  if (source.version !== 1) return defaults;
+  if (source.version !== 1 && source.version !== 2) return defaults;
+  const adventure = record(source.adventure);
+  const earned = adventure.wrenchJoined === true;
+  defaults.adventure = { fireUnlocked: earned, wrenchJoined: earned, attackBonus: earned ? 0.1 : 0 };
+  const badges = Array.isArray(source.bossBadges) ? source.bossBadges.filter((id): id is string => typeof id === 'string' && KNOWN_STAGES.includes(id)) : [];
+  if (earned && !badges.includes('home')) badges.push('home');
+  defaults.bossBadges = [...new Set(badges)];
+  defaults.unlockedSupport = [...defaults.bossBadges];
+  defaults.unlockedFruits = FRUITS.filter((_, index) => badges.includes(KNOWN_STAGES[index]));
+  defaults.maxHearts = badges.includes('basement') ? 6 : 5;
+  defaults.maxPurrEnergy = badges.includes('parking') ? 120 : 100;
   const settings = record(source.settings);
   defaults.settings = {
     music: bounded(settings.music, 0.25, 0, 1),
@@ -73,12 +95,11 @@ export function validateSave(value: unknown): SaveData {
   if (typeof source.currentStage === 'string' && KNOWN_STAGES.includes(source.currentStage)) {
     defaults.currentStage = source.currentStage;
   }
-  if (Array.isArray(source.unlockedStages)) {
-    defaults.unlockedStages = [...new Set(['home', ...source.unlockedStages.filter(
-      (stage): stage is string => typeof stage === 'string' && KNOWN_STAGES.includes(stage))])];
-  }
-  for (const [id, rawResult] of Object.entries(record(source.stages))) {
-    if (!KNOWN_STAGES.includes(id)) continue;
+  defaults.unlockedStages = KNOWN_STAGES.filter((_, index) => index === 0 || badges.includes(KNOWN_STAGES[index - 1]));
+  const invalidStage = typeof source.currentStage === 'string' && (!KNOWN_STAGES.includes(source.currentStage) || !defaults.unlockedStages.includes(source.currentStage));
+  if (invalidStage) defaults.currentStage = 'home';
+  for (const [id, rawResult] of Object.entries({ ...record(source.legacyStages), ...record(source.stages) })) {
+    if (!KNOWN_STAGES.includes(id) && !['cafe', 'garden', 'ending'].includes(id)) continue;
     const result = record(rawResult);
     const stage: StageRecord = {
       completed: result.completed === true,
@@ -89,9 +110,10 @@ export function validateSave(value: unknown): SaveData {
     if (typeof result.bestTime === 'number' && Number.isFinite(result.bestTime) && result.bestTime > 0) {
       stage.bestTime = bounded(result.bestTime, MAX_TIME, 1, MAX_TIME);
     }
-    defaults.stages[id] = stage;
+    if (KNOWN_STAGES.includes(id)) defaults.stages[id] = stage;
+    else defaults.legacyStages[id] = stage;
   }
-  const run = record(source.run);
+  const run = invalidStage ? {} : record(source.run);
   const checkpoint = record(run.checkpoint);
   const flags: Record<string, boolean> = {};
   for (const [key, flag] of Object.entries(record(run.flags)).slice(0, 300)) {
@@ -105,7 +127,7 @@ export function validateSave(value: unknown): SaveData {
     },
     collected: Array.isArray(run.collected) ? [...new Set(run.collected.filter(identifier))].slice(0, 2000) : [],
     flags,
-    hearts: Math.floor(bounded(run.hearts, 5, 0, 5)),
+    hearts: Math.floor(bounded(run.hearts, defaults.maxHearts, 0, defaults.maxHearts)),
     elapsed: bounded(run.elapsed, 0, 0, MAX_TIME),
   };
   return defaults;
@@ -160,8 +182,18 @@ export class SaveSystem {
   }
 
   resetRun(checkpoint: CheckpointSave = DEFAULT_CHECKPOINT): void {
-    this.data.currentStage = 'home';
     this.data.run = freshRun(checkpoint);
+    this.data.run.hearts = this.data.maxHearts;
+    this.save();
+  }
+  startStage(id: string): boolean {
+    if (!this.data.unlockedStages.includes(id)) return false;
+    this.data.currentStage = id; this.resetRun(); return true;
+  }
+  completeAdventure(stageId: string): void {
+    if (!KNOWN_STAGES.includes(stageId)) return;
+    if (!this.data.bossBadges.includes(stageId)) this.data.bossBadges.push(stageId);
+    if (stageId === 'home') this.data.adventure = { fireUnlocked: true, wrenchJoined: true, attackBonus: .1 };
     this.save();
   }
 
@@ -188,6 +220,10 @@ export class SaveSystem {
     this.save();
   }
 
+  unlockHomeAdventure(): void {
+    this.completeAdventure('home');
+  }
+
   completeStage(result: StageResult, stageId = 'home'): void {
     if (!KNOWN_STAGES.includes(stageId)) return;
     const old = this.data.stages[stageId];
@@ -200,7 +236,7 @@ export class SaveSystem {
       bestTime: Math.min(old?.bestTime ?? Infinity, time),
     };
     this.data.run.flags['stage-complete'] = true;
-    // Later stages remain explicitly locked until they are implemented.
+    // Unlocks are awarded by reconciliation, independently of optional scores.
     this.save();
   }
 }

@@ -1,12 +1,14 @@
 import Phaser from 'phaser';
 import manifest from '../../../public/assets/manifest.json';
 import { registerAnimations } from './Textures';
+import { preloadAdventureAssets, finishAdventureAssets } from './AdventureAssets';
 
 /** Production asset boundary: exported PNGs own the visuals used by the game.
  * Replace a file at its manifest path while preserving its dimensions/frames.
  * Original code drawings only run through scripts/export-assets.mjs.
  */
 export function preloadAssets(scene: Phaser.Scene): void {
+  preloadAdventureAssets(scene);
   for (const asset of manifest.textures) {
     const url = `assets/${asset.path}?v=${manifest.version}`;
     if (asset.key === 'snowball') {
@@ -29,4 +31,5 @@ export function finishAssets(scene: Phaser.Scene): void {
     texture.setFilter(Phaser.Textures.FilterMode.NEAREST);
   }
   registerAnimations(scene);
+  finishAdventureAssets(scene);
 }

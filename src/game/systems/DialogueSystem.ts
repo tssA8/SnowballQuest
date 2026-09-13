@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 
 export interface Dialogue { speaker: string; lines: string[]; }
 export const DIALOGUE: Record<string, Dialogue> = {
-  intro: { speaker: 'SNOWBALL', lines: ['The treat box is empty.\nThis is a very serious development.', 'A brighter tomorrow has gone missing.\nPerhaps start with a small kindness?'] },
+  intro: { speaker: '小鈴', lines: ['09:03，主人已出門。\n雪球，陽台偵測到異常訊號。喵艦 SNOW-01，出勤！', 'J / E 肉球攻擊，Shift 閃避，Space 跳躍。\n前方有火焰果實；找到扳手就能完成這次出勤。'] },
   mouse: { speaker: 'MOUSE COURIER', lines: ['I have a flag. That means I have a mission.', 'My plush friend is by the vacuum.\nCould you bring him back? He is terrible at walking.'] },
   delivered: { speaker: 'MOUSE COURIER', lines: ['My friend! You brought him home!', 'The toy box likes helpful cats.\nTry the scratching board, then give it a nudge.'] },
   scratch: { speaker: 'SNOWBALL', lines: ['An excellent board. Very scratchable.\nSomewhere, a tiny lock clicks.'] },

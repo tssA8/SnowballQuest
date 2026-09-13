@@ -1,4 +1,15 @@
-# Home verification — 2026-09-09
+# 七關冒險驗證 — 2026-09-13 / 0.2.0
+
+- 88 項自動測試通過：七關地圖、三階段魔王、集氣取消、補血、元素能力、原生儲存與 v1 → v2 遷移。
+- TypeScript 檢查通過。獨立本機預覽使用原生 esbuild；此 Windows 執行環境的 Node 子程序會被 `EPERM` 阻擋，標準 Vite 建置交由既有 GitHub Actions 執行。
+- `campaign-browser-fixture.js` 在獨立測試來源完成七關：短按／長按 K、穿甲命中每位魔王、暫停取消、水盾、風二段跳、大地護甲、罐頭補血、連續換關、各關和解與完整永久獎勵。未出現瀏覽器執行錯誤。
+- 瀏覽器測試發現並修正第二關離場時重複清理 Phaser 碰撞群組的問題；另有回歸測試覆蓋場景提前銷毀的情況。
+- 已檢視天台魔王戰、最終結局與 844 × 390 模擬觸控版面。實體手機驗收與自然遊玩難度測試仍需持續。
+- 正式建置及網站發布可查閱 [Pages workflow](https://github.com/tssA8/SnowballQuest/actions/workflows/pages.yml)。
+
+這些是功能驗證；fixture 會定位角色並直接調整部分魔王血量以隔離換關流程，不代表無輔助全程遊玩。下方保留舊版本驗證歷史，不能作為 0.2.0 實機安裝或 TestFlight 發布的證據。
+
+# Home verification — 2026-09-09（歷史紀錄）
 
 The first Home vertical slice is playable. Later chapters and final production artwork remain separate work.
 

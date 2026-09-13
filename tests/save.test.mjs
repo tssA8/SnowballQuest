@@ -90,3 +90,24 @@ test('unavailable or full localStorage never prevents in-memory gameplay progres
   assert.equal(full.data.run.flags['key-found'], true);
   assert.equal(full.save(), false);
 });
+
+test('legacy Home clears do not unlock combat rewards; trial persists only within a run', () => {
+  const storage = memoryStorage();
+  const saves = new SaveSystem(storage);
+  saves.completeStage({ fish: 30, stars: 3, secrets: 3, time: 100000 });
+  saves.setFlag('fire-trial');
+  assert.equal(new SaveSystem(storage).data.run.flags['fire-trial'], true);
+  assert.equal(new SaveSystem(storage).data.adventure.fireUnlocked, false);
+  saves.resetRun();
+  assert.equal(saves.data.run.flags['fire-trial'], undefined);
+  assert.equal(saves.data.adventure.fireUnlocked, false);
+});
+
+test('Wrench rewards survive refresh and replay without multiplying the attack bonus', () => {
+  const storage = memoryStorage();
+  const saves = new SaveSystem(storage);
+  saves.unlockHomeAdventure(); saves.unlockHomeAdventure(); saves.resetRun();
+  assert.deepEqual(new SaveSystem(storage).data.adventure,
+    { fireUnlocked: true, wrenchJoined: true, attackBonus: .1 });
+  assert.equal(saves.data.run.flags['boss-defeated'], undefined);
+});

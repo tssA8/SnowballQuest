@@ -1,8 +1,10 @@
 import Phaser from 'phaser';
 import { InputSystem } from '../systems/InputSystem';
+import type { FruitId } from '../data/stages';
 
 export type PlayerState = 'idle' | 'walk' | 'run' | 'jump' | 'fall' | 'land' | 'dash' |
-  'sit' | 'sleep' | 'interact' | 'celebrate' | 'victory' | 'stumble';
+  'sit' | 'sleep' | 'interact' | 'celebrate' | 'victory' | 'stumble' |
+  'attack-1' | 'attack-2' | 'attack-3' | 'air-attack' | 'hurt' | 'fruit-eat';
 
 export const PLAYER_TUNING = {
   walkSpeed: 210, runSpeed: 280, acceleration: 1700, deceleration: 2100,
@@ -14,12 +16,15 @@ export const PLAYER_TUNING = {
 export class Player extends Phaser.Physics.Arcade.Sprite {
   declare body: Phaser.Physics.Arcade.Body;
   facing: -1 | 1 = 1;
+  element: FruitId | null = null;
+  private airJumpUsed = false;
   movementState: PlayerState = 'idle';
   private frozen = false;
   private lastGrounded = -Infinity;
   private lastJumpPressed = -Infinity;
   private nextDash = 0;
   private dashUntil = 0;
+  private dodgeUntil = 0;
   private idleFor = 0;
   private runningFor = 0;
   private wasGrounded = false;
@@ -43,6 +48,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     return this.body.velocity.y >= 0 && (this.body.blocked.down || this.body.touching.down);
   }
   get isDashing(): boolean { return this.scene.time.now < this.dashUntil; }
+  get isDodgeProtected(): boolean { return this.scene.time.now < this.dodgeUntil; }
 
   freeze(frozen: boolean): void {
     this.frozen = frozen;
@@ -51,6 +57,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.body.setAllowGravity(!frozen);
     this.lastJumpPressed = -Infinity;
     this.dashUntil = 0;
+    this.dodgeUntil = 0;
     if (frozen) this.controls.clear();
   }
 
@@ -62,9 +69,11 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.frozen = false;
     this.dashUntil = 0;
     this.nextDash = 0;
+    this.dodgeUntil = 0;
     this.lastGrounded = -Infinity;
     this.lastJumpPressed = -Infinity;
     this.hasJumped = false;
+    this.airJumpUsed = false;
     this.wasGrounded = false;
     this.poseUntil = 0;
     this.forcedPose = undefined;
@@ -89,13 +98,15 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     if (onGround) {
       this.lastGrounded = time;
       this.hasJumped = false;
+      this.airJumpUsed = false;
       if (!this.wasGrounded) {
         this.scene.events.emit('player-landed', this.x, this.y);
         if (!this.forcedPose || time >= this.poseUntil) this.pose('land', 90);
       }
     }
     this.wasGrounded = onGround;
-    if (this.controls.consumeJump()) this.lastJumpPressed = time;
+    const pressedJump = this.controls.consumeJump();
+    if (pressedJump) this.lastJumpPressed = time;
     const axis = this.controls.axis;
     if (axis !== 0) {
       this.facing = axis < 0 ? -1 : 1;
@@ -107,7 +118,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       this.idleFor = onGround ? this.idleFor + delta : 0;
     }
     if (this.controls.consumeDash() && time >= this.nextDash) {
-      this.dashUntil = time + PLAYER_TUNING.dashDuration;
+      this.dashUntil = time + (this.element === 'lightning' ? 230 : PLAYER_TUNING.dashDuration);
+      this.dodgeUntil = time + 340;
       this.nextDash = time + PLAYER_TUNING.dashCooldown;
       this.scene.events.emit('player-dashed', this.x, this.y, this.facing);
     }
@@ -134,9 +146,15 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     }
     // Release cuts the rising phase; holding jump never queues a second jump.
     if (!this.controls.jumpHeld && this.body.velocity.y < -170) this.body.setVelocityY(-170);
+    if (this.element === 'wind' && !onGround && pressedJump && !this.airJumpUsed && this.lastJumpPressed !== -Infinity) {
+      this.body.setVelocityY(-390); this.airJumpUsed = true; this.lastJumpPressed = -Infinity;
+      this.scene.events.emit('player-jumped', this.x, this.y);
+    }
+    if (this.element === 'wind' && this.controls.jumpHeld && this.body.velocity.y > 110) this.body.setVelocityY(110);
 
     let state: PlayerState;
-    if (this.body.velocity.y < -12) state = 'jump';
+    if (this.forcedPose && time < this.poseUntil && /^(attack-|air-attack|hurt|fruit-eat)/.test(this.forcedPose)) state = this.forcedPose;
+    else if (this.body.velocity.y < -12) state = 'jump';
     else if (!onGround && this.body.velocity.y > 12) state = 'fall';
     else if (this.forcedPose && time < this.poseUntil && !axis) state = this.forcedPose;
     else if (axis) state = speed === PLAYER_TUNING.runSpeed ? 'run' : 'walk';

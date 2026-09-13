@@ -10,7 +10,7 @@ const gameObjects = ['objects', 'collectibles', 'npcs', 'triggers', 'checkpoints
 const properties = Object.fromEntries(raw.properties.map(property => [property.name, property.value]));
 
 test('Home is a complete bounded Tiled map with unique persistent and editor IDs', () => {
-  assert.equal(level.width, 4096);
+  assert.equal(level.width, 4864);
   assert.equal(level.height, 768);
   assert.equal(level.tileSize, 32);
   const required = ['Ground', 'Platforms', 'DecorBack', 'DecorFront', 'Collision', 'Objects', 'Spawn', 'Collectibles', 'NPC', 'Triggers', 'Checkpoints', 'Exit'];
@@ -91,18 +91,19 @@ test('All collision surfaces are reachable inside the held-jump envelope', () =>
   const key = level.collectibles.find(object => object.type === 'key');
   assert.ok(level.platforms.some(platform => reachable.has(platform.id) && key.x >= platform.x &&
     key.x <= platform.x + platform.width && platform.y - key.y >= 0 && platform.y - key.y <= maxRise),
-  'The mandatory key needs a reachable support surface within jump height');
+  'The optional key needs a reachable support surface within jump height');
 });
 
-test('Objective prerequisites reference implemented mission flags and prevent skipping the box', () => {
-  const knownFlags = new Set(['key-found', 'mouse-helped', 'box-open', 'scratched', 'balcony-open']);
+test('Optional rewards keep prerequisites while the main route depends only on boss defeat', () => {
+  const knownFlags = new Set(['key-found', 'mouse-helped', 'box-open', 'scratched', 'balcony-open', 'boss-defeated']);
   const requiredFlags = object => String(object.properties.requires ?? '').split(',').filter(Boolean);
   for (const object of [...level.objects, ...level.exits]) {
     for (const flag of requiredFlags(object)) assert.ok(knownFlags.has(flag), `${object.id} refers to unsupported flag ${flag}`);
   }
   assert.deepEqual(requiredFlags(level.objects.find(object => object.type === 'toy-box')).sort(), ['mouse-helped', 'scratched']);
-  assert.deepEqual(requiredFlags(level.objects.find(object => object.type === 'door')).sort(), ['box-open', 'key-found', 'mouse-helped']);
-  assert.deepEqual(requiredFlags(level.exits[0]), ['balcony-open']);
+  assert.deepEqual(requiredFlags(level.objects.find(object => object.type === 'door')), []);
+  assert.deepEqual(requiredFlags(level.exits[0]), ['boss-defeated']);
+  assert.ok(level.checkpoints.some(checkpoint => checkpoint.id === 'checkpoint-boss' && checkpoint.x < 3650));
 });
 
 test('Malformed required level data fails with a clear diagnostic', () => {

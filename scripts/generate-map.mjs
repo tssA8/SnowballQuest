@@ -4,7 +4,7 @@ import { dirname, resolve } from 'node:path';
 
 // Tiled-compatible source generator. Edit coordinates here, then node scripts/generate-map.mjs.
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const columns = 128;
+const columns = 152;
 const rows = 24;
 const tileSize = 32;
 let nextObjectId = 1;
@@ -27,7 +27,7 @@ const rect = (name, kind, x, y, width, height) => ({
 
 const solids = [
   rect('floor-west', 'ground', 0, 640, 2496, 128),
-  rect('floor-east', 'ground', 2592, 640, 1504, 128),
+  rect('floor-east', 'ground', 2592, 640, 2272, 128),
   rect('jump-lesson', 'platform', 448, 576, 192, 32),
   rect('window-shelf', 'platform', 672, 512, 160, 32),
   rect('secret-nook-shelf', 'platform', 704, 384, 352, 32),
@@ -78,7 +78,7 @@ const objects = [
   point('tunnel-entry', 'cat-tunnel', 664, 640, { targetX: 760, targetY: 384, targetId: 'tunnel-return', secretId: 'secret-nook', label: 'A suspiciously cozy tunnel' }),
   point('tunnel-return', 'cat-tunnel', 760, 384, { targetX: 704, targetY: 640, targetId: 'tunnel-entry', label: 'Back to the living room' }),
   point('toy-treat-box', 'toy-box', 2352, 640, { requires: 'mouse-helped,scratched', reward: 'star-box', label: 'The empty treat box' }),
-  point('balcony-door', 'door', 3500, 640, { width: 64, height: 192, requires: 'key-found,mouse-helped,box-open', label: 'Balcony door' }),
+  point('balcony-door', 'door', 3500, 640, { width: 64, height: 192, label: '開放的陽台通道' }),
 ];
 const decorBack = [
   point('home-window-one', 'window', 420, 410),
@@ -99,7 +99,7 @@ const decorBack = [
   point('home-lamp-two', 'lamp', 2470, 640),
   point('home-plant-two', 'plant', 3248, 576),
   point('balcony-plant-one', 'plant', 3616, 640),
-  point('balcony-plant-two', 'plant', 4016, 640),
+  point('balcony-plant-two', 'plant', 4800, 640),
 ];
 const decorFront = [
   point('home-rug-start', 'rug', 400, 640),
@@ -108,19 +108,21 @@ const decorFront = [
 ];
 const npcs = [
   point('mouse-courier', 'mouse', 1120, 640, { dialogueId: 'mouse_intro', questId: 'mouse-delivery' }),
-  point('vacuum-one', 'robot-vacuum', 1360, 640, { patrolMin: 1296, patrolMax: 1472, speed: 42 }),
   point('professional-napper', 'sleepy-cat', 1000, 384, { dialogueId: 'sleepy_cat' }),
 ];
 const triggers = [
-  point('tutorial-move', 'sign', 176, 510, { text: 'A / D or ← → to move', label: 'WAKING UP IS THE HARD PART' }),
-  point('tutorial-jump', 'sign', 456, 464, { text: 'Space to jump • Hold for height', label: 'FOLLOW THAT FEATHER' }),
-  point('tutorial-interact', 'sign', 1104, 500, { text: 'E to say hello', label: 'A VERY SMALL MISSION' }),
-  point('tower-hint', 'sign', 1696, 330, { text: 'A key? On my cat tower?', label: 'THE HIGHER STANDARD' }),
-  point('balcony-hint', 'sign', 3376, 472, { text: 'Help a friend. Find a key. Bring a star.', label: 'A BRIGHTER TOMORROW' }),
+  point('tutorial-move', 'sign', 176, 480, { text: 'A / D 移動　J 肉球攻擊', label: '09:03 · 主人剛剛出門' }),
+  point('tutorial-jump', 'sign', 520, 438, { text: 'Space 跳躍　Shift 閃避', label: 'SNOW-01 · 祕密出勤' }),
+  point('tutorial-interact', 'sign', 1104, 474, { text: '靠近後按 J / E 交談', label: '小小幫忙 · 自由選擇' }),
+  point('tower-hint', 'sign', 1696, 306, { text: '上面好像有一點閃光……', label: '探索岔路 · 不影響通關' }),
+  point('balcony-hint', 'sign', 3296, 432, { text: '直接往右，找到失控的戰甲 →', label: '訊號來源 · 陽台' }),
   point('secret-nook', 'secret', 880, 384, { width: 352, height: 112, secretId: 'secret-nook', label: 'THE PROFESSIONAL NAPPING CLUB' }),
 ];
-const checkpoints = [point('checkpoint-paw', 'checkpoint', 2176, 640, { label: 'A small pause. A fresh start.' })];
-const exits = [point('home-exit', 'stageExit', 3904, 640, { nextStage: 'rooftops', requires: 'balcony-open', width: 96, height: 128 })];
+const checkpoints = [
+  point('checkpoint-paw', 'checkpoint', 2176, 640, { label: '休息一下，再出發。' }),
+  point('checkpoint-boss', 'checkpoint', 3590, 640, { label: '魔王重試點' }),
+];
+const exits = [point('home-exit', 'stageExit', 4768, 640, { nextStage: 'rooftop', requires: 'boss-defeated', width: 96, height: 128 })];
 const layers = [
   tileLayer('Ground', 'ground', 1), tileLayer('Platforms', 'platform', 2),
   objectLayer('DecorBack', decorBack), objectLayer('DecorFront', decorFront),
@@ -134,7 +136,7 @@ const map = {
   tileheight: tileSize, tilewidth: tileSize, orientation: 'orthogonal',
   renderorder: 'right-down', tiledversion: '1.11.2', type: 'map', version: '1.10',
   nextlayerid: nextLayerId, nextobjectid: nextObjectId,
-  properties: properties({ stageId: 'home', title: 'HOME — THE EMPTY TREAT BOX', fishTotal: 30, starTotal: 3, featherTotal: 3, secretTotal: 3, objectAnchor: 'bottom-center' }),
+  properties: properties({ stageId: 'home', title: '第一關 · 沙發底下的警報', fishTotal: 30, starTotal: 3, featherTotal: 3, secretTotal: 3, objectAnchor: 'bottom-center' }),
   tilesets: [{ firstgid: 1, name: 'world', tilewidth: 32, tileheight: 32, tilecount: 2, columns: 2, image: '../tiles/world.png', imagewidth: 64, imageheight: 32, margin: 0, spacing: 0 }],
   layers,
 };

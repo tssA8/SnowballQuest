@@ -44,9 +44,11 @@ export class HomeWorld {
       if (p.oneWay) { body.checkCollision.down = false; body.checkCollision.left = false; body.checkCollision.right = false; }
     }
     const rail = scene.add.graphics().setDepth(4);
-    rail.fillStyle(0x63595c).fillRect(3520, 540, 576, 12);
-    rail.fillStyle(0xc7b297).fillRect(3520, 536, 576, 4);
-    for (let x = 3520; x < 4096; x += 52) rail.fillStyle(0x6d6261).fillRect(x, 550, 8, 90);
+    rail.fillStyle(0x63595c).fillRect(3520, 540, level.width - 3520, 12);
+    rail.fillStyle(0xc7b297).fillRect(3520, 536, level.width - 3520, 4);
+    for (let x = 3520; x < level.width; x += 52) rail.fillStyle(0x6d6261).fillRect(x, 550, 8, 90);
+    text(scene, 4176, 328, '訊號異常 · 維修區', 18, '#574552').setOrigin(.5).setDepth(4);
+    text(scene, 4176, 360, '留意地面提示，等待戰甲的破綻', 14, '#765e65').setOrigin(.5).setDepth(4);
     for (const sign of level.triggers.filter(o => o.type === 'sign')) {
       text(scene, sign.x, sign.y, String(sign.properties.label ?? ''), 10, '#a28266').setOrigin(.5).setDepth(8);
       text(scene, sign.x, sign.y + 23, String(sign.properties.text ?? ''), 13, '#6b5a4c').setOrigin(.5).setDepth(8);

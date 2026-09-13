@@ -1,0 +1,1193 @@
+{
+  "version": 2,
+  "status": "Seven-stage runtime art; combat uses 28 approved key poses with procedural gameplay effects",
+  "assets": [
+    {
+      "key": "enemy-vacuum",
+      "source": "runtime/enemies/enemy_01_vacuum_drone.png",
+      "width": 384,
+      "height": 64,
+      "frameSize": 64,
+      "frameCount": 6,
+      "sha256": "177ce2a291e55b15da03a1137965ee71ce5529694156b495e2884e68f197fee5",
+      "alphaBounds": [
+        8,
+        4,
+        380,
+        64
+      ],
+      "bytes": 17971
+    },
+    {
+      "key": "enemy-mouse",
+      "source": "runtime/enemies/enemy_02_clockwork_mouse.png",
+      "width": 384,
+      "height": 64,
+      "frameSize": 64,
+      "frameCount": 6,
+      "sha256": "4ed06b5af2549ce3f52d9b489a6c6cccd0026266249d9d456cc12f7fe78dde3a",
+      "alphaBounds": [
+        4,
+        4,
+        380,
+        60
+      ],
+      "bytes": 25631
+    },
+    {
+      "key": "enemy-pigeon",
+      "source": "runtime/enemies/enemy_03_pigeon_scout.png",
+      "width": 384,
+      "height": 64,
+      "frameSize": 64,
+      "frameCount": 6,
+      "sha256": "91258e8f0cc014e4ea3115a7c300a204e47cdcc4dfe905b6c98f37e9a56a1605",
+      "alphaBounds": [
+        4,
+        4,
+        378,
+        64
+      ],
+      "bytes": 25755
+    },
+    {
+      "key": "enemy-slime",
+      "source": "runtime/enemies/enemy_04_bubble_slime.png",
+      "width": 384,
+      "height": 64,
+      "frameSize": 64,
+      "frameCount": 6,
+      "sha256": "bd9b39cfaa897d7ab8b7e7b066483c574a11bf8fa34a3a1a75a01000203ab0ef",
+      "alphaBounds": [
+        4,
+        4,
+        381,
+        64
+      ],
+      "bytes": 24705
+    },
+    {
+      "key": "enemy-beetle",
+      "source": "runtime/enemies/enemy_05_battery_beetle.png",
+      "width": 384,
+      "height": 64,
+      "frameSize": 64,
+      "frameCount": 6,
+      "sha256": "409ff2b31e705a2738268eac63cbd0c409d1c547d6ff9b73e213521d9499b988",
+      "alphaBounds": [
+        6,
+        5,
+        380,
+        64
+      ],
+      "bytes": 23248
+    },
+    {
+      "key": "enemy-mole",
+      "source": "runtime/enemies/enemy_06_miner_mole.png",
+      "width": 384,
+      "height": 64,
+      "frameSize": 64,
+      "frameCount": 6,
+      "sha256": "2221bbd295eb539b874b504576302f2566f317e7bd13351c8b6a9f59d73e86a1",
+      "alphaBounds": [
+        11,
+        9,
+        377,
+        64
+      ],
+      "bytes": 26586
+    },
+    {
+      "key": "enemy-dragon",
+      "source": "runtime/enemies/enemy_07_baby_bubble_dragon.png",
+      "width": 384,
+      "height": 64,
+      "frameSize": 64,
+      "frameCount": 6,
+      "sha256": "62da2ea50370e9abffe6a10d8369c2203e78f2471b1b1b17b0937370c5bd52c5",
+      "alphaBounds": [
+        7,
+        8,
+        381,
+        63
+      ],
+      "bytes": 29603
+    },
+    {
+      "key": "enemy-shadow",
+      "source": "runtime/enemies/enemy_08_shadow_fuzz.png",
+      "width": 384,
+      "height": 64,
+      "frameSize": 64,
+      "frameCount": 6,
+      "sha256": "86026f58ba5ba62c126c47a5f2e70f377b5a43b8fb3a465e3759b99e5eb70a1c",
+      "alphaBounds": [
+        4,
+        4,
+        379,
+        64
+      ],
+      "bytes": 19547
+    },
+    {
+      "key": "boss-wrench",
+      "source": "runtime/bosses/boss_01_wrench_atlas.png",
+      "width": 1024,
+      "height": 128,
+      "frameSize": 128,
+      "frameCount": 8,
+      "sha256": "fe4241d288d5c89e0d5ae1f7c6b9b1aa29ef67b3364506266caf722c2cdf8181",
+      "alphaBounds": [
+        6,
+        11,
+        1018,
+        122
+      ],
+      "bytes": 154824
+    },
+    {
+      "key": "boss-galeplume",
+      "source": "runtime/bosses/boss_02_galeplume_atlas.png",
+      "width": 1024,
+      "height": 128,
+      "frameSize": 128,
+      "frameCount": 8,
+      "sha256": "9259e19014bcb60b47293c6061eab47cff53caef080f30033be4624ec824b83f",
+      "alphaBounds": [
+        6,
+        6,
+        1018,
+        122
+      ],
+      "bytes": 172520
+    },
+    {
+      "key": "boss-bobo",
+      "source": "runtime/bosses/boss_03_bobo_atlas.png",
+      "width": 1024,
+      "height": 128,
+      "frameSize": 128,
+      "frameCount": 8,
+      "sha256": "d04e6bb9c83bc533a41da3db3f07c6df4e706a8ea13fd830cb9905d972b5c04b",
+      "alphaBounds": [
+        7,
+        6,
+        1018,
+        122
+      ],
+      "bytes": 171532
+    },
+    {
+      "key": "boss-volt",
+      "source": "runtime/bosses/boss_04_volt_atlas.png",
+      "width": 1024,
+      "height": 128,
+      "frameSize": 128,
+      "frameCount": 8,
+      "sha256": "2786af7f46514a94e85047db0c1d2e7b51e4a79893cd4bdc8a6cfaa07b877e0a",
+      "alphaBounds": [
+        10,
+        10,
+        1018,
+        122
+      ],
+      "bytes": 148170
+    },
+    {
+      "key": "boss-tato",
+      "source": "runtime/bosses/boss_05_tato_atlas.png",
+      "width": 1024,
+      "height": 128,
+      "frameSize": 128,
+      "frameCount": 8,
+      "sha256": "f3f991faabd53bc771805450ea2fe1fbd3a9ae9a538e03501af5300699e59df0",
+      "alphaBounds": [
+        6,
+        20,
+        1012,
+        122
+      ],
+      "bytes": 174163
+    },
+    {
+      "key": "boss-bubble",
+      "source": "runtime/bosses/boss_06_bubble_dragon_family_atlas.png",
+      "width": 1536,
+      "height": 192,
+      "frameSize": 192,
+      "frameCount": 8,
+      "sha256": "0ef1a9906d0f7986fb970bfc9553c97f8cad36eacc5e7eadca83579977a1c69c",
+      "alphaBounds": [
+        10,
+        17,
+        1516,
+        182
+      ],
+      "bytes": 300795
+    },
+    {
+      "key": "boss-nightink",
+      "source": "runtime/bosses/boss_07_nightink_atlas.png",
+      "width": 1536,
+      "height": 192,
+      "frameSize": 192,
+      "frameCount": 8,
+      "sha256": "69451d0212be749f517d7774dfb89ba0ba515afa3a28ddf339bcdd9c47ec6315",
+      "alphaBounds": [
+        26,
+        11,
+        1526,
+        182
+      ],
+      "bytes": 318681
+    },
+    {
+      "key": "fire-fruit",
+      "source": "ui/fruit_pickups_icons.png",
+      "sourceBox": [
+        60,
+        25,
+        365,
+        360
+      ],
+      "width": 32,
+      "height": 32,
+      "sha256": "22bf734440b95cd3f7734a883e8758947b58ab0cc34fc95abb112744fa5eceef",
+      "alphaBounds": [
+        4,
+        2,
+        27,
+        30
+      ],
+      "bytes": 1613
+    },
+    {
+      "key": "fruit-wind",
+      "source": "ui/fruit_pickups_icons.png",
+      "sourceBox": [
+        470,
+        20,
+        760,
+        360
+      ],
+      "width": 32,
+      "height": 32,
+      "sha256": "0cd2b9dd52b0424f1df5274da5226f9cd5ffeaf797ed6276fbd3dff9c5ca260e",
+      "alphaBounds": [
+        5,
+        2,
+        26,
+        30
+      ],
+      "bytes": 1556
+    },
+    {
+      "key": "fruit-water",
+      "source": "ui/fruit_pickups_icons.png",
+      "sourceBox": [
+        845,
+        20,
+        1130,
+        360
+      ],
+      "width": 32,
+      "height": 32,
+      "sha256": "fc6697df6fd9b2646231b41562f9db12ce2f938e376a0005e36638a44842dd8c",
+      "alphaBounds": [
+        5,
+        2,
+        26,
+        30
+      ],
+      "bytes": 1448
+    },
+    {
+      "key": "fruit-lightning",
+      "source": "ui/fruit_pickups_icons.png",
+      "sourceBox": [
+        1210,
+        20,
+        1510,
+        360
+      ],
+      "width": 32,
+      "height": 32,
+      "sha256": "0d94865eb52fd18809a2bce7622f967030eff0e9eefab0a8f237870d484c2464",
+      "alphaBounds": [
+        5,
+        2,
+        26,
+        30
+      ],
+      "bytes": 1387
+    },
+    {
+      "key": "fruit-earth",
+      "source": "ui/fruit_pickups_icons.png",
+      "sourceBox": [
+        1610,
+        20,
+        1880,
+        360
+      ],
+      "width": 32,
+      "height": 32,
+      "sha256": "7025d78c6a23800b18f1997bad900cd240a82b2f1406664f715e453d9e07fa9a",
+      "alphaBounds": [
+        5,
+        2,
+        27,
+        30
+      ],
+      "bytes": 1663
+    },
+    {
+      "key": "portrait-snowball",
+      "source": "ui/dialogue_portraits.png",
+      "sourceBox": [
+        25,
+        5,
+        415,
+        406
+      ],
+      "width": 96,
+      "height": 96,
+      "sha256": "41372fbba8f5eb60727de2538b97ce95167ddb7c6b16b67bde7a07eec0710f1d",
+      "alphaBounds": [
+        7,
+        2,
+        89,
+        94
+      ],
+      "bytes": 16164
+    },
+    {
+      "key": "portrait-ai",
+      "source": "ui/dialogue_portraits.png",
+      "sourceBox": [
+        439,
+        12,
+        840,
+        406
+      ],
+      "width": 96,
+      "height": 96,
+      "sha256": "72e3545b9451613cb338d445df27481edca5393d1a4785d251e5dd85e02df238",
+      "alphaBounds": [
+        2,
+        6,
+        94,
+        90
+      ],
+      "bytes": 15347
+    },
+    {
+      "key": "portrait-wrench",
+      "source": "ui/dialogue_portraits.png",
+      "sourceBox": [
+        843,
+        8,
+        1289,
+        407
+      ],
+      "width": 96,
+      "height": 96,
+      "sha256": "a1b213f5dfcecc80d8d270716810877f24f8131c06f193ddf72ac6b1b3722d7a",
+      "alphaBounds": [
+        2,
+        6,
+        94,
+        89
+      ],
+      "bytes": 16393
+    },
+    {
+      "key": "badge-wrench",
+      "source": "ui/boss_badges_and_collectibles.png",
+      "sourceBox": [
+        4,
+        22,
+        368,
+        401
+      ],
+      "width": 64,
+      "height": 64,
+      "sha256": "c8d72a01e1fce29ff10efc0fa511ace7a0ed10b1899668100dab8f1d00780a6c",
+      "alphaBounds": [
+        2,
+        2,
+        60,
+        62
+      ],
+      "bytes": 8496
+    },
+    {
+      "key": "ship-icon",
+      "source": "ui/ship_ai_and_map_icons.png",
+      "sourceBox": [
+        6,
+        75,
+        325,
+        324
+      ],
+      "width": 64,
+      "height": 64,
+      "sha256": "17441c3ab7101a03f081063daa18c923ec493e65e1467ff3cc262b7c9e5a1f7d",
+      "alphaBounds": [
+        2,
+        11,
+        62,
+        53
+      ],
+      "bytes": 5458
+    },
+    {
+      "key": "snowball-combat",
+      "source": "characters/snowball/snowball_combat_sheet.png",
+      "width": 1792,
+      "height": 64,
+      "frameSize": 64,
+      "frameCount": 28,
+      "scale": 0.32,
+      "frames": [
+        {
+          "index": 0,
+          "pose": "ready",
+          "sourceBox": [
+            5,
+            136,
+            158,
+            282
+          ],
+          "sourceAlphaBounds": [
+            17,
+            11,
+            145,
+            140
+          ],
+          "destination": [
+            11,
+            23,
+            41,
+            41
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 1,
+          "pose": "paw-reach",
+          "sourceBox": [
+            158,
+            139,
+            306,
+            283
+          ],
+          "sourceAlphaBounds": [
+            2,
+            14,
+            143,
+            137
+          ],
+          "destination": [
+            9,
+            25,
+            45,
+            39
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 2,
+          "pose": "paw-swipe",
+          "sourceBox": [
+            306,
+            137,
+            466,
+            284
+          ],
+          "sourceAlphaBounds": [
+            10,
+            9,
+            149,
+            139
+          ],
+          "destination": [
+            10,
+            22,
+            44,
+            42
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 3,
+          "pose": "second-swipe",
+          "sourceBox": [
+            602,
+            139,
+            743,
+            284
+          ],
+          "sourceAlphaBounds": [
+            11,
+            10,
+            131,
+            138
+          ],
+          "destination": [
+            13,
+            23,
+            38,
+            41
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 4,
+          "pose": "heavy-windup",
+          "sourceBox": [
+            1014,
+            135,
+            1151,
+            286
+          ],
+          "sourceAlphaBounds": [
+            5,
+            12,
+            121,
+            145
+          ],
+          "destination": [
+            13,
+            21,
+            37,
+            43
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 5,
+          "pose": "heavy-sweep",
+          "sourceBox": [
+            1143,
+            134,
+            1314,
+            286
+          ],
+          "sourceAlphaBounds": [
+            2,
+            7,
+            169,
+            146
+          ],
+          "destination": [
+            5,
+            20,
+            53,
+            44
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 6,
+          "pose": "low-sweep",
+          "sourceBox": [
+            1312,
+            137,
+            1467,
+            286
+          ],
+          "sourceAlphaBounds": [
+            1,
+            20,
+            153,
+            139
+          ],
+          "destination": [
+            7,
+            26,
+            49,
+            38
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 7,
+          "pose": "rising-swipe",
+          "sourceBox": [
+            1456,
+            131,
+            1628,
+            288
+          ],
+          "sourceAlphaBounds": [
+            3,
+            14,
+            163,
+            148
+          ],
+          "destination": [
+            6,
+            21,
+            51,
+            43
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 8,
+          "pose": "air-rise",
+          "sourceBox": [
+            162,
+            347,
+            300,
+            552
+          ],
+          "sourceAlphaBounds": [
+            9,
+            17,
+            129,
+            161
+          ],
+          "destination": [
+            13,
+            18,
+            38,
+            46
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 9,
+          "pose": "air-slash",
+          "sourceBox": [
+            299,
+            349,
+            469,
+            552
+          ],
+          "sourceAlphaBounds": [
+            3,
+            18,
+            168,
+            157
+          ],
+          "destination": [
+            5,
+            20,
+            53,
+            44
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 10,
+          "pose": "pounce",
+          "sourceBox": [
+            602,
+            351,
+            739,
+            552
+          ],
+          "sourceAlphaBounds": [
+            9,
+            16,
+            127,
+            145
+          ],
+          "destination": [
+            13,
+            23,
+            38,
+            41
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 11,
+          "pose": "pound-impact",
+          "sourceBox": [
+            739,
+            380,
+            886,
+            555
+          ],
+          "sourceAlphaBounds": [
+            20,
+            14,
+            145,
+            169
+          ],
+          "destination": [
+            12,
+            14,
+            40,
+            50
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 12,
+          "pose": "pound-land",
+          "sourceBox": [
+            884,
+            416,
+            1018,
+            555
+          ],
+          "sourceAlphaBounds": [
+            7,
+            35,
+            129,
+            129
+          ],
+          "destination": [
+            12,
+            34,
+            39,
+            30
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 13,
+          "pose": "pound-recover",
+          "sourceBox": [
+            1017,
+            408,
+            1162,
+            552
+          ],
+          "sourceAlphaBounds": [
+            0,
+            17,
+            130,
+            136
+          ],
+          "destination": [
+            11,
+            26,
+            42,
+            38
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 14,
+          "pose": "dodge-start",
+          "sourceBox": [
+            1165,
+            405,
+            1314,
+            552
+          ],
+          "sourceAlphaBounds": [
+            10,
+            28,
+            140,
+            137
+          ],
+          "destination": [
+            11,
+            29,
+            42,
+            35
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 15,
+          "pose": "dodge-streak",
+          "sourceBox": [
+            1313,
+            403,
+            1466,
+            552
+          ],
+          "sourceAlphaBounds": [
+            8,
+            34,
+            147,
+            139
+          ],
+          "destination": [
+            10,
+            30,
+            44,
+            34
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 16,
+          "pose": "dodge-low",
+          "sourceBox": [
+            1468,
+            414,
+            1616,
+            554
+          ],
+          "sourceAlphaBounds": [
+            5,
+            34,
+            144,
+            132
+          ],
+          "destination": [
+            10,
+            33,
+            44,
+            31
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 17,
+          "pose": "counter-swipe",
+          "sourceBox": [
+            1617,
+            405,
+            1774,
+            553
+          ],
+          "sourceAlphaBounds": [
+            3,
+            15,
+            146,
+            139
+          ],
+          "destination": [
+            9,
+            24,
+            46,
+            40
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 18,
+          "pose": "hurt-alert",
+          "sourceBox": [
+            2,
+            635,
+            134,
+            792
+          ],
+          "sourceAlphaBounds": [
+            13,
+            16,
+            126,
+            150
+          ],
+          "destination": [
+            14,
+            21,
+            36,
+            43
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 19,
+          "pose": "hurt-flinch",
+          "sourceBox": [
+            133,
+            635,
+            244,
+            792
+          ],
+          "sourceAlphaBounds": [
+            5,
+            16,
+            105,
+            150
+          ],
+          "destination": [
+            16,
+            21,
+            32,
+            43
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 20,
+          "pose": "hurt-dizzy",
+          "sourceBox": [
+            340,
+            641,
+            443,
+            793
+          ],
+          "sourceAlphaBounds": [
+            0,
+            18,
+            98,
+            142
+          ],
+          "destination": [
+            16,
+            24,
+            31,
+            40
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 21,
+          "pose": "ko-nap",
+          "sourceBox": [
+            440,
+            685,
+            569,
+            793
+          ],
+          "sourceAlphaBounds": [
+            7,
+            26,
+            129,
+            96
+          ],
+          "destination": [
+            12,
+            42,
+            39,
+            22
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 22,
+          "pose": "ko-sleep",
+          "sourceBox": [
+            567,
+            654,
+            672,
+            793
+          ],
+          "sourceAlphaBounds": [
+            1,
+            15,
+            99,
+            119
+          ],
+          "destination": [
+            16,
+            31,
+            31,
+            33
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 23,
+          "pose": "fruit-look",
+          "sourceBox": [
+            1202,
+            648,
+            1323,
+            794
+          ],
+          "sourceAlphaBounds": [
+            1,
+            35,
+            115,
+            138
+          ],
+          "destination": [
+            14,
+            31,
+            36,
+            33
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 24,
+          "pose": "fruit-bite",
+          "sourceBox": [
+            1321,
+            648,
+            1421,
+            794
+          ],
+          "sourceAlphaBounds": [
+            5,
+            19,
+            100,
+            137
+          ],
+          "destination": [
+            17,
+            26,
+            30,
+            38
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 25,
+          "pose": "fruit-eat",
+          "sourceBox": [
+            1420,
+            648,
+            1533,
+            794
+          ],
+          "sourceAlphaBounds": [
+            0,
+            14,
+            107,
+            137
+          ],
+          "destination": [
+            15,
+            25,
+            34,
+            39
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 26,
+          "pose": "transform-a",
+          "sourceBox": [
+            1533,
+            644,
+            1650,
+            795
+          ],
+          "sourceAlphaBounds": [
+            1,
+            20,
+            112,
+            141
+          ],
+          "destination": [
+            14,
+            25,
+            36,
+            39
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        },
+        {
+          "index": 27,
+          "pose": "transform-b",
+          "sourceBox": [
+            1650,
+            634,
+            1774,
+            795
+          ],
+          "sourceAlphaBounds": [
+            4,
+            21,
+            117,
+            152
+          ],
+          "destination": [
+            14,
+            22,
+            36,
+            42
+          ],
+          "groundAnchor": [
+            32,
+            64
+          ]
+        }
+      ],
+      "sha256": "b3379d853b1dd153c98f9ff05d883169e1e9c80fb035f600c1a99f6b0b853595",
+      "alphaBounds": [
+        11,
+        14,
+        1778,
+        64
+      ],
+      "bytes": 88021
+    }
+  ]
+}

@@ -11,13 +11,12 @@ const TEXTURES: Record<string, string> = {
 };
 const LABELS: Record<string, string> = {
   'feather-wand': 'PLAY', 'yarn-ball': 'ROLL', 'plush-mouse': 'PICK UP', 'bell-ball': 'RING',
-  'scratching-board': 'SCRATCH', 'cat-tunnel': 'EXPLORE', 'toy-box': 'OPEN', door: 'UNLOCK', mouse: 'TALK', 'sleepy-cat': 'WHISPER',
+  'scratching-board': '磨爪', 'cat-tunnel': '探索', 'toy-box': '開啟', door: '前往陽台', mouse: '交談', 'sleepy-cat': '輕聲說話',
 };
 export class Interactions {
   private objects: { data: LevelObject; sprite: Phaser.GameObjects.Image | Phaser.Physics.Arcade.Image }[] = [];
   private prompt: Phaser.GameObjects.Container;
   private promptText: Phaser.GameObjects.Text;
-  private barrier?: Phaser.GameObjects.Zone;
   private nearest?: typeof this.objects[number];
   private sleepyCount = 0;
   private lastRing = 0;
@@ -41,11 +40,8 @@ export class Interactions {
         sprite.setData('bell', obj.type === 'bell-ball');
       } else sprite = scene.add.image(obj.x, obj.y, key).setOrigin(.5, 1).setDepth(obj.type === 'door' ? 9 : 12);
       if (obj.type === 'door') {
-        if (!scene.hasFlag('balcony-open')) {
-          this.barrier = scene.add.zone(obj.x, 320, 20, 640);
-          scene.physics.add.existing(this.barrier, true);
-          scene.physics.add.collider(scene.player, this.barrier);
-        } else sprite.setAlpha(.35);
+        // The balcony is a main-route passage. Optional quests never block it.
+        sprite.setAlpha(.22);
       }
       if (obj.type === 'toy-box' && scene.hasFlag('box-open')) sprite.setTint(0xffe399);
       this.objects.push({ data: obj, sprite });
@@ -53,6 +49,12 @@ export class Interactions {
     const plate = scene.add.rectangle(0, 0, 160, 32, 0x433c39, .92).setStrokeStyle(1, 0xffe8b8);
     this.promptText = text(scene, 0, 0, '', 13, '#fff0d4').setOrigin(.5);
     this.prompt = scene.add.container(0, 0, [plate, this.promptText]).setDepth(60).setVisible(false);
+  }
+  get hasNearby(): boolean { return Boolean(this.nearest); }
+  tryInteract(): boolean {
+    if (!this.nearest) return false;
+    this.interact(this.nearest);
+    return true;
   }
   update(): void {
     const p = this.scene.player;
@@ -62,9 +64,8 @@ export class Interactions {
     if (this.nearest) {
       this.prompt.setPosition(Math.max(92, this.nearest.sprite.x), this.nearest.data.y - 106);
       const label = this.nearest.data.type === 'mouse' && this.scene.hasFlag('plush-carried') && !this.scene.hasFlag('mouse-helped') ? 'DELIVER' : LABELS[this.nearest.data.type];
-      this.promptText.setText(`[ E ]  ${label}`);
+      this.promptText.setText(`[ J / E ]  ${label}`);
     }
-    if (this.scene.controls.consumeInteract() && this.nearest) this.interact(this.nearest);
     for (const entry of this.objects) {
       if (entry.sprite.body && entry.sprite.y > 820) {
         (entry.sprite as Phaser.Physics.Arcade.Image).setPosition(entry.data.x, entry.data.y - 16).setVelocity(0, 0);
@@ -95,13 +96,8 @@ export class Interactions {
         sprite.setTint(0xffdf85); s.say(DIALOGUE.box); break;
       }
       case 'door': {
-        if (s.hasFlag('balcony-open')) { s.notify('A brighter tomorrow is just outside.'); break; }
-        const required = String(obj.properties.requires ?? 'key-found,mouse-helped,box-open').split(',');
-        if (!required.every(flag => s.hasFlag(flag))) {
-          s.say({ speaker: 'BALCONY DOOR', lines: [!s.hasFlag('key-found') ? 'Locked. The key is near the very top\nof the cat tower.' : !s.hasFlag('mouse-helped') ? 'One more small kindness before you go.\nBring the plush friend back to the mouse.' : 'Happiness first. Open the toy box\nand collect its star before heading outside.'] }); break;
-        }
-        s.setFlag('balcony-open'); this.barrier?.destroy(); sprite.setAlpha(.35); audio.play('door');
-        s.notify('THE BALCONY IS OPEN · FOLLOW THE GOLDEN FISH'); s.sparkle(obj.x, obj.y - 80); break;
+        s.setFlag('balcony-open');
+        s.notify('陽台通道已開放，直接往右就能找到扳手。'); break;
       }
       case 'cat-tunnel':
         s.player.respawn(Number(obj.properties.targetX), Number(obj.properties.targetY));

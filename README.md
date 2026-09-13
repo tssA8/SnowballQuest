@@ -1,124 +1,114 @@
 # Snowball Quest
 
-A cozy browser platformer starring Snowball, a slightly unimpressed Siamese cat with ivory fur, soft gray markings and ice-blue eyes, based on her owner's photos. This repository implements the first vertical slice, **HOME — THE EMPTY TREAT BOX**: explore the apartment, return a tiny toy to its owner, find the balcony key, open the treat box, and follow the sunset to the flag. Later stages remain outside the initial slice.
+《雪球的祕密出勤》是一款 Phaser 橫向動作冒險遊戲。奶油灰、藍眼睛、表情有點厭世的雪球，從沙發底下的警報一路前往永夜方舟，與七位魔王和解，再邀請大家一起回家。
 
-Built with Phaser 3, TypeScript, Vite, Tiled JSON, Arcade Physics, Web Audio and localStorage. The game renders at 1280 × 720 with nearest-neighbor pixel art; the Home world is 4096 × 768. The target first-play duration is 3–5 minutes, to be confirmed through playtesting.
+目前提供**七關可遊玩的完整出勤流程、五種元素、補血罐頭、集氣攻擊、循序解鎖與自由巡邏**。角色戰鬥仍使用整理過的關鍵姿勢；後六關場景以 Phaser 圖形組成，尚未替換成完整的正式背景美術。完整設計目標與目前實作的差異見 [七關實作說明](docs/CAMPAIGN.md)；[PHASE1.md](docs/PHASE1.md) 保留第一關原型的歷史紀錄。
 
-## Play online
+## 遊玩與安裝
 
-[Play Snowball Quest](https://tssa8.github.io/SnowballQuest/) — no account or installation required.
+[GitHub Pages 遊戲網址](https://tssa8.github.io/SnowballQuest/) — 發布版本以最近一次成功的 Pages 工作流程為準。
 
-[Download the Android preview APK](https://github.com/tssA8/SnowballQuest/releases/tag/v0.1.1-mobile-preview) — bundled offline game; Android 7+ with WebView 89+. iOS project and simulator build are included; installation on an iPhone requires Apple signing.
+[舊版 Android 0.1.1 預覽 APK](https://github.com/tssA8/SnowballQuest/releases/tag/v0.1.1-mobile-preview) 是先前的行動版發行包，**不包含這次七關更新**。目前原始碼保留 Capacitor Android／iOS 專案、離線素材、原生存檔與生命週期處理；重新打包方式見 [MOBILE.md](docs/MOBILE.md)。iPhone 安裝需 Apple 簽章，[iOS 發布流程](docs/IOS_RELEASE.md) 支援設定簽章後建立 IPA／TestFlight。
 
-## Run locally
+## 本機啟動
 
-Android and iOS app projects are included using Capacitor, with bundled offline assets, native saves and app lifecycle handling. See [mobile build and installation](docs/MOBILE.md). GitHub builds an Android development APK and an unsigned iOS simulator app; iPhone distribution requires Apple signing.
-
-The manual [iOS release workflow](docs/IOS_RELEASE.md) can check a Release archive for iPhone, export a signed IPA, or upload it to TestFlight once the owner's signing credentials are configured.
-
-Use Node.js 22.18 or newer so the test runner can import the small TypeScript data modules directly.
+使用 Node.js 22.18 以上版本，以便測試直接載入 TypeScript 規則模組。
 
 ```sh
 npm install
 npm run dev
 ```
 
-Open the URL printed by Vite, usually `http://localhost:5173`. The development server listens on the local network so a phone on the same network can use the computer's LAN address. Firewall and network settings must permit access.
+開啟 Vite 顯示的網址，通常是 `http://localhost:5173`。同一區域網路的手機可透過電腦的 LAN 位址連線；防火牆需允許該連線。
 
 ```sh
 npm test
 npm run build
 npm run preview
 npm run assets:map
+node scripts/generate-stages.mjs
 ```
 
-`build` runs the TypeScript check and creates `dist/`; `preview` serves that production build. `assets:map` regenerates `public/assets/maps/home.json` from `scripts/generate-map.mjs`. Static hosting should publish `dist/`.
+`build` 先檢查 TypeScript，再產生 `dist/`；`preview` 預覽正式建置。`assets:map` 重建第一關的 Tiled 地圖；`generate-stages.mjs` 重建後六關 JSON 地圖。七關故事與獎勵定義在 `src/game/data/stages.ts`，後六關場景與環境互動由 `src/game/world/StageWorld.ts` 呈現。
 
-## Deployment
+遊戲以 1280 × 720 顯示，使用 nearest-neighbor 像素美術、Arcade Physics、Web Audio 與本機存檔。
 
-GitHub Actions runs the existing tests, builds the game with Node.js 24, and publishes `dist/` to GitHub Pages on every push to `main`. The workflow can also be started manually from the Actions tab. The repository's Settings → Pages source must be **GitHub Actions**. Relative asset URLs support both the `/SnowballQuest/` project path and hosting at a domain root.
+## 操作
 
-## Controls
-
-| Action | Keyboard | Touch |
+| 動作 | 鍵盤 | 手機 |
 |---|---|---|
-| Move | A / D or ← / → | Left / Right |
-| Jump | Space, held for a higher jump | Jump, held for height |
-| Interact | E | Interact |
-| Dash | Shift | Dash |
-| Pause | Esc | Pause button |
+| 移動 | A／D 或 ←／→ | 左／右 |
+| 跳躍；按久一點跳高 | Space | 跳躍 |
+| 肉球連擊／附近物件互動 | J／E | 肉球／互動 |
+| 快速特殊攻擊 | 輕按 K 後放開 | 輕按「集氣」後放開 |
+| 集氣攻擊 | 按住 K，蓄滿後放開 | 按住「集氣」，亮起後放開 |
+| 循環切換已取得的元素與原生形態 | Q | 點左下果實卡 |
+| 衝刺閃避 | Shift | 衝刺 |
+| 暫停 | Esc | 暫停按鈕 |
+| 對話繼續 | E／Space | 點一下對話 |
 
-Holding a direction builds to a gentle run. Jump buffering and coyote time make platform edges forgiving. Independent touch pointers allow movement and jumping together. Touch controls appear on touch devices; landscape is recommended, while portrait remains usable with a rotation hint. Fullscreen is optional.
+集滿需要 **1.2 秒**。快速特殊攻擊消耗 **16** 呼嚕能量，一般滿蓄力攻擊消耗 **30**；中途放開會依蓄力程度調整威力與耗能。沒有果實也能發射肉球能量波。第七關啟用的星貓爆發是另計 100 能量的強化招式，詳見 [CAMPAIGN.md](docs/CAMPAIGN.md)。
 
-## Home objectives
+碰到粉紅**愛心罐頭**會自動回復 **2 顆心＋20 能量**；生命與能量都滿時保留罐頭。沿途有補給，魔王場內罐頭會再生，低血量還會出現救援罐頭。魔王戰失敗可從入口立即重試，回滿生命與能量，並保留本關試用元素。
 
-Learn movement near the cushion, follow the first feather, and meet the mouse courier. Bring back the plush mouse, try the scratching board, and climb the cat tower for the balcony key. The paw checkpoint provides a safe return point. Helping the mouse and scratching opens the toy box and releases one happiness star. Open the balcony and reach the flag to finish.
+## 七次出勤
 
-Optional discoveries include the cat tunnel's napping club, three feathers, 30 fish, the upper shelf star and the balcony star. The game has no combat: a mishap costs a heart and returns Snowball to the checkpoint; an exhausted cat takes a tiny nap. Later stages should be added after this slice has passed playtesting.
+| 關卡 | 目的地 | 魔王 | 主要解鎖 |
+|---|---|---|---|
+| 1 | 沙發底下的警報 | 扳手 | 火焰、攻擊力 +10% |
+| 2 | 天台風暴 | 風翎 | 風、二段跳與滑翔 |
+| 3 | 地下水世界 | 波波 | 水、生命上限 6 心 |
+| 4 | 停電停車場 | 伏特 | 雷電、能量上限 120 與較快回復 |
+| 5 | 地基大震動 | 土豆 | 大地、第三段連擊強化 |
+| 6 | 十三樓泡泡龍之家 | 泡泡龍媽媽 | 元素連攜、同伴救援 |
+| 7 | 夜空中的回家路 | 夜墨 | 星貓爆發、自由巡邏 |
 
-## Project structure
+打贏魔王即可完成出勤；**星星、鑰匙與支線不阻擋主線**。前五關的祭壇先提供本關試用，和解後才永久保留果實。星圖可重玩所有已解鎖關卡，飛船名冊顯示實際取得的同伴、徽章與元素。
 
-```text
-public/assets/             Runtime textures, atlases and Tiled maps
-references/                Supplied approved visual references, when available
-scripts/                   Reproducible asset and map preparation
-src/game/data/             Level parser, mission and dialogue definitions
-src/game/entities/         Player motion and animation
-src/game/scenes/           Loading, menu, Home and result flow
-src/game/systems/          Input, objectives, saving and audio
-src/game/ui/               HUD, panels and touch controls
-src/game/world/            Room composition and collision construction
-tests/                     Data, progress and map checks
-docs/ASSET_STATUS.md        Intake measurements and production-readiness report
-docs/LEVEL_FORMAT.md        Tiled conventions and the authored route
-docs/TODO.md                Remaining art, validation and later stages
-```
+## 存檔
 
-## Assets
-
-Snowball retains the original player design's round face, compact body and poses. Only the coat and markings use the owner's photo-derived palette. See [the character reference notes](docs/SNOWBALL_IDENTITY.md) and [normalized animation sheet](resources/art/snowball-contact-sheet.png).
-
-The twelve supplied artwork groups define the approved direction. Presentation sheets are treated as **reference-only** unless they can be extracted reliably; printed dimensions are not trusted as atlas coordinates. The first runtime pack uses original generated placeholders with consistent dimensions, transparent sprite backgrounds and stable bottom-center anchors. These interfaces allow production artwork to be replaced without changing game logic. See `docs/ASSET_STATUS.md` for the actual intake inventory and extraction decisions.
-
-Do not slice arbitrary regions from an irregular reference sheet or scale character frames by fractional factors. Keep 64 × 64 player cells, identical foot baselines, integer coordinates and 32 × 32 gameplay tiles. Runtime textures and collision bodies are independent.
-
-## Extending the game
-
-To add a level, create another Tiled JSON map using the required layers and properties documented in `docs/LEVEL_FORMAT.md`, preload it as JSON and a Phaser tilemap, and call `loadLevel(scene, cacheKey)`. The parsed `LevelData` exposes collision rectangles, spawn, objects, collectibles, NPCs, triggers, checkpoints, exit and decoration arrays. Gameplay points are bottom-center anchors; collision rectangles use top-left coordinates. Give every object a stable unique name because it becomes its persistent save ID.
-
-To add an NPC, place a point in the `NPC` layer with a supported `type` and `dialogueId`. Add its short dialogue to the dialogue data and register any new behavior in the interaction system. Keep quest flags in mission data instead of embedding objective labels in the HUD. Home mission definitions live in `src/game/data/missions.ts`; `MissionSystem` emits `mission-updated` and `mission-completed` events.
-
-To add a collectible of an existing type, add a named point to `Collectibles` and update the map totals. Supported Home items are fish, feathers, stars, key and heart. The toy box's `star-box` is a generated reward and must not also appear as a placed star. A new collectible type needs a runtime texture and a collection handler that writes its unique ID once and emits the appropriate game event.
-
-To add an animation, export equally sized frames with a stable foot baseline, register a Phaser animation such as `snowball-walk`, and map the state in `Player`. The player supports idle, walk, run, jump, fall, landing, dash, interaction, sit, sleep, celebration, victory and stumble. Jump can use the `snowball-jump-rise` animation alias. Keep animation changes independent of the player's smaller 30 × 42 physics body.
-
-## Saving
-
-Progress uses the browser's `snowball-quest-save-v1` localStorage entry. It is local to that browser and origin. Version 1 contains:
+存檔內容已升級為 **schema v2**，儲存鍵仍是 `snowball-quest-save-v1`，讓舊瀏覽器與 Capacitor 原生存檔能在原位置遷移。
 
 ```ts
 {
-  version: 1,
-  currentStage: 'home',
-  unlockedStages: ['home'],
-  stages: {
-    home: { completed, fish, stars, secrets, bestTime? }
-  },
+  version: 2,
+  currentStage, unlockedStages, stages,
+  unlockedFruits, unlockedSupport, bossBadges,
+  maxHearts, maxPurrEnergy,
   settings: { music, sfx, reducedMotion },
-  run: {
-    checkpoint: { x, y, id },
-    collected: ['fish-01', 'star-box'],
-    flags: { 'key-found': true },
-    hearts: 5,
-    elapsed: 0
-  }
+  run: { checkpoint, collected, flags, hearts, elapsed },
+  adventure: { fireUnlocked, wrenchJoined, attackBonus },
+  legacyStages
 }
 ```
 
-Time values are milliseconds. Collected IDs are deduplicated; unknown versions reset to safe defaults, and malformed fields are sanitized. If storage is unavailable, the game continues with an in-memory save. Replay clears the current run while preserving settings and best stage results. Stage results retain the largest collectible totals and shortest completed time; later stages remain locked until implemented.
+v1 設定、有效的當次探索進度與成績會被保留；已取得的扳手獎勵遷移為第一關徽章與火焰解鎖。舊探索通關成績不會憑空轉換成魔王獎勵。舊咖啡廳／花園／結局成績移到 `legacyStages`。下一關由前一關徽章解鎖；重玩只重設當次出勤，不疊加永久獎勵。
 
-## Verification status
+所有時間為毫秒。存檔驗證會去除重複 ID、限制不合法數值；不支援的版本回到安全預設。儲存無法使用時仍可用記憶體存檔遊玩。不同瀏覽器與網址來源的進度分開保存。
 
-`npm test` passes 26 map, save, native-storage and player-controller checks. The production build, Edge quest integration, actual keyboard platform routes, mobile touch/rotation emulation and production-preview smoke test have passed. See `docs/VERIFICATION.md` for evidence, reproducible browser-test commands and the limits of these checks. Human playtesting remains necessary to tune feel and the 3–5 minute target.
+## 素材與專案結構
 
-Real iPhone Safari and Android Chrome checks are tracked in `docs/TODO.md`. Desktop touch emulation can exercise pointer logic but does not replace testing on physical devices. Do not mark the complete MVP accepted until the remaining browser and mobile checks have passed.
+[冒險素材說明](docs/ADVENTURE_ASSETS.md) 列出 26 個遊戲 texture、透明度檢查與可重建腳本：8 種小怪、7 位魔王、5 種果實、3 張頭像、徽章、飛船圖示與 28 姿勢雪球戰鬥圖集。原本的雪球移動圖集保留；角色辨識見 [SNOWBALL_IDENTITY.md](docs/SNOWBALL_IDENTITY.md)。外部素材包只讀，不由建置程序修改。
+
+```text
+public/assets/          遊戲圖集、UI、Tiled 地圖
+scripts/                素材整理、建置與瀏覽器檢查
+src/game/data/          七關定義、關卡資料與舊探索任務
+src/game/combat/        連擊、集氣、五元素與補血
+src/game/entities/      雪球、八種小怪與魔王
+src/game/scenes/        選單、出勤、HUD、星圖與結算
+src/game/systems/       輸入、存檔、對話與音效
+src/game/world/         場景、碰撞與關卡特殊環境
+src/game/ui/            手機操作與 UI 元件
+tests/                  規則、存檔、地圖與戰鬥檢查
+```
+
+新增關卡時同步維護 `stages.ts`、存檔合法關卡 ID、場景資料與魔王；第一關 Tiled 格式見 [LEVEL_FORMAT.md](docs/LEVEL_FORMAT.md)。素材的可見輪廓與碰撞盒分開維護，不因攻擊圖格改變碰撞大小。
+
+## 發布與驗證
+
+GitHub Actions 在 `main` 更新時執行測試、建置並發布 `dist/` 至 GitHub Pages；Pages 來源需設為 **GitHub Actions**。相對素材路徑同時支援 `/SnowballQuest/` 與網域根目錄。
+
+本輪 88 項自動測試與 TypeScript 檢查通過。七關瀏覽器 fixture 已檢查實際集氣命中、水盾、罐頭補血、風二段跳、七關結算與永久獎勵保存，未出現 runtime error。本機瀏覽器檢查使用原生 esbuild 預覽；標準 Vite 正式建置與發布結果由 [GitHub Pages workflow](https://github.com/tssA8/SnowballQuest/actions/workflows/pages.yml) 記錄。
+
+最新執行結果見 [VERIFICATION.md](docs/VERIFICATION.md)。規則測試與瀏覽器功能檢查涵蓋不同層次；以測試定位或直接調整狀態檢查通關，不等同首次玩家無輔助全程遊玩。七關流程已實作，正式動畫、實機效能、觸控手感與難度仍需持續驗收，列於 [TODO.md](docs/TODO.md)。

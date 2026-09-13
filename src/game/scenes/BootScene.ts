@@ -1,10 +1,11 @@
 import Phaser from 'phaser';
 import { preloadAssets, finishAssets } from '../art/AssetLoader';
+import { STAGES } from '../data/stages';
 export class BootScene extends Phaser.Scene {
   constructor() { super('Boot'); }
   preload(): void {
     preloadAssets(this);
-    this.load.json('home-map', 'assets/maps/home.json');
+    for (const stage of STAGES) this.load.json(`${stage.id}-map`, `assets/maps/${stage.id}.json`);
     this.load.tilemapTiledJSON('home-tilemap', 'assets/maps/home.json');
     this.load.on('loaderror', () => {
       const loading = document.getElementById('loading');

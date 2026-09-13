@@ -1,46 +1,52 @@
 # Remaining work
 
-The current scope is Home. Keep later stages locked until the first slice feels responsive, reads clearly on a phone and meets the handoff acceptance criteria.
+The seven-stage campaign is now implemented: opening dialogue, routes, enemy encounters, three-phase bosses, reconciliation, permanent rewards, sequential unlocks, replay and the Nightink ending. This checklist tracks refinement and acceptance; it does not mark the later stages as unavailable. See [CAMPAIGN.md](CAMPAIGN.md) for current behavior and [GAME_DESIGN.md](GAME_DESIGN.md) for the broader production target.
 
-## Home validation
+## Implemented campaign scope
 
-- [ ] Complete and record an ordinary desktop playthrough, including movement, jump buffering, coyote time, both tunnel entrances, mouse delivery, scratch, key, box, checkpoint, balcony and stage clear.
-- [ ] Complete an all-collectibles run: 30 fish, 3 feathers and all 3 stars, including the box reward. Confirm secret counters cannot increment twice.
-- [ ] Confirm fall and vacuum recovery, zero-heart nap, checkpoint respawn and replay behavior without softlocks.
-- [ ] Refresh during a partially completed run and after stage clear. Check item state, objective flags, checkpoint position, settings and best results.
-- [ ] Verify pause and resume, tab blur, browser resizing, optional fullscreen and Web Audio unlock through a user gesture.
-- [ ] Inspect the production preview for console errors, missing assets, blurred pixels and unintended geometry gaps.
-- [ ] Time several first-play sessions against the 3–5 minute target; adjust route clarity and optional rewards from observed play.
+- [x] Seven destinations with distinct environment themes and stage-specific bosses.
+- [x] Eight enemy types and seven boss runtime sheets from the approved pack.
+- [x] Five fruit forms, sequential trials and permanent unlocks.
+- [x] Healing cans, low-health supplies, hold-and-release charge attacks and boss-entry retries.
+- [x] Star map, crew/badge/fruit collection menu, next-stage flow and unlocked-stage replay.
+- [x] Nightink reconciliation, ending and free patrol through the unlocked star map.
+- [x] Schema v2 with migration under the existing browser/native storage key.
 
-These entries are a verification checklist, not a claim that a defect exists. Update them with actual evidence as checks finish.
+## Campaign acceptance
 
-## Real browser and mobile coverage
+- [ ] Record an ordinary, unassisted new-save playthrough across all seven stages, including healing, retries, stage transitions and the final ending.
+- [ ] Repeat with existing phase-one saves and partially completed v2 saves; verify reload at checkpoints, after reconciliation and after selecting the next destination.
+- [ ] Validate optional Home delivery/toy-box discoveries and all collectible routes in later stages without duplicate rewards.
+- [ ] Time first-player sessions and tune boss difficulty, reaction windows, recovery supplies and navigation from observed play.
+- [ ] Check clarity of wind jumps, water shields, electric cables, earth walls, moving bubbles, element chains and starburst for a player who has not read the design document.
+- [ ] Audit production console output, asset requests, layout bounds and static-host subpath behavior after each release.
 
-- [x] Add Capacitor Android/iOS projects, offline assets, safe-area layout, lifecycle handling and native save recovery.
+Automated test counts and completed browser checks belong in [VERIFICATION.md](VERIFICATION.md). State-isolating fixtures are useful but do not replace natural playthroughs or difficulty testing.
+
+## Physical devices and distribution
+
+- [x] Capacitor Android/iOS projects, offline assets, safe-area layout, lifecycle handling and native save recovery are present.
+- [ ] Build and publish a new seven-stage Android package; the existing 0.1.1 APK is an older preview.
 - [ ] Complete signed iPhone/TestFlight distribution with the owner's Apple Developer account.
+- [ ] Physical iPhone Safari: safe areas, rotation, simultaneous movement/jump/charge, release outside a button, audio gesture and save recovery.
+- [ ] Physical Android Chrome: multi-touch, viewport resizing, background/foreground recovery, performance and saves.
+- [ ] Safari desktop: keyboard play, audio interruptions and restored sessions.
+- [ ] Verify readable HUD/dialogue text on the smallest supported landscape screen and measure frame rate/memory on a mid-range phone.
 
-- [ ] Desktop Chrome / Edge keyboard playthrough.
-- [ ] Desktop Safari playthrough and audio resume after interruption.
-- [ ] Physical iPhone Safari: safe areas, portrait/landscape rotation, multi-touch move+jump, move+interact, pointer release outside a button, sound gesture and local save.
-- [ ] Physical Android Chrome: multi-touch, viewport resizing, background/foreground recovery, performance and local save.
-- [ ] Verify HUD, missions and dialogue readability on the smallest supported landscape screen.
-- [ ] Measure practical frame rate and memory on a mid-range phone; keep particles and audio voices bounded.
+## Production art and design detail
 
-## Production artwork
+- [x] Preserve normalized Snowball movement cells and the owner's approved identity; see [SNOWBALL_IDENTITY.md](SNOWBALL_IDENTITY.md).
+- [x] Integrate 26 adventure textures including all eight enemies, seven bosses, five fruit icons and 28 combat poses.
+- [ ] Add consistent intermediate combat frames, per-pose collar/bell placement and complete element-specific character animation.
+- [ ] Replace or refine Phaser geometry scenery with approved layered environment art, repeatable parallax backgrounds and seamless tiles.
+- [ ] Audit every source atlas frame for stray fragments, cropping, scale and consistent ground anchors.
+- [ ] Complete production collectible animation, button states, furniture/toy variants, sound and restrained effects.
+- [ ] Expand the shared element-chain bonus into the distinct combination states/effects specified by the design, with meaningful feedback for each combination.
+- [ ] Add remaining design-specific boss staging such as destructible platforms, detailed gravity changes and individual companion interventions where appropriate.
+- [ ] Expand optional later-stage stories, memory discoveries and the ship menu into richer companion interactions.
 
-- [ ] Replace generated placeholders with normalized production assets from the approved twelve reference groups.
-- [x] Normalize the full Snowball state set into 44 transparent 64 × 64 cells with a stable bottom-center anchor. The original concept defines the shape and poses; the photo-derived palette defines only the coat. See `SNOWBALL_IDENTITY.md`.
-- [ ] Export repeatable, separate parallax layers and inspect their horizontal seams.
-- [ ] Complete furniture and toy variants, all UI button states, collectible animation and restrained VFX.
-- [ ] Audit every replacement visually at integer display scales and update `ASSET_STATUS.md` with dimensions and readiness.
+## Follow-up improvements
 
-## Later stages and features
-
-- [ ] Rooftops / Sunny Town: introduce the next route and a small helping objective.
-- [ ] City / Café: ingredient delivery and the reopened café.
-- [ ] Moonlight Garden: lanterns, sleeping cat and final fragment.
-- [ ] Return Home and a short crown / full treat box ending.
-- [ ] Add stage transitions, unlock progression and map data for completed future stages.
-- [ ] Revisit remappable keyboard controls after Home input is proven.
-- [ ] Consider PWA offline installation only after core gameplay and deployment are stable.
-- [x] Publish to the user's preferred public host: [GitHub Pages](https://tssa8.github.io/SnowballQuest/). Pushes to `main` run tests and deploy automatically; visitors do not need an account.
+- [ ] Revisit remappable controls and optional difficulty settings after first-player feedback.
+- [ ] Consider PWA installation after the core browser and mobile release behavior is stable.
+- [ ] Update asset and verification reports when production art or acceptance evidence changes; retain historical reports with clear scope labels.
