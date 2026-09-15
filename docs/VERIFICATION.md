@@ -13,9 +13,11 @@
 
 ## 畫面檢查
 
-發行測試的應用程式元素截圖在橫向時被 XCTest 錯誤裁切，因此補充測試改用完整 `XCUIScreen` 截圖，遊戲程式沒有變更。已實際檢視 home、rooftop、basement、parking、foundations、floor13 六關完整橫向畫面：場景、美術、HUD 和左右操作區正常顯示，沒有前一種截圖的黑色裁切區。此為起始場景檢視，不代表無輔助全程通關。
+發行測試的應用程式元素截圖在橫向時被 XCTest 錯誤裁切，因此補充測試改用完整 `XCUIScreen` 截圖，遊戲程式沒有變更。已實際檢視 home、rooftop、basement、parking、foundations、floor13、nightark 七關完整橫向畫面：場景、美術、HUD 和左右操作區正常顯示，沒有前一種截圖的黑色裁切區。此為起始場景檢視，不代表無輔助全程通關。
 
-第一次補充測試 `34936158368` 在第七關前超過單項測試的 120 秒限制；前六關截圖保存在 `test-results/native-ios-artifact-10383676239`。修正只將這個七次啟動的測試上限設為 300 秒，後續結果以 [補充驗證工作流程 34937614715](https://github.com/tssA8/SnowballQuest/actions/runs/34937614715) 為準。此補充工作不會重新上傳已發行的 IPA。
+第一次補充測試 `34936158368` 在第七關前超過單項測試的 120 秒限制；修正只將這個七次啟動的測試上限設為 300 秒。[補充驗證工作流程 34937614715](https://github.com/tssA8/SnowballQuest/actions/runs/34937614715) 已全部成功，包含完整原生測試與 unsigned iPhone archive。測試来源 `601f4e0` 與已上傳版本的遊戲程式一致，僅有測試修改，不需重新上傳 IPA。
+
+完整七關截圖與 manifest 保存在 `test-results/native-ios-artifact-10384397843`；已下載的原始結果 ZIP 為 `releases/ios/native-34937614715-10384397843.zip`，SHA-256 `e8641bc3c3049dc299a76cb0502f73a0bd5d5fcf127d83f10a3a746161ac4220`，通過 GitHub artifact digest 比對。
 
 ## 本次修正與驗證範圍
 
