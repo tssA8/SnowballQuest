@@ -33,6 +33,7 @@ final class GameScene: SKScene {
     let world: GameWorld
     let boss: GameBoss
     let player: SKSpriteNode
+    let appearance = SnowballAppearance()
     private(set) var hearts: Int
     private(set) var energy: Double
     private(set) var fruit: Fruit?
@@ -53,6 +54,7 @@ final class GameScene: SKScene {
     private var collectibleNodes: [String: SKSpriteNode] = [:]
     private var healing: [HealingCan] = []
     private var projectiles: [PlayerShot] = []
+    private var combatBursts: [ElementalBurst] = []
     private var altar: SKSpriteNode?
     private var velocity = CGVector.zero
     private var movement: CGFloat = 0
@@ -103,7 +105,7 @@ final class GameScene: SKScene {
     }
 
     private final class PlayerShot {
-        let node: SKShapeNode
+        let node: ElementalProjectileVisual
         let direction: CGFloat
         let damage: Double
         let fruit: Fruit?
@@ -114,17 +116,13 @@ final class GameScene: SKScene {
         var victims = Set<ObjectIdentifier>()
         var spent = false
         init(position: CGPoint, direction: CGFloat, damage: Double, fruit: Fruit?,
-             ratio: Double, piercing: Bool, now: Double, starburst: Bool) {
+             ratio: Double, piercing: Bool, now: Double, starburst: Bool, reducedMotion: Bool) {
             self.direction = direction; self.damage = damage; self.fruit = fruit
             self.piercing = piercing; radius = starburst ? 43 : 13 + CGFloat(ratio) * 20
             born = now; duration = 1.5 + ratio * 0.5
-            node = SKShapeNode(circleOfRadius: radius); node.position = position
-            node.fillColor = GameScene.color(fruit).withAlphaComponent(0.86)
-            node.strokeColor = .white; node.lineWidth = piercing ? 4 : 2; node.zPosition = 18
-            if starburst {
-                let center = SKShapeNode(circleOfRadius: 18); center.fillColor = .white; center.strokeColor = .clear
-                node.addChild(center)
-            }
+            node = ElementalProjectileVisual(fruit: fruit, radius: radius, power: ratio,
+                                             starburst: starburst, reducedMotion: reducedMotion)
+            node.position = position; node.xScale = direction; node.zPosition = 18
         }
     }
 
@@ -140,6 +138,8 @@ final class GameScene: SKScene {
         addChild(world.node); addChild(effectsLayer); effectsLayer.zPosition = 20
         player.position = CGPoint(x: runSave.checkpointX, y: 768 - runSave.checkpointY)
         player.zPosition = 16; addChild(player)
+        player.addChild(appearance)
+        appearance.update(fruit: fruit, frame: 0, elapsed: 0, reducedMotion: store.state.settings.reducedMotion)
         aura.position = CGPoint(x: 0, y: 26); aura.fillColor = .clear; aura.lineWidth = 2
         player.addChild(aura)
         chargeRing.fillColor = .clear; chargeRing.strokeColor = .white; chargeRing.lineWidth = 3
@@ -205,12 +205,13 @@ final class GameScene: SKScene {
         guard mode == .playing, clock >= dashReadyAt else { return }
         dashUntil = clock + 0.17; dodgeUntil = clock + 0.36; dashReadyAt = clock + 0.75
         velocity.dx = facing * (fruit == .lightning ? 920 : 690)
-        pose([14, 15, 16], duration: 0.22); sparkle(player.position, color: Self.color(fruit))
+        pose([10, 11, 12], duration: 0.22); sparkle(player.position, color: Self.color(fruit))
     }
 
     func attack() {
         guard mode == .playing, let hit = combo.hit(now: clock, airborne: !grounded) else { return }
-        let frames = hit.airborne ? [8, 9, 9] : hit.step == 1 ? [0, 1, 2] : hit.step == 2 ? [1, 3, 2] : [4, 5, 6, 7]
+        // These are poses of the approved Snowball, not the unrecolored combat atlas.
+        let frames = hit.airborne ? [16, 18, 19] : hit.step == 1 ? [28, 18, 29] : hit.step == 2 ? [29, 16, 18, 28] : [28, 16, 18, 19, 29]
         pose(frames, duration: hit.step == 3 ? 0.36 : 0.24)
         if fruit == .earth && !grounded { stomping = true; velocity.dy = -760 }
         let thirdHitBonus = hit.step == 3 && store.state.cleared.contains(.foundations) ? 1.25 : 1.0
@@ -225,9 +226,8 @@ final class GameScene: SKScene {
         if meleeReaches(boss.sprite.position, range: range, halfWidth: 78) {
             landed = boss.hit(elementDamage(damage, element: fruit), sourceX: player.position.x, now: clock) || landed
         }
-        let swipe = effectsLayer.disc(CGPoint(x: player.position.x + facing * 48, y: player.position.y + 28), radius: hit.step == 3 ? 44 : 30,
-                                       color: Self.color(fruit).withAlphaComponent(0.26))
-        swipe.run(.sequence([.fadeOut(withDuration: 0.14), .removeFromParent()]))
+        addBurst(at: CGPoint(x: player.position.x + facing * 39, y: player.position.y + 28),
+                 fruit: fruit, kind: .melee, direction: facing, strength: hit.step == 3 ? 1.25 : 0.9)
         if landed { energy = min(store.state.maxEnergy, energy + 3); feedback(.hit) }
         publishHUD()
     }
@@ -257,7 +257,8 @@ final class GameScene: SKScene {
         cancelCharge()
         let index = options.firstIndex(where: { $0 == fruit }) ?? 0
         fruit = options[(index + 1) % options.count]
-        pose([26, 27, 26], duration: 0.25)
+        pose([30, 31, 30], duration: 0.25)
+        addBurst(at: CGPoint(x: player.position.x, y: player.position.y + 25), fruit: fruit, kind: .transformation)
         toast(fruit.map { "\($0.title)形態" } ?? "原生雪球")
         publishHUD()
     }
@@ -304,6 +305,7 @@ final class GameScene: SKScene {
         }
         guard mode == .playing else { return }
         clock += delta; runSave.elapsed += delta
+        updateBursts(delta: delta)
         energy = min(store.state.maxEnergy, energy + store.state.energyPerSecond * delta)
         if charging {
             chargeElapsed = min(ChargeProfile.chargeDuration, chargeElapsed + delta)
@@ -402,14 +404,18 @@ final class GameScene: SKScene {
         if starburst { clearHazards(); toast("星貓爆發！大家一起回家！") }
         let shot = PlayerShot(position: CGPoint(x: player.position.x + facing * 37, y: player.position.y + 31),
                               direction: facing, damage: damage, fruit: fruit, ratio: profile.ratio,
-                              piercing: profile.piercing, now: clock, starburst: starburst)
+                              piercing: profile.piercing, now: clock, starburst: starburst,
+                              reducedMotion: store.state.settings.reducedMotion)
         projectiles.append(shot); addChild(shot.node)
-        pose([16, 17, 17], duration: 0.24)
+        pose([28, 29, 18], duration: 0.24)
+        addBurst(at: shot.node.position, fruit: fruit, kind: .launch, direction: facing,
+                 strength: 0.6 + CGFloat(profile.ratio) * 0.6)
         feedback(profile.piercing ? .charged : .hit)
     }
 
     private func updateProjectiles(delta: Double) {
         for shot in projectiles {
+            shot.node.update(elapsed: clock - shot.born)
             shot.node.position.x += shot.direction * (shot.fruit == .lightning ? 840 : 620) * CGFloat(delta)
             if clock - shot.born > shot.duration || shot.node.position.x < 0 || shot.node.position.x > world.width { shot.spent = true }
             guard !shot.spent else { continue }
@@ -420,7 +426,8 @@ final class GameScene: SKScene {
                 shot.victims.insert(identity)
                 strike(enemy, damage: shot.damage, element: shot.fruit)
                 if shot.fruit == .lightning { chainLightning(from: enemy, damage: shot.damage * 0.55, excluding: shot.victims) }
-                sparkle(shot.node.position, color: Self.color(shot.fruit)); feedback(.hit)
+                addBurst(at: shot.node.position, fruit: shot.fruit, kind: .impact, direction: shot.direction)
+                feedback(.hit)
                 if !shot.piercing { shot.spent = true; break }
             }
             if !shot.spent, boss.active,
@@ -428,7 +435,9 @@ final class GameScene: SKScene {
                abs(shot.node.position.y - boss.sprite.position.y - 75) < shot.radius + 82 {
                 if boss.hit(elementDamage(shot.damage, element: shot.fruit), sourceX: shot.node.position.x - shot.direction * 100,
                             now: clock, piercing: shot.piercing) {
-                    shot.spent = true; sparkle(shot.node.position, color: Self.color(shot.fruit)); feedback(.hit)
+                    shot.spent = true
+                    addBurst(at: shot.node.position, fruit: shot.fruit, kind: .impact, direction: shot.direction, strength: 1.3)
+                    feedback(.hit)
                 }
             }
             if mode != .playing { break }
@@ -511,7 +520,7 @@ final class GameScene: SKScene {
         }
         hearts = max(0, hearts - 1); invulnerableUntil = clock + 1.6
         velocity.dx = player.position.x < sourceX ? -170 : 170; velocity.dy = 135
-        pose([18, 19], duration: 0.3); feedback(.hurt)
+        pose([40, 41], duration: 0.3); feedback(.hurt)
         if hearts <= 0 {
             if boss.active && store.state.cleared.contains(.floor13) && !rescueUsed {
                 rescueUsed = true; hearts = 3; energy = max(energy, 40); invulnerableUntil = clock + 3
@@ -534,7 +543,8 @@ final class GameScene: SKScene {
     private func defeatPlayer() {
         mode = .defeated; retryRemaining = 0.85; cancelCharge(); movement = 0; jumpHeld = false
         velocity = .zero; clearHazards(); clearProjectiles()
-        player.texture = GameArt.texture(key: "snowball-combat", frame: 21)
+        player.texture = GameArt.texture(key: "snowball", frame: 42)
+        appearance.update(fruit: fruit, frame: 42, elapsed: clock, reducedMotion: store.state.settings.reducedMotion)
         toast(boss.active ? "先休息一下，從魔王入口再試！" : "先休息一下，從最近的腳印再試！")
     }
 
@@ -662,7 +672,8 @@ final class GameScene: SKScene {
         node.position.y = 153 + CGFloat(sin(clock * 3)) * 4
         if abs(player.position.x - 500) < 66 && abs(player.position.y - 128) < 85 {
             runSave.trial = trial; fruit = trial; energy = store.state.maxEnergy
-            node.removeFromParent(); altar = nil; pose([23, 24, 25], duration: 0.4)
+            node.removeFromParent(); altar = nil; pose([28, 30, 31], duration: 0.4)
+            addBurst(at: CGPoint(x: player.position.x, y: player.position.y + 25), fruit: fruit, kind: .transformation)
             toast("\(trial.title)果實試用！打贏本關後永久保留")
             feedback(.heal); persist(); publishHUD()
         }
@@ -710,20 +721,46 @@ final class GameScene: SKScene {
     }
 
     private func clearHazards() { hazards.forEach { $0.node.removeFromParent() }; hazards.removeAll() }
-    private func clearProjectiles() { projectiles.forEach { $0.node.removeFromParent() }; projectiles.removeAll() }
+    private func clearProjectiles() {
+        projectiles.forEach { $0.node.removeFromParent() }; projectiles.removeAll()
+        combatBursts.forEach { $0.removeFromParent() }; combatBursts.removeAll()
+    }
 
-    private func pose(_ frames: [Int], duration: Double) { poseFrames = frames; poseStarted = clock; poseUntil = clock + duration }
+    private func pose(_ frames: [Int], duration: Double) {
+        poseFrames = frames; poseStarted = clock; poseUntil = clock + duration
+        updatePlayerArt()
+    }
+
+    private func addBurst(at point: CGPoint, fruit: Fruit?, kind: ElementalBurst.Kind,
+                          direction: CGFloat = 1, strength: CGFloat = 1) {
+        // Bound node count even when a piercing shot hits several targets in one frame.
+        if combatBursts.count >= 20 { combatBursts.removeFirst().removeFromParent() }
+        let burst = ElementalBurst(fruit: fruit, kind: kind, direction: direction,
+                                   strength: strength, reducedMotion: store.state.settings.reducedMotion)
+        burst.position = point; effectsLayer.addChild(burst); combatBursts.append(burst)
+    }
+
+    private func updateBursts(delta: Double) {
+        for burst in combatBursts { burst.update(delta: delta) }
+        combatBursts.removeAll { burst in
+            guard burst.finished else { return false }
+            burst.removeFromParent(); return true
+        }
+    }
 
     private func updatePlayerArt() {
+        let selectedFrame: Int
         if clock < poseUntil && !poseFrames.isEmpty {
             let duration: Double = max(0.01, poseUntil - poseStarted)
             let progress: Double = (clock - poseStarted) / duration
             let frame = min(poseFrames.count - 1, Int(progress * Double(poseFrames.count)))
-            player.texture = GameArt.texture(key: "snowball-combat", frame: poseFrames[max(0, frame)])
+            selectedFrame = poseFrames[max(0, frame)]
         } else {
             let frame = !grounded ? (velocity.dy > 10 ? 17 : 18) : abs(velocity.dx) > 20 ? 4 + Int(clock * 11) % 6 : Int(clock * 3) % 4
-            player.texture = GameArt.texture(key: "snowball", frame: frame)
+            selectedFrame = frame
         }
+        player.texture = GameArt.texture(key: "snowball", frame: selectedFrame)
+        appearance.update(fruit: fruit, frame: selectedFrame, elapsed: clock, reducedMotion: store.state.settings.reducedMotion)
         player.xScale = facing; player.alpha = clock < invulnerableUntil ? (Int(clock * 12) % 2 == 0 ? 0.5 : 1) : 1
         aura.isHidden = fruit == nil && shieldUntil <= clock
         aura.strokeColor = Self.color(fruit).withAlphaComponent(shieldUntil > clock ? 0.9 : 0.4)

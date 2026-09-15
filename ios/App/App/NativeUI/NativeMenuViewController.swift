@@ -23,6 +23,11 @@ final class NativeMenuViewController: UIViewController {
                 }
                 _ = self.store.startStage(id)
             }
+            if arguments.contains("-near-fruit") {
+                var run = self.store.state.run
+                run.checkpointX = 420
+                self.store.updateRun(run)
+            }
         } else {
             self.store = store
         }

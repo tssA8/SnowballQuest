@@ -22,8 +22,9 @@ final class NativeUITests: XCTestCase {
         app.terminate()
     }
 
-    private func launchGame(stage: String = "home") {
+    private func launchGame(stage: String = "home", nearFruit: Bool = false) {
         app.launchArguments = ["-ui-testing", "-stage", stage]
+        if nearFruit { app.launchArguments.append("-near-fruit") }
         app.launch()
         XCTAssertTrue(app.buttons["menu-continue"].waitForExistence(timeout: 15))
         app.buttons["menu-continue"].tap()
@@ -93,6 +94,24 @@ final class NativeUITests: XCTestCase {
         let cost = feedback.split(separator: " ").compactMap { Int($0) }.first ?? 0
         XCTAssertGreaterThanOrEqual(cost, 25, "Holding must produce a charged shot, not the 16-energy tap")
         XCTAssertLessThanOrEqual(cost, 30)
+    }
+
+    func testWindFruitTransformsSnowballAndSwitchesBackAfterNativeCombat() {
+        launchGame(stage: "rooftop", nearFruit: true)
+        let form = app.buttons["control-fruit"]
+        XCTAssertEqual(form.value as? String, "原生雪球")
+        app.buttons["control-right"].press(forDuration: 0.55)
+        let wind = NSPredicate(format: "value == %@", "旋風")
+        expectation(for: wind, evaluatedWith: form)
+        waitForExpectations(timeout: 5)
+        let picture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        picture.name = "Wind form after real fruit pickup"; picture.lifetime = .keepAlways; add(picture)
+        app.buttons["control-attack"].tap()
+        XCTAssertEqual(form.value as? String, "旋風")
+        app.buttons["control-charge"].press(forDuration: 1.3)
+        XCTAssertEqual(form.value as? String, "旋風")
+        form.tap()
+        XCTAssertEqual(form.value as? String, "原生雪球")
     }
 
     func testDraggingOutCancelsChargeWithoutSpendingEnergy() {
