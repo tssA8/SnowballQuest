@@ -51,6 +51,9 @@ final class NativeUITests: XCTestCase {
     }
 
     func testSevenNativeStagesBootWithUsableControls() {
+        // Seven fresh launches and full-screen captures exceed the per-test
+        // default on hosted simulators; keep the allowance local to this test.
+        executionTimeAllowance = 300
         for stage in ["home", "rooftop", "basement", "parking", "foundations", "floor13", "nightark"] {
             launchGame(stage: stage)
             let window = app.windows.firstMatch.frame
