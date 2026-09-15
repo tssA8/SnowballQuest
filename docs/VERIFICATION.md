@@ -1,4 +1,29 @@
-# Swift iOS 驗證 — 2026-09-13 / 0.3.0
+# Swift iOS TestFlight 發行 — 2026-09-15 / 0.3.0 (4)
+
+**已上傳並可進行內部測試。** [發行工作流程 34935674826](https://github.com/tssA8/SnowballQuest/actions/runs/34935674826) 全部成功；簽名並上傳的來源為 `feature/native-swift-ios` 的 `a41b00265b6382f61e708c1e030d47871d8a97c8`。iPhone 開啟 TestFlight → Snowball Quest → 更新，即可安裝原生 Swift 版。
+
+## 發行驗證
+
+- Xcode 26.3 / macOS runner：17 項 NativeCore 測試、22 項 SpriteKit／遊戲測試、7 項 XCUITest 及 36 項 Python 發行工具測試通過。iPhone 17 Pro 模擬器使用 iOS 26.2。
+- 原生 UI 測試覆蓋七關啟動、至少 48 pt 且位於畫面內的操作按鈕、初始關卡鎖定、集氣消耗／取消、暫停、背景恢復與設定持久化。
+- arm64 iPhone archive、Apple Distribution 簽名、IPA 匯出及上傳成功。下載後另行驗證 IPA 的 Bundle ID `io.github.tssa8.snowballquest`、版本 `0.3.0`、build `4`、SpriteKit 引擎及 87 個隨包資源的 SHA-256；未打包 Capacitor 或 `public/index.html`。
+- Apple build ID：`ef6ee312-82d1-4be0-b435-2deda7ef9b3f`。處理狀態 `VALID`、內部測試狀態 `IN_BETA_TESTING`；已確認與既有 **Snowball Quest Internal** 群組的關聯。沿用既有簽署資料及使用者已授權的 `ITSAppUsesNonExemptEncryption=false`，未新增測試者。
+- 本機封存檔案：`releases/ios/snowball-quest-0.3.0-build-4.ipa`，2,590,539 bytes，SHA-256 `a39dbc800b28b9010da25b7eb2d20dede59d7a8004aa18e2e99e24bc1f02bb8d`。與 CI checksum 相同；下載的 artifact ZIP 也通過 GitHub artifact digest 比對。
+- Apple 狀態封存於 `releases/ios/testflight-status-0.3.0-build-4.json`。上述發行檔案只保存在本機 ignored 目錄；GitHub Actions artifact 保留七天。
+
+## 畫面檢查
+
+發行測試的應用程式元素截圖在橫向時被 XCTest 錯誤裁切，因此補充測試改用完整 `XCUIScreen` 截圖，遊戲程式沒有變更。已實際檢視 home、rooftop、basement、parking、foundations、floor13 六關完整橫向畫面：場景、美術、HUD 和左右操作區正常顯示，沒有前一種截圖的黑色裁切區。此為起始場景檢視，不代表無輔助全程通關。
+
+第一次補充測試 `34936158368` 在第七關前超過單項測試的 120 秒限制；前六關截圖保存在 `test-results/native-ios-artifact-10383676239`。修正只將這個七次啟動的測試上限設為 300 秒，後續結果以 [補充驗證工作流程 34937614715](https://github.com/tssA8/SnowballQuest/actions/runs/34937614715) 為準。此補充工作不會重新上傳已發行的 IPA。
+
+## 本次修正與驗證範圍
+
+本次修正跨平台 JSON 換行造成的資源 hash 不一致、Xcode 對動畫時間複合運算式的型別檢查逾時，以及模擬器版本選擇、啟動與 ad hoc 測試簽署。測試 teardown 現在只在真正失敗時記錄畫面，避免測試已關閉 app 後被誤判失敗。
+
+目前驗證涵蓋 CI、模擬器、下載後的 IPA 完整性及 Apple 內部測試狀態；**尚未在實體 iPhone 驗證長時間幀率、溫度、音訊、操作手感及實際舊版安裝升級**。沒有提交公開 App Store 或外部 TestFlight 審查。下方保留較早版本的歷史記錄。
+
+# Swift iOS 驗證 — 2026-09-13 / 0.3.0（首次上傳前的歷史紀錄）
 
 分支：`feature/native-swift-ios`。原生 Swift 程式、Xcode 專案、七關資源和自動測試已建立；此段在首次上傳前記錄，目前 macOS 編譯、iPhone 模擬器與 TestFlight 驗證仍待執行，不能視為已發行。
 

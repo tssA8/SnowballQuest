@@ -2,7 +2,7 @@
 
 `feature/native-swift-ios` 將 iPhone app 改為 Swift、SpriteKit 和 UIKit。七關地圖與 PNG 美術由原專案匯入；角色移動、碰撞、集氣、補血、小怪、魔王、UI、音效和存檔由 Swift 執行。App target 不連結 Capacitor，也不打包 HTML 或 JavaScript。
 
-Bundle ID 維持 `io.github.tssa8.snowballquest`，可以透過 TestFlight 更新原本的安裝。此分支使用版本 0.3.0，首次原生上傳使用 build 4。是否已通過測試及 Apple 處理，以 [驗證記錄](VERIFICATION.md) 和工作流程結果為準。
+Bundle ID 維持 `io.github.tssa8.snowballquest`，可以透過 TestFlight 更新原本的安裝。原生版本 **0.3.0 (build 4)** 已於 2026-09-15 通過測試、Apple 處理並開放給既有內部測試群組。iPhone 開啟 TestFlight → Snowball Quest → 更新即可安裝；實際驗證範圍與發行工作流程記錄見 [VERIFICATION.md](VERIFICATION.md)。
 
 ## iPhone 操作
 
