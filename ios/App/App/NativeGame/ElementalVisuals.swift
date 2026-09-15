@@ -208,6 +208,12 @@ final class ElementalProjectileVisual: SKNode {
 
     func update(elapsed: Double) {
         self.elapsed = max(0, elapsed)
+        // Keep the tip at the collision edge while the wake grows out of the muzzle.
+        // A full-length tail at birth would extend backwards through Snowball.
+        let extensionRatio = CGFloat(min(1, self.elapsed / 0.12))
+        let stretch: CGFloat = 0.28 + extensionRatio * 0.72
+        art.xScale = radius / 26 * stretch
+        art.position.x = radius * (1 - stretch)
         let t = reducedMotion ? 0 : self.elapsed
         for (index, node) in flowing.enumerated() {
             node.zRotation = CGFloat(sin(t * 17 + Double(index) * 1.8)) * (fruit == .earth ? 0.18 : 0.045)

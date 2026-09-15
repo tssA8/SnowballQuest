@@ -27,8 +27,21 @@ final class ElementalArtTests: XCTestCase {
     }
 
     private func render(_ node: SKNode, crop: CGRect, view: SKView) throws -> UIImage {
+        // A live player's world transform otherwise moves it outside this small crop.
+        // Detach only during the synchronous snapshot, then restore the real scene.
+        let parent = node.parent, position = node.position
+        node.removeFromParent(); node.position = .zero
+        defer {
+            node.position = position
+            parent?.addChild(node)
+        }
         let texture = try XCTUnwrap(view.texture(from: node, crop: crop), "SpriteKit must actually render the artwork")
-        return UIImage(cgImage: texture.cgImage())
+        let image = texture.cgImage()
+        let pixels = try XCTUnwrap(image.dataProvider?.data) as Data
+        var samples = Set<UInt8>()
+        for index in stride(from: 0, to: pixels.count, by: max(1, pixels.count / 1021)) { samples.insert(pixels[index]) }
+        XCTAssertGreaterThan(samples.count, 8, "A blank or flat-color snapshot is not valid visual evidence")
+        return UIImage(cgImage: image)
     }
 
     func testCollectingEachFruitImmediatelyChangesSnowballsRenderedAppearance() throws {
@@ -56,6 +69,7 @@ final class ElementalArtTests: XCTestCase {
         try withGame { scene, _ in
             let view = SKView(frame: CGRect(x: 0, y: 0, width: 240, height: 180))
             var pictures = Set<Data>()
+            var originalFace: Data?
             for expected in [nil] + Fruit.allCases.map({ Optional($0) }) {
                 XCTAssertEqual(scene.fruit, expected)
                 XCTAssertEqual(scene.appearance.fruit, expected)
@@ -63,6 +77,9 @@ final class ElementalArtTests: XCTestCase {
                 scene.appearance.update(fruit: expected, frame: 0, elapsed: 0, reducedMotion: true)
                 let picture = try render(scene.player, crop: CGRect(x: -55, y: -4, width: 110, height: 84), view: view)
                 pictures.insert(try XCTUnwrap(picture.pngData()))
+                let face = try render(scene.player, crop: CGRect(x: -7, y: 20, width: 14, height: 12), view: view).pngData()
+                if expected == nil { originalFace = face }
+                else { XCTAssertEqual(face, originalFace, "Elemental costumes must leave Snowball's eyes and muzzle unobscured") }
                 scene.cycleFruit()
             }
             XCTAssertEqual(pictures.count, 6, "Forms must have distinct pixels, not only different HUD labels")
@@ -152,5 +169,20 @@ final class ElementalArtTests: XCTestCase {
             attachment.name = String(format: "Elemental animation %02d", frame)
             attachment.lifetime = .keepAlways; add(attachment)
         }
+
+        // Inspect every anchor, including low landings, side attacks and concealed rolling poses.
+        let poses = SKScene(size: CGSize(width: 1280, height: 1056))
+        poses.backgroundColor = UIColor(hex: 0x182238)
+        for frame in 0..<44 {
+            let x = CGFloat(frame % 8) * 160 + 80
+            let y = CGFloat(5 - frame / 8) * 176 + 18
+            let cat = GameArt.sprite("snowball", frame: frame)
+            let form = SnowballAppearance(); cat.addChild(form)
+            form.update(fruit: .wind, frame: frame, elapsed: 0, reducedMotion: true)
+            cat.position = CGPoint(x: x, y: y); cat.setScale(2.2); poses.addChild(cat)
+            poses.label("POSE \(frame)", at: CGPoint(x: x, y: y - 8), size: 13, color: .white)
+        }
+        let anchors = XCTAttachment(image: try render(poses, crop: CGRect(origin: .zero, size: poses.size), view: view))
+        anchors.name = "All 44 poses - collar and ear alignment"; anchors.lifetime = .keepAlways; add(anchors)
     }
 }

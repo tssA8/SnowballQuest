@@ -67,7 +67,7 @@ final class NativeMenuViewController: UIViewController {
         let title = NativeTheme.label("雪球大冒險", size: 37, weight: .heavy)
         title.accessibilityTraits = .header
         hero.addArrangedSubview(title)
-        let image = UIImageView(image: GameArt.image(key: "snowball-combat", frame: 0))
+        let image = UIImageView(image: GameArt.image(key: "snowball", frame: 0))
         image.contentMode = .scaleAspectFit
         image.accessibilityLabel = "準備出發的白貓雪球"
         image.isAccessibilityElement = true
