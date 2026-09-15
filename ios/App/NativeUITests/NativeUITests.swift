@@ -11,8 +11,10 @@ final class NativeUITests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-        if testRun?.hasSucceeded == false {
-            let image = XCTAttachment(screenshot: app.screenshot())
+        // hasSucceeded is still false while teardown is running. Only capture
+        // actual failures, and use the screen if the test already closed the app.
+        if (testRun?.failureCount ?? 0) > 0 {
+            let image = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
             image.name = "Native UI failure"
             image.lifetime = .keepAlways
             add(image)
