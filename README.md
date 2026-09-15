@@ -2,6 +2,8 @@
 
 此分支 `feature/native-swift-ios` 的 iPhone 版本已改用 **Swift、SpriteKit 與 UIKit**。原生遊戲、測試及建置方式見 [Swift iOS 說明](docs/NATIVE_IOS.md)。網頁與 Android 保留 Phaser；本分支不會自動更新 GitHub Pages。TestFlight 的實際驗證狀態見 [VERIFICATION.md](docs/VERIFICATION.md)。
 
+原生 0.3.1 接入新版待機插圖與五種元素特效，普攻及其他動作共用同一套雪球本體；任務項圈與鈴鐺固定不變。新版大綱、來源素材及匯入方式見 [素材包接入記錄](docs/ART_PACK_INTAKE.md)，外觀與動畫說明見 [ELEMENTAL_ART.md](docs/ELEMENTAL_ART.md)。
+
 《雪球的祕密出勤》是一款 Phaser 橫向動作冒險遊戲。奶油灰、藍眼睛、表情有點厭世的雪球，從沙發底下的警報一路前往永夜方舟，與七位魔王和解，再邀請大家一起回家。
 
 目前提供**七關可遊玩的完整出勤流程、五種元素、補血罐頭、集氣攻擊、循序解鎖與自由巡邏**。角色戰鬥仍使用整理過的關鍵姿勢；後六關場景以 Phaser 圖形組成，尚未替換成完整的正式背景美術。完整設計目標與目前實作的差異見 [七關實作說明](docs/CAMPAIGN.md)；[PHASE1.md](docs/PHASE1.md) 保留第一關原型的歷史紀錄。

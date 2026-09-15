@@ -2,7 +2,7 @@
 
 `feature/native-swift-ios` 將 iPhone app 改為 Swift、SpriteKit 和 UIKit。七關地圖與 PNG 美術由原專案匯入；角色移動、碰撞、集氣、補血、小怪、魔王、UI、音效和存檔由 Swift 執行。App target 不連結 Capacitor，也不打包 HTML 或 JavaScript。
 
-Bundle ID 維持 `io.github.tssa8.snowballquest`，可以透過 TestFlight 更新原本的安裝。原生版本 **0.3.0 (build 4)** 已於 2026-09-15 通過測試、Apple 處理並開放給既有內部測試群組。iPhone 開啟 TestFlight → Snowball Quest → 更新即可安裝；實際驗證範圍與發行工作流程記錄見 [VERIFICATION.md](VERIFICATION.md)。
+Bundle ID 維持 `io.github.tssa8.snowballquest`，可以透過 TestFlight 更新原本的安裝。原生版本 **0.3.1 (build 5)** 已於 2026-09-15 通過測試、Apple 處理並開放給既有內部測試群組。iPhone 開啟 TestFlight → Snowball Quest → 更新即可安裝；實際驗證範圍與發行工作流程記錄見 [VERIFICATION.md](VERIFICATION.md)。
 
 ## iPhone 操作
 
@@ -16,6 +16,8 @@ Bundle ID 維持 `io.github.tssa8.snowballquest`，可以透過 TestFlight 更�
 介面使用 iOS safe area，觸控區至少 48 pt，支援橫向左右旋轉。設定可控制音樂、音效、震動和減少動態效果。外接鍵盤支援方向鍵／A、D、Space、J、K、Q、Shift 和 Esc。VoiceOver 也可對集氣按鈕執行「滿蓄力攻擊」操作。
 
 七關保留循序解鎖、五種元素、和解對話、永久獎勵、飛船名冊、重玩和最終回家結局。素材仍採用整理過的角色關鍵姿勢和圖形場景，原生版沒有額外重繪正式動畫。主線不要求收齊星星。
+
+0.3.1 的主選單使用提供的完整待機插圖。START 開啟關卡星圖，CONTINUE 接續進度；左上角保留同伴與設定。吃果實或切換元素會立即更新腳掌、尾巴和局部耳緣特效，所有動作仍使用同一套雪球本體與固定任務項圈。發射和命中特效採用素材包的火焰、風刃、水波、電弧及岩片；製作方式與未補齊的逐格動畫見 [ELEMENTAL_ART.md](ELEMENTAL_ART.md)。
 
 第一關的選擇性探索配合觸控簡化：寶箱星星可直接收集，原隧道入口改成可跳躍階梯。網頁版的物件遞送對話未搬進這個介面；七關主線與每關三顆星仍可完成。
 

@@ -1,3 +1,27 @@
+# Swift iOS TestFlight 發行與元素美術驗證 — 2026-09-15 / 0.3.1 (5)
+
+新版待機圖、五種元素特效、同一套雪球本體的普通攻擊，已在 `feature/native-swift-ios` 實作。主要素材提交為 `73fc5c696b7bf5e6c30a2369ff3031ba9a3f4427`；實際截圖檢查發現左上角工具按鈕文字換行，再由 `a975be74211063e17d320a409d1278c9518c5fe8` 修正圖示、字級與內距。
+
+## 素材與模擬器證據
+
+- [原生驗證 34947383898](https://github.com/tssA8/SnowballQuest/actions/runs/34947383898) 成功：17 項 NativeCore、28 項 SpriteKit／美術、9 項 XCUITest、36 項 Python 發行工具測試通過，並完成 unsigned arm64 iPhone archive 驗證。
+- 五種果實實際拾取後，外觀立刻改變；六種形態的圖片互異，中央臉部像素完全一致，深色項圈／金色鈴鐺也維持一致。普攻、衝刺、集氣與受傷持續引用同一套 44 格雪球 atlas。向左發射、暫停凍結及效果清理測試通過。
+- 新素材包 90 個來源 SHA-256、32 個特效片段與 95 個原生 bundle 資源皆通過檢查。使用者指定的完整待機圖保持原檔；UI 測試確認 START／CONTINUE 操作及至少 48pt 的畫面內觸控區。
+- 已實際檢視模擬器輸出的元素動畫影格 04、08、44 姿勢定位圖、風果實拾取畫面與待機畫面。12 個實際 SpriteKit 影格另以 16fps 重複編碼為六秒 MP4；沒有使用另一套網頁程式模擬效果。風果實拾取截圖包含短暫提示，部分身體被提示遮住，完整外觀另由 44 姿勢圖與像素測試核對。
+- 完整測試 artifact `10388486560` 已下載並通過 GitHub digest 比對，ZIP SHA-256 為 `2645dbbb8a40e5bb5af893c9c8c06f92c32856de60f2c33890a1726830fee39a`。檔案位於本機 ignored 的 `releases/ios/native-34947383898-10388486560.zip`；解出的截圖在 `test-results/native-ios-artifact-10388486560`，影片在 `test-results/elemental-preview-0.3.1/elemental-animation.mp4`。
+
+## 發行狀態
+
+**已上傳並可進行內部測試。** [TestFlight 發行 34949159347](https://github.com/tssA8/SnowballQuest/actions/runs/34949159347) 以 `a975be74211063e17d320a409d1278c9518c5fe8` 再次通過 54 項原生測試與 36 項 Python 工具測試，完成簽署、上傳與 Apple 可用性驗證。同提交的重複 push CI `34949126633` 已取消，由發行流程執行完整相同測試。
+
+- Apple build ID：`e1b56455-9ec5-4778-8c97-b972779e8e4c`；`VALID`、`IN_BETA_TESTING`，與既有 **Snowball Quest Internal** 群組的關聯已確認。iPhone 開啟 TestFlight → Snowball Quest → 更新，即可安裝 **0.3.1（5）**。
+- 下載後獨立核對 IPA：Bundle ID `io.github.tssa8.snowballquest`、版本 `0.3.1`、build `5`、SpriteKit 引擎及全部 95 個資源 SHA-256 與來源一致，沒有 Capacitor 或打包的網頁程式。沿用已授權的加密宣告，未新增測試者。
+- `releases/ios/snowball-quest-0.3.1-build-5.ipa`：5,210,003 bytes，SHA-256 `6aee5b5a851168f9228a7c18ac8d7226ce13e39132029a5511f80d7a4ac6a232`。IPA artifact `10389311279` 的 ZIP digest 為 `96082f85bf28b31ef522da9dcef2a13b8c0495667b14e4908ac129e03c255015`，下載比對通過。
+- Apple 回報與本機檔案驗證分別存於 `releases/ios/testflight-status-0.3.1-build-5.json`、`releases/ios/verification-0.3.1-build-5.json`。本機發行檔案均位於 ignored 目錄，GitHub artifacts 保留七天。
+- 發行測試 artifact `10389028558` 完整 ZIP 已通過 digest 比對：`6070a171b55f5bfdd0816605305cb01fcf69aea81a91d6e63dce6f6310272584`。已實際開啟最終待機截圖，確認「同伴／設定」均為單行，插圖與 START／CONTINUE 完整顯示。最終截圖在 `test-results/native-ios-artifact-10389028558`；同一預覽目錄的 MP4 及 `source.json` 已更新為此發行測試的 12 個實際影格。UI 截圖的 EXIF 橫向資訊只在檢視副本中正規化，原始截圖保留。
+
+尚未驗證實體 iPhone 的長時間效能、音效、溫度及操作手感。此更新僅接入原生 iOS 分支；網頁／Android 的執行流程保留。新來源圖是 key pose／VFX 設計稿，32 個片段以程式產生運動，不是新手繪的完整逐格動畫。下方保留前版發行歷史。
+
 # Swift iOS TestFlight 發行 — 2026-09-15 / 0.3.0 (4)
 
 **已上傳並可進行內部測試。** [發行工作流程 34935674826](https://github.com/tssA8/SnowballQuest/actions/runs/34935674826) 全部成功；簽名並上傳的來源為 `feature/native-swift-ios` 的 `a41b00265b6382f61e708c1e030d47871d8a97c8`。iPhone 開啟 TestFlight → Snowball Quest → 更新，即可安裝原生 Swift 版。

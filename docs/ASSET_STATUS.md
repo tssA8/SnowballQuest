@@ -1,5 +1,15 @@
 # Asset inventory and production status
 
+## Native iOS update — 2026-09-15
+
+The supplied updated pack was checked against all 90 manifest hashes. The native iOS game keeps the approved 44-frame Snowball body for every action, with a fixed dark mission collar and gold bell. Five elemental atlases contain 32 measured source VFX fragments; appearance, projectiles and impacts use these fragments. The supplied 1672 × 941 title illustration is displayed intact with native START / CONTINUE hit targets. The iOS bundle now contains 95 verified PNG / JSON resources.
+
+See [ART_PACK_INTAKE.md](ART_PACK_INTAKE.md) for the new MD, preserved source files and import rules, [ELEMENTAL_ART.md](ELEMENTAL_ART.md) for the runtime behavior, and [VERIFICATION.md](VERIFICATION.md) for actual simulator and release results. These integrations apply to `feature/native-swift-ios`; the web / Android implementation retains its earlier artwork flow. The suggested 67 new combat frames remain future artwork, not a completed animation atlas.
+
+The following section preserves the original Home intake history; its deferred-scope and placeholder descriptions are not the current seven-stage native iOS inventory.
+
+## Original Home intake — 2026-09-09
+
 Intake date: 2026-09-09. Read against the complete `SNOWBALL_QUEST_HANDOFF.md`, including sections 64–76.
 
 **At intake, all 14 supplied PNGs were measured and visually inspected.** They cover the 12 approved groups, an overview, and an alternate background sheet. Every source is **1536 × 1024 actual pixels**. None is loaded directly as a production atlas or flattened gameplay background. The player reference now supplies measured poses and original silhouettes for a normalized runtime sheet, as described below.
