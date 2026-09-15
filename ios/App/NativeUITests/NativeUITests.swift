@@ -53,6 +53,8 @@ final class NativeUITests: XCTestCase {
     func testSevenNativeStagesBootWithUsableControls() {
         for stage in ["home", "rooftop", "basement", "parking", "foundations", "floor13", "nightark"] {
             launchGame(stage: stage)
+            let window = app.windows.firstMatch.frame
+            XCTAssertGreaterThan(window.width, window.height, "The game must use landscape layout")
             for name in ["left", "right", "jump", "attack", "charge", "dash", "pause", "fruit"] {
                 let control = app.buttons["control-\(name)"]
                 XCTAssertTrue(control.isHittable, "\(stage) \(name) must be reachable")
@@ -63,7 +65,9 @@ final class NativeUITests: XCTestCase {
             let left = app.buttons["control-right"].frame
             let actions = app.buttons["control-dash"].frame
             XCTAssertFalse(left.intersects(actions), "Movement and combat controls must not overlap")
-            let image = XCTAttachment(screenshot: app.screenshot())
+            // Application-element cropping can use portrait coordinates after a
+            // landscape launch. Preserve the complete simulator screen instead.
+            let image = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
             image.name = "Native \(stage) landscape"
             image.lifetime = .keepAlways
             add(image)
