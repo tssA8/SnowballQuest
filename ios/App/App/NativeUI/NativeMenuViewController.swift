@@ -74,6 +74,20 @@ final class NativeMenuViewController: UIViewController {
         tools.axis = .horizontal; tools.spacing = 8; tools.distribution = .fillEqually
         tools.addArrangedSubview(NativeTheme.button("同伴", symbol: "person.3.fill", id: "menu-crew") { [weak self] in self?.showCrew() })
         tools.addArrangedSubview(NativeTheme.button("設定", symbol: "slider.horizontal.3", id: "menu-settings") { [weak self] in self?.showSettings() })
+        for case let button as UIButton in tools.arrangedSubviews {
+            var configuration = button.configuration
+            configuration?.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 10, bottom: 8, trailing: 10)
+            configuration?.imagePadding = 6
+            configuration?.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 16, weight: .semibold)
+            configuration?.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { attributes in
+                var result = attributes
+                result.font = .systemFont(ofSize: 14, weight: .semibold)
+                return result
+            }
+            configuration?.titleLineBreakMode = .byClipping
+            button.configuration = configuration
+            button.titleLabel?.numberOfLines = 1
+        }
         view.addSubview(tools)
         refreshStatus()
     }
@@ -93,7 +107,7 @@ final class NativeMenuViewController: UIViewController {
         startButton.frame = hitArea(CGRect(x: 527, y: 757, width: 305, height: 99))
         continueButton.frame = hitArea(CGRect(x: 862, y: 757, width: 307, height: 99))
         let safe = view.safeAreaLayoutGuide.layoutFrame
-        tools.frame = CGRect(x: safe.minX + 10, y: safe.minY + 8, width: min(220, safe.width * 0.32), height: 48)
+        tools.frame = CGRect(x: safe.minX + 10, y: safe.minY + 8, width: min(196, safe.width * 0.32), height: 48)
     }
 
     override func viewWillAppear(_ animated: Bool) {
