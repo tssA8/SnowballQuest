@@ -1,0 +1,1022 @@
+{
+  "package": "SnowballQuest_2D_Art_Pack",
+  "version": 1,
+  "generated_asset_kind": "pixel-art source sheets and runtime placeholders",
+  "runtime_note": "Source sheets require final Aseprite cleanup and animation in-between frames. Files under runtime/ are normalized placeholders with fixed cells.",
+  "file_count": 90,
+  "files": [
+    {
+      "path": "README.md",
+      "size_bytes": 1891,
+      "sha256": "80029a041b355e5d622889981bac99a531b98f5c23fd06019b5b682840b1043f"
+    },
+    {
+      "path": "SnowballQuest_Game_Design.md",
+      "size_bytes": 31509,
+      "sha256": "b23a44b65745a46c013f6d4a4275c058353e8971c1964b7fde86efd23d1019b5"
+    },
+    {
+      "path": "characters/bosses/BOSSES_01_03_GENERATION_NOTES.md",
+      "size_bytes": 2813,
+      "sha256": "00a5195241d75aa430e50f6f4a3a78df8a5d95884f860d519fe1dfd610db672a"
+    },
+    {
+      "path": "characters/bosses/BOSS_SHEETS_04_07.md",
+      "size_bytes": 3097,
+      "sha256": "2ebe6766e1e23c07302cdfd8629e375e4457075c4498f94ad7c7cfd5563cebf5"
+    },
+    {
+      "path": "characters/bosses/boss_01_wrench.png",
+      "size_bytes": 1893259,
+      "sha256": "00d1aa36e63e27d2b1dc0344a57b7bee93fdd3bc647be244d5d87bd25d3fbd11"
+    },
+    {
+      "path": "characters/bosses/boss_02_galeplume.png",
+      "size_bytes": 2168798,
+      "sha256": "9f0d1194addb2fef1366ca55678d605e34e825e880c3fa03e7057b40621eae3f"
+    },
+    {
+      "path": "characters/bosses/boss_03_bobo.png",
+      "size_bytes": 2070653,
+      "sha256": "632713fc2df4e65e0b7158679806918bf62c69aa4c8add7bcba3e8cd612493a2"
+    },
+    {
+      "path": "characters/bosses/boss_04_volt.png",
+      "size_bytes": 1169165,
+      "sha256": "1b1021fef4a7023238ac0ba2494b43413f40da337d0ab99ae2c969fe25ceef0b"
+    },
+    {
+      "path": "characters/bosses/boss_05_tato.png",
+      "size_bytes": 1559077,
+      "sha256": "43a34d96b9f8ee47fe7f1b96aba116a6cf8c8caef4b220e37687d9630de1c2c6"
+    },
+    {
+      "path": "characters/bosses/boss_06_bubble_dragon_family.png",
+      "size_bytes": 1492731,
+      "sha256": "1cb79daab2f95fe22b798b3580a5c083b6af0bb527dfab111d6424c5d6e55558"
+    },
+    {
+      "path": "characters/bosses/boss_07_nightink.png",
+      "size_bytes": 1460726,
+      "sha256": "295afd4b1873cbb830e8305a25f3c8f57146eed8562fba905c0bf43cf9da926b"
+    },
+    {
+      "path": "characters/enemies/GENERATION_NOTES.md",
+      "size_bytes": 3271,
+      "sha256": "4f97aec16e01e2f7d81c2b8c4b4e59d9593da325ef8db0fb6048fc42ed603a59"
+    },
+    {
+      "path": "characters/enemies/enemy_01_vacuum_drone.png",
+      "size_bytes": 1369238,
+      "sha256": "e9d13ff405692f6a278e210ae77c61945f895e113d749314716d4e5767d85e7f"
+    },
+    {
+      "path": "characters/enemies/enemy_02_clockwork_mouse.png",
+      "size_bytes": 1620800,
+      "sha256": "3788a39b0d1f43be1f9582b9ad28dae9501fdfa43edf31fe8bd62ef5770d8dff"
+    },
+    {
+      "path": "characters/enemies/enemy_03_pigeon_scout.png",
+      "size_bytes": 1623331,
+      "sha256": "c77149740c71bd14f959957e27377f9298b6e37e07a5264578ecb58a568c73dd"
+    },
+    {
+      "path": "characters/enemies/enemy_04_bubble_slime.png",
+      "size_bytes": 1516983,
+      "sha256": "e7171e18d11893257c54c889d7371629a71e7ce137fa1078ca232bdbcb656c18"
+    },
+    {
+      "path": "characters/enemies/enemy_05_battery_beetle.png",
+      "size_bytes": 1559590,
+      "sha256": "e9c935ea279b5ff717b1644d60e4be87a3af64ace162c5b6343c62326e18acc2"
+    },
+    {
+      "path": "characters/enemies/enemy_06_miner_mole.png",
+      "size_bytes": 1586831,
+      "sha256": "b39230366fa94abdf175e525ddb1ea0253fe526b5a9808ab52d9deb8af58bc32"
+    },
+    {
+      "path": "characters/enemies/enemy_07_baby_bubble_dragon.png",
+      "size_bytes": 1744821,
+      "sha256": "6e15977f55f82a32a40d5c83b2c0a8d97d995d41bee75e3b29f0338310678d21"
+    },
+    {
+      "path": "characters/enemies/enemy_08_shadow_fuzz.png",
+      "size_bytes": 1413402,
+      "sha256": "9f7c27e5e8d52719b4202b63274d3a763361bad8e8b66f759826dc44c4742ca9"
+    },
+    {
+      "path": "characters/snowball/ELEMENT_GENERATION_NOTES.md",
+      "size_bytes": 2608,
+      "sha256": "c9995022ac0f77ab295f73466a734fd7d9ac6e7f8dd7bb814640186933278f48"
+    },
+    {
+      "path": "characters/snowball/GENERATION_NOTES.md",
+      "size_bytes": 3795,
+      "sha256": "03b6c3331ef72d2843ca5366aed1a186f686890c17c179dd4728fec1fdc9dfae"
+    },
+    {
+      "path": "characters/snowball/snowball_combat_sheet.png",
+      "size_bytes": 2919715,
+      "sha256": "1196a10e2e338850ebe294ccaef1986e9001d053a8c0214ba731780b40e9729a"
+    },
+    {
+      "path": "characters/snowball/snowball_earth_sheet.png",
+      "size_bytes": 3009999,
+      "sha256": "4f2570d4a64bc25ff1c635e2a2dcd2ee7132d4e5deb9fe865dbd76a2c6a5d27c"
+    },
+    {
+      "path": "characters/snowball/snowball_fire_sheet.png",
+      "size_bytes": 2136470,
+      "sha256": "5b14ff53955ea32fa04bf04bc74f9359ba65147f94e354a2cea925860114dbed"
+    },
+    {
+      "path": "characters/snowball/snowball_lightning_sheet.png",
+      "size_bytes": 3723632,
+      "sha256": "204ce62583d42312c2670310b6d7de11929914c1ebf4cf24de22103a4c1cdab5"
+    },
+    {
+      "path": "characters/snowball/snowball_movement_sheet.png",
+      "size_bytes": 3241673,
+      "sha256": "a321f950831b44b9502bcaecc201309c4b9b0c69239bb41cb10e1b7b0d6af109"
+    },
+    {
+      "path": "characters/snowball/snowball_turnaround_expressions.png",
+      "size_bytes": 1996534,
+      "sha256": "172e77d05bc13d3b9eb9aa0839eb5b840f0ab331313a1893e8a4866acee58abd"
+    },
+    {
+      "path": "characters/snowball/snowball_water_sheet.png",
+      "size_bytes": 2875746,
+      "sha256": "92bea2645cf562c41659b0767a941b24fcf062cbcc97de47647f636f05a91903"
+    },
+    {
+      "path": "characters/snowball/snowball_wind_sheet.png",
+      "size_bytes": 3414698,
+      "sha256": "fed50299f21807a1305364431a1cc59d45162eb870535049bdd7642ae10d4ce9"
+    },
+    {
+      "path": "characters/support/GENERATION_NOTES.md",
+      "size_bytes": 807,
+      "sha256": "c4238049f71bee1bdd6efa44187d732213f9c96eedbfa781dd799fe5718ef5c5"
+    },
+    {
+      "path": "characters/support/support_cast_sheet.png",
+      "size_bytes": 1532624,
+      "sha256": "235f7bda2cce6cf82d6a225b99c0d111ef0a84759bf9dc24e973bb3743f1990f"
+    },
+    {
+      "path": "contact_sheets/bosses_overview.png",
+      "size_bytes": 1177771,
+      "sha256": "0416d32964b1c53806aeaa4f2b3b05328b10241f37bc3adb39f81cc9903d4491"
+    },
+    {
+      "path": "contact_sheets/enemies_overview.png",
+      "size_bytes": 2344186,
+      "sha256": "e3eb6dc7db07896fa14ffbccc14c5582f7952fc29cfe81e22cf3277a1ded73ab"
+    },
+    {
+      "path": "contact_sheets/enemy_runtime_preview.png",
+      "size_bytes": 456819,
+      "sha256": "19fc2826e8bd50262ef436288fc4d3983ccef6aae802cc24c484d7c6330baee5"
+    },
+    {
+      "path": "contact_sheets/snowball_core_overview.png",
+      "size_bytes": 1503606,
+      "sha256": "ac901ded4f4d5538fae09bf0cc06c75fa657f5d9b9a34d25445634b3f826f2d4"
+    },
+    {
+      "path": "contact_sheets/snowball_elements_overview.png",
+      "size_bytes": 1014120,
+      "sha256": "10ddf2b57a8b17dd6fa49adc4783862c6f634cce583bfa5af97b48e34239455b"
+    },
+    {
+      "path": "contact_sheets/support_ui_overview.png",
+      "size_bytes": 2545873,
+      "sha256": "b6cc8e9ef02fad695121a1b06039c318c012f46f7ed5beae3cc920666ed2a287"
+    },
+    {
+      "path": "qa/snowball_earth_dark.jpg",
+      "size_bytes": 257945,
+      "sha256": "45df6e7e5308a6408fb60ad7be032d2a7c08cd816b021e5ab67bb602ce70a9e0"
+    },
+    {
+      "path": "qa/snowball_fire_dark.jpg",
+      "size_bytes": 540006,
+      "sha256": "27ae1818be8609a5e39eb3be7bbee064e229295faa6d8b41af473f06eef1251a"
+    },
+    {
+      "path": "qa/snowball_fire_light.jpg",
+      "size_bytes": 564060,
+      "sha256": "176091f9684cafd0ea667baba8540cf7fabfcdc9415b4b79f6086c913498157b"
+    },
+    {
+      "path": "qa/snowball_lightning_dark.jpg",
+      "size_bytes": 259177,
+      "sha256": "9fce3f51ac9d09433f438aa02798182cadce3ae67bbeb3bd9cc5d5cb3b6cd9d3"
+    },
+    {
+      "path": "qa/snowball_water_dark.jpg",
+      "size_bytes": 599680,
+      "sha256": "307dc3c9b736c4b94edc33480ab924e91bd668b27617fe91e29f8176668c3f21"
+    },
+    {
+      "path": "qa/snowball_water_light.jpg",
+      "size_bytes": 647610,
+      "sha256": "553dc871db17407670c69601e56070a8d784dbf47a4a07a7a22a228d48710aa9"
+    },
+    {
+      "path": "qa/snowball_wind_dark.jpg",
+      "size_bytes": 259789,
+      "sha256": "eef453ebe6ce0def9c8bb86808aae51649cb146d90bceebbf284b98063dd984e"
+    },
+    {
+      "path": "reference/bosses_3d_lineup_concept.png",
+      "size_bytes": 1971511,
+      "sha256": "85d0603977e2f5c9b4b6aa3b0843ab0c3bfd43a1ff882c60708ab1c3322fe483"
+    },
+    {
+      "path": "reference/snowball_3d_element_concept.png",
+      "size_bytes": 1932183,
+      "sha256": "e8364a674fc977d9adaa1a376d8c8d02a3a7f50fa0ea408f5699a773433d5332"
+    },
+    {
+      "path": "runtime/bosses/README.md",
+      "size_bytes": 1688,
+      "sha256": "fd9b3e81d2615c38d0d0dfa30d465539f68550b6267d58b81c0de21dd862be22"
+    },
+    {
+      "path": "runtime/bosses/boss_01_wrench_atlas.json",
+      "size_bytes": 3391,
+      "sha256": "76dbc6459859d0e17da09ef7bf5b4e333ead3d88180de2aa39ea1c9ea56ec74e"
+    },
+    {
+      "path": "runtime/bosses/boss_01_wrench_atlas.png",
+      "size_bytes": 155478,
+      "sha256": "3d9a33227934e33f2d48218059a360bbe54d18f65ab91f8c22f32f02265c2c2d"
+    },
+    {
+      "path": "runtime/bosses/boss_02_galeplume_atlas.json",
+      "size_bytes": 3394,
+      "sha256": "dbff9b46d53ff55232b89ecea71e59d4e0a7067ffca91878a250f1268a096d2d"
+    },
+    {
+      "path": "runtime/bosses/boss_02_galeplume_atlas.png",
+      "size_bytes": 173300,
+      "sha256": "a4617a24e4482bfad206128622743015c7f6479d4c75fd610a09d30a802ad449"
+    },
+    {
+      "path": "runtime/bosses/boss_03_bobo_atlas.json",
+      "size_bytes": 3389,
+      "sha256": "78fb94df46daa20d000274e6ad2cbec8682b64aad30fc7c48ac17768e0d74c98"
+    },
+    {
+      "path": "runtime/bosses/boss_03_bobo_atlas.png",
+      "size_bytes": 172224,
+      "sha256": "14dd3a15136a01aac176c92c19a4bbdc843c9d0804bbb7d2e12edac3f6df099d"
+    },
+    {
+      "path": "runtime/bosses/boss_04_volt_atlas.json",
+      "size_bytes": 3405,
+      "sha256": "c5a7df441e4033a8bbb4c0f2ce124008d33960ebe558ff257fbb6567fdf5ffb3"
+    },
+    {
+      "path": "runtime/bosses/boss_04_volt_atlas.png",
+      "size_bytes": 148259,
+      "sha256": "772adb08c1ddb95b4ef1bc0245ae74dabcb63caaa5b6d543d2e54783cdddc76e"
+    },
+    {
+      "path": "runtime/bosses/boss_05_tato_atlas.json",
+      "size_bytes": 3405,
+      "sha256": "daf92be8be83ad52b6b6506ef5c0085db345bd2c89bf36bc0a216bbcee58137a"
+    },
+    {
+      "path": "runtime/bosses/boss_05_tato_atlas.png",
+      "size_bytes": 174220,
+      "sha256": "f1a4965a0432ba244389d11b7e7ffa671055cd7302d2cbea8520b7e101403a9f"
+    },
+    {
+      "path": "runtime/bosses/boss_06_bubble_dragon_family_atlas.json",
+      "size_bytes": 3423,
+      "sha256": "0267b32c6d625e0687667f120cb1e9b13fd4db33224abe192ddf7a6c2d82b374"
+    },
+    {
+      "path": "runtime/bosses/boss_06_bubble_dragon_family_atlas.png",
+      "size_bytes": 300975,
+      "sha256": "262fe445e94ad220a80f9392d871a4c9357e26095efeb229c501e115632091d6"
+    },
+    {
+      "path": "runtime/bosses/boss_07_nightink_atlas.json",
+      "size_bytes": 3411,
+      "sha256": "0366e5b0ed98cf2708c5fbd2ccf16b90b41860aac43a76f09c8009347abb529d"
+    },
+    {
+      "path": "runtime/bosses/boss_07_nightink_atlas.png",
+      "size_bytes": 318851,
+      "sha256": "f27ea795f44913950ce6a0fc984d854fe287d96f4a60c130420167af69e1d66c"
+    },
+    {
+      "path": "runtime/enemies/README.md",
+      "size_bytes": 1410,
+      "sha256": "f79cf0e829cae9708b86a93d9b35054f6f94870742e3a509808d35c10228f236"
+    },
+    {
+      "path": "runtime/enemies/enemy_01_vacuum_drone.json",
+      "size_bytes": 1823,
+      "sha256": "afb21fc9a6f7f7db513b4b5253a681611694463122b8e4a4ffeeffea1dc741fb"
+    },
+    {
+      "path": "runtime/enemies/enemy_01_vacuum_drone.png",
+      "size_bytes": 18261,
+      "sha256": "17f5885a5255f61f52231bc84fb965d11cbf4cfabca3bf50108f7f4bd3d9adc6"
+    },
+    {
+      "path": "runtime/enemies/enemy_02_clockwork_mouse.json",
+      "size_bytes": 1826,
+      "sha256": "71e1f4707d1075ed36c2b4a1daff00f651ea40a89c6dcf3ddfadbb2e4c3e7d25"
+    },
+    {
+      "path": "runtime/enemies/enemy_02_clockwork_mouse.png",
+      "size_bytes": 25937,
+      "sha256": "fe12003e5eb1f8e7006dd320e79b1bb4f26c16ffa8ec3d199c8f40094d3dc888"
+    },
+    {
+      "path": "runtime/enemies/enemy_03_pigeon_scout.json",
+      "size_bytes": 1823,
+      "sha256": "070dd9b5a78598ae4c02b2e53476745083870f412cef3f3997244e2847ac0470"
+    },
+    {
+      "path": "runtime/enemies/enemy_03_pigeon_scout.png",
+      "size_bytes": 26100,
+      "sha256": "d347b78be4853036d08d13b6aad9dbf1dc37631aea3caaf3f4192488b8fe51d3"
+    },
+    {
+      "path": "runtime/enemies/enemy_04_bubble_slime.json",
+      "size_bytes": 1823,
+      "sha256": "cac955d884c73b296079f84b5750d5878c98106c954e6212353ac2ac1e22471c"
+    },
+    {
+      "path": "runtime/enemies/enemy_04_bubble_slime.png",
+      "size_bytes": 25090,
+      "sha256": "863ba2df841e6519d93eed5866db49ae502f7b0ad9762fe37f9d8ab16fe85d8d"
+    },
+    {
+      "path": "runtime/enemies/enemy_05_battery_beetle.json",
+      "size_bytes": 1825,
+      "sha256": "d2b5829041dac551a2e1fb5c0d51735b63cfe7a9318ae59db9ba00a0b99690e4"
+    },
+    {
+      "path": "runtime/enemies/enemy_05_battery_beetle.png",
+      "size_bytes": 23546,
+      "sha256": "52bd13a960a0eef47ae7bad912497475bd6b8bed2d5715efcfa5b7a88a723888"
+    },
+    {
+      "path": "runtime/enemies/enemy_06_miner_mole.json",
+      "size_bytes": 1821,
+      "sha256": "24ee1d6f6d261897bb62b4b18dc4e4a2e0ba848260932e8d190569d0ae7a28cf"
+    },
+    {
+      "path": "runtime/enemies/enemy_06_miner_mole.png",
+      "size_bytes": 26931,
+      "sha256": "882c70db3c3dc09ce8f83d0744452a97e272daa4d50b00ccd197dda749e621e0"
+    },
+    {
+      "path": "runtime/enemies/enemy_07_baby_bubble_dragon.json",
+      "size_bytes": 1829,
+      "sha256": "2eaf124e3e753a04986fb4fd1267b86b5e7dd1ff0758003511ab7e5071206d31"
+    },
+    {
+      "path": "runtime/enemies/enemy_07_baby_bubble_dragon.png",
+      "size_bytes": 29916,
+      "sha256": "8cec3059dd0c79589ea2a813428172158c783edf765fc2f2e67b030bdebe5f2b"
+    },
+    {
+      "path": "runtime/enemies/enemy_08_shadow_fuzz.json",
+      "size_bytes": 1822,
+      "sha256": "e4073746f435511961328ecce552b0b5fe36dfc58e21864c88c0f4b1e3b208a8"
+    },
+    {
+      "path": "runtime/enemies/enemy_08_shadow_fuzz.png",
+      "size_bytes": 19961,
+      "sha256": "863f54c15c394418b8c30947871c2724a1a89274313bf7e8532e13b735c85fc9"
+    },
+    {
+      "path": "runtime/snowball/README.md",
+      "size_bytes": 4881,
+      "sha256": "15328992c189518cb22fce8fcfa8261cac6681f3de4b2204b327d14d8d895d1e"
+    },
+    {
+      "path": "runtime/snowball/snowball_existing_44f.json",
+      "size_bytes": 18954,
+      "sha256": "c7b0b47f40291365dec98a059e4030ac44cb45344701ce7758e6a5a963dbcf2b"
+    },
+    {
+      "path": "runtime/snowball/snowball_existing_44f.png",
+      "size_bytes": 156400,
+      "sha256": "6bcc9a3548ba8aee135a51c126041a024fdff89732ffe6ed8038905ac3d811d7"
+    },
+    {
+      "path": "tools/build_asset_manifest.py",
+      "size_bytes": 2686,
+      "sha256": "0b520eb5af0da7b30dc251195b634fa8838537eeb6ab7959ed07061ccda4172c"
+    },
+    {
+      "path": "tools/validate_assets.py",
+      "size_bytes": 4135,
+      "sha256": "33d3d3dca09821086cb148591d4a6ce25df788120e3eb8984c9268268c7edf1b"
+    },
+    {
+      "path": "ui/GENERATION_NOTES.md",
+      "size_bytes": 1837,
+      "sha256": "5a0206f5d942a15fc1fe7d9403d3b0c47d8239c9546f3d9075a95367dbfa0e71"
+    },
+    {
+      "path": "ui/ability_status_icons.png",
+      "size_bytes": 1897929,
+      "sha256": "f1468dd219ab66bbfea4878a2974459dca3416afa4e2b2f62f2b04e6d4bd5e2b"
+    },
+    {
+      "path": "ui/boss_badges_and_collectibles.png",
+      "size_bytes": 2132914,
+      "sha256": "6d0cfa61880b6bf089844ef0fe62198d52b4a22e63bb50754f11a4d61ae08226"
+    },
+    {
+      "path": "ui/dialogue_portraits.png",
+      "size_bytes": 2167708,
+      "sha256": "c14eace57e666492bb4ede099d2fd4394a20fa2923b54a94a8e03a7f7650c249"
+    },
+    {
+      "path": "ui/fruit_pickups_icons.png",
+      "size_bytes": 1655536,
+      "sha256": "d88bdb183c69244e663b4cfe17fde621a5659e5894911cc10d8a0f97ced5d7a6"
+    },
+    {
+      "path": "ui/ship_ai_and_map_icons.png",
+      "size_bytes": 1406888,
+      "sha256": "1c6087259860a1e90c040657bc6a5ca36954df5e8f0644f1b76c0c161e09bc23"
+    }
+  ],
+  "png_count": 53,
+  "pngs": [
+    {
+      "path": "characters/bosses/boss_01_wrench.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 1893259,
+      "sha256": "00d1aa36e63e27d2b1dc0344a57b7bee93fdd3bc647be244d5d87bd25d3fbd11"
+    },
+    {
+      "path": "characters/bosses/boss_02_galeplume.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 2168798,
+      "sha256": "9f0d1194addb2fef1366ca55678d605e34e825e880c3fa03e7057b40621eae3f"
+    },
+    {
+      "path": "characters/bosses/boss_03_bobo.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 2070653,
+      "sha256": "632713fc2df4e65e0b7158679806918bf62c69aa4c8add7bcba3e8cd612493a2"
+    },
+    {
+      "path": "characters/bosses/boss_04_volt.png",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 1169165,
+      "sha256": "1b1021fef4a7023238ac0ba2494b43413f40da337d0ab99ae2c969fe25ceef0b"
+    },
+    {
+      "path": "characters/bosses/boss_05_tato.png",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 1559077,
+      "sha256": "43a34d96b9f8ee47fe7f1b96aba116a6cf8c8caef4b220e37687d9630de1c2c6"
+    },
+    {
+      "path": "characters/bosses/boss_06_bubble_dragon_family.png",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 1492731,
+      "sha256": "1cb79daab2f95fe22b798b3580a5c083b6af0bb527dfab111d6424c5d6e55558"
+    },
+    {
+      "path": "characters/bosses/boss_07_nightink.png",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 1460726,
+      "sha256": "295afd4b1873cbb830e8305a25f3c8f57146eed8562fba905c0bf43cf9da926b"
+    },
+    {
+      "path": "characters/enemies/enemy_01_vacuum_drone.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 1369238,
+      "sha256": "e9d13ff405692f6a278e210ae77c61945f895e113d749314716d4e5767d85e7f"
+    },
+    {
+      "path": "characters/enemies/enemy_02_clockwork_mouse.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 1620800,
+      "sha256": "3788a39b0d1f43be1f9582b9ad28dae9501fdfa43edf31fe8bd62ef5770d8dff"
+    },
+    {
+      "path": "characters/enemies/enemy_03_pigeon_scout.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 1623331,
+      "sha256": "c77149740c71bd14f959957e27377f9298b6e37e07a5264578ecb58a568c73dd"
+    },
+    {
+      "path": "characters/enemies/enemy_04_bubble_slime.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 1516983,
+      "sha256": "e7171e18d11893257c54c889d7371629a71e7ce137fa1078ca232bdbcb656c18"
+    },
+    {
+      "path": "characters/enemies/enemy_05_battery_beetle.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 1559590,
+      "sha256": "e9c935ea279b5ff717b1644d60e4be87a3af64ace162c5b6343c62326e18acc2"
+    },
+    {
+      "path": "characters/enemies/enemy_06_miner_mole.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 1586831,
+      "sha256": "b39230366fa94abdf175e525ddb1ea0253fe526b5a9808ab52d9deb8af58bc32"
+    },
+    {
+      "path": "characters/enemies/enemy_07_baby_bubble_dragon.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 1744821,
+      "sha256": "6e15977f55f82a32a40d5c83b2c0a8d97d995d41bee75e3b29f0338310678d21"
+    },
+    {
+      "path": "characters/enemies/enemy_08_shadow_fuzz.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 1413402,
+      "sha256": "9f7c27e5e8d52719b4202b63274d3a763361bad8e8b66f759826dc44c4742ca9"
+    },
+    {
+      "path": "characters/snowball/snowball_combat_sheet.png",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 2919715,
+      "sha256": "1196a10e2e338850ebe294ccaef1986e9001d053a8c0214ba731780b40e9729a"
+    },
+    {
+      "path": "characters/snowball/snowball_earth_sheet.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 3009999,
+      "sha256": "4f2570d4a64bc25ff1c635e2a2dcd2ee7132d4e5deb9fe865dbd76a2c6a5d27c"
+    },
+    {
+      "path": "characters/snowball/snowball_fire_sheet.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 2136470,
+      "sha256": "5b14ff53955ea32fa04bf04bc74f9359ba65147f94e354a2cea925860114dbed"
+    },
+    {
+      "path": "characters/snowball/snowball_lightning_sheet.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 3723632,
+      "sha256": "204ce62583d42312c2670310b6d7de11929914c1ebf4cf24de22103a4c1cdab5"
+    },
+    {
+      "path": "characters/snowball/snowball_movement_sheet.png",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 3241673,
+      "sha256": "a321f950831b44b9502bcaecc201309c4b9b0c69239bb41cb10e1b7b0d6af109"
+    },
+    {
+      "path": "characters/snowball/snowball_turnaround_expressions.png",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 1996534,
+      "sha256": "172e77d05bc13d3b9eb9aa0839eb5b840f0ab331313a1893e8a4866acee58abd"
+    },
+    {
+      "path": "characters/snowball/snowball_water_sheet.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 2875746,
+      "sha256": "92bea2645cf562c41659b0767a941b24fcf062cbcc97de47647f636f05a91903"
+    },
+    {
+      "path": "characters/snowball/snowball_wind_sheet.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 3414698,
+      "sha256": "fed50299f21807a1305364431a1cc59d45162eb870535049bdd7642ae10d4ce9"
+    },
+    {
+      "path": "characters/support/support_cast_sheet.png",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 1532624,
+      "sha256": "235f7bda2cce6cf82d6a225b99c0d111ef0a84759bf9dc24e973bb3743f1990f"
+    },
+    {
+      "path": "contact_sheets/bosses_overview.png",
+      "width": 1016,
+      "height": 1566,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": false,
+      "size_bytes": 1177771,
+      "sha256": "0416d32964b1c53806aeaa4f2b3b05328b10241f37bc3adb39f81cc9903d4491"
+    },
+    {
+      "path": "contact_sheets/enemies_overview.png",
+      "width": 928,
+      "height": 1596,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": false,
+      "size_bytes": 2344186,
+      "sha256": "e3eb6dc7db07896fa14ffbccc14c5582f7952fc29cfe81e22cf3277a1ded73ab"
+    },
+    {
+      "path": "contact_sheets/enemy_runtime_preview.png",
+      "width": 792,
+      "height": 1712,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": false,
+      "size_bytes": 456819,
+      "sha256": "19fc2826e8bd50262ef436288fc4d3983ccef6aae802cc24c484d7c6330baee5"
+    },
+    {
+      "path": "contact_sheets/snowball_core_overview.png",
+      "width": 668,
+      "height": 1332,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": false,
+      "size_bytes": 1503606,
+      "sha256": "ac901ded4f4d5538fae09bf0cc06c75fa657f5d9b9a34d25445634b3f826f2d4"
+    },
+    {
+      "path": "contact_sheets/snowball_elements_overview.png",
+      "width": 1016,
+      "height": 1290,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": false,
+      "size_bytes": 1014120,
+      "sha256": "10ddf2b57a8b17dd6fa49adc4783862c6f634cce583bfa5af97b48e34239455b"
+    },
+    {
+      "path": "contact_sheets/support_ui_overview.png",
+      "width": 1512,
+      "height": 1668,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": false,
+      "size_bytes": 2545873,
+      "sha256": "b6cc8e9ef02fad695121a1b06039c318c012f46f7ed5beae3cc920666ed2a287"
+    },
+    {
+      "path": "reference/bosses_3d_lineup_concept.png",
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB",
+      "has_alpha": false,
+      "has_transparent_pixels": false,
+      "size_bytes": 1971511,
+      "sha256": "85d0603977e2f5c9b4b6aa3b0843ab0c3bfd43a1ff882c60708ab1c3322fe483"
+    },
+    {
+      "path": "reference/snowball_3d_element_concept.png",
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB",
+      "has_alpha": false,
+      "has_transparent_pixels": false,
+      "size_bytes": 1932183,
+      "sha256": "e8364a674fc977d9adaa1a376d8c8d02a3a7f50fa0ea408f5699a773433d5332"
+    },
+    {
+      "path": "runtime/bosses/boss_01_wrench_atlas.png",
+      "width": 1024,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 155478,
+      "sha256": "3d9a33227934e33f2d48218059a360bbe54d18f65ab91f8c22f32f02265c2c2d"
+    },
+    {
+      "path": "runtime/bosses/boss_02_galeplume_atlas.png",
+      "width": 1024,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 173300,
+      "sha256": "a4617a24e4482bfad206128622743015c7f6479d4c75fd610a09d30a802ad449"
+    },
+    {
+      "path": "runtime/bosses/boss_03_bobo_atlas.png",
+      "width": 1024,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 172224,
+      "sha256": "14dd3a15136a01aac176c92c19a4bbdc843c9d0804bbb7d2e12edac3f6df099d"
+    },
+    {
+      "path": "runtime/bosses/boss_04_volt_atlas.png",
+      "width": 1024,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 148259,
+      "sha256": "772adb08c1ddb95b4ef1bc0245ae74dabcb63caaa5b6d543d2e54783cdddc76e"
+    },
+    {
+      "path": "runtime/bosses/boss_05_tato_atlas.png",
+      "width": 1024,
+      "height": 128,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 174220,
+      "sha256": "f1a4965a0432ba244389d11b7e7ffa671055cd7302d2cbea8520b7e101403a9f"
+    },
+    {
+      "path": "runtime/bosses/boss_06_bubble_dragon_family_atlas.png",
+      "width": 1536,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 300975,
+      "sha256": "262fe445e94ad220a80f9392d871a4c9357e26095efeb229c501e115632091d6"
+    },
+    {
+      "path": "runtime/bosses/boss_07_nightink_atlas.png",
+      "width": 1536,
+      "height": 192,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 318851,
+      "sha256": "f27ea795f44913950ce6a0fc984d854fe287d96f4a60c130420167af69e1d66c"
+    },
+    {
+      "path": "runtime/enemies/enemy_01_vacuum_drone.png",
+      "width": 384,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 18261,
+      "sha256": "17f5885a5255f61f52231bc84fb965d11cbf4cfabca3bf50108f7f4bd3d9adc6"
+    },
+    {
+      "path": "runtime/enemies/enemy_02_clockwork_mouse.png",
+      "width": 384,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 25937,
+      "sha256": "fe12003e5eb1f8e7006dd320e79b1bb4f26c16ffa8ec3d199c8f40094d3dc888"
+    },
+    {
+      "path": "runtime/enemies/enemy_03_pigeon_scout.png",
+      "width": 384,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 26100,
+      "sha256": "d347b78be4853036d08d13b6aad9dbf1dc37631aea3caaf3f4192488b8fe51d3"
+    },
+    {
+      "path": "runtime/enemies/enemy_04_bubble_slime.png",
+      "width": 384,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 25090,
+      "sha256": "863ba2df841e6519d93eed5866db49ae502f7b0ad9762fe37f9d8ab16fe85d8d"
+    },
+    {
+      "path": "runtime/enemies/enemy_05_battery_beetle.png",
+      "width": 384,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 23546,
+      "sha256": "52bd13a960a0eef47ae7bad912497475bd6b8bed2d5715efcfa5b7a88a723888"
+    },
+    {
+      "path": "runtime/enemies/enemy_06_miner_mole.png",
+      "width": 384,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 26931,
+      "sha256": "882c70db3c3dc09ce8f83d0744452a97e272daa4d50b00ccd197dda749e621e0"
+    },
+    {
+      "path": "runtime/enemies/enemy_07_baby_bubble_dragon.png",
+      "width": 384,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 29916,
+      "sha256": "8cec3059dd0c79589ea2a813428172158c783edf765fc2f2e67b030bdebe5f2b"
+    },
+    {
+      "path": "runtime/enemies/enemy_08_shadow_fuzz.png",
+      "width": 384,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 19961,
+      "sha256": "863f54c15c394418b8c30947871c2724a1a89274313bf7e8532e13b735c85fc9"
+    },
+    {
+      "path": "runtime/snowball/snowball_existing_44f.png",
+      "width": 2816,
+      "height": 64,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 156400,
+      "sha256": "6bcc9a3548ba8aee135a51c126041a024fdff89732ffe6ed8038905ac3d811d7"
+    },
+    {
+      "path": "ui/ability_status_icons.png",
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 1897929,
+      "sha256": "f1468dd219ab66bbfea4878a2974459dca3416afa4e2b2f62f2b04e6d4bd5e2b"
+    },
+    {
+      "path": "ui/boss_badges_and_collectibles.png",
+      "width": 1448,
+      "height": 1086,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 2132914,
+      "sha256": "6d0cfa61880b6bf089844ef0fe62198d52b4a22e63bb50754f11a4d61ae08226"
+    },
+    {
+      "path": "ui/dialogue_portraits.png",
+      "width": 1289,
+      "height": 1221,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 2167708,
+      "sha256": "c14eace57e666492bb4ede099d2fd4394a20fa2923b54a94a8e03a7f7650c249"
+    },
+    {
+      "path": "ui/fruit_pickups_icons.png",
+      "width": 1983,
+      "height": 793,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 1655536,
+      "sha256": "d88bdb183c69244e663b4cfe17fde621a5659e5894911cc10d8a0f97ced5d7a6"
+    },
+    {
+      "path": "ui/ship_ai_and_map_icons.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "has_alpha": true,
+      "has_transparent_pixels": true,
+      "size_bytes": 1406888,
+      "sha256": "1c6087259860a1e90c040657bc6a5ca36954df5e8f0644f1b76c0c161e09bc23"
+    }
+  ],
+  "documents": [
+    "README.md",
+    "SnowballQuest_Game_Design.md",
+    "characters/bosses/BOSSES_01_03_GENERATION_NOTES.md",
+    "characters/bosses/BOSS_SHEETS_04_07.md",
+    "characters/enemies/GENERATION_NOTES.md",
+    "characters/snowball/ELEMENT_GENERATION_NOTES.md",
+    "characters/snowball/GENERATION_NOTES.md",
+    "characters/support/GENERATION_NOTES.md",
+    "runtime/bosses/README.md",
+    "runtime/bosses/boss_01_wrench_atlas.json",
+    "runtime/bosses/boss_02_galeplume_atlas.json",
+    "runtime/bosses/boss_03_bobo_atlas.json",
+    "runtime/bosses/boss_04_volt_atlas.json",
+    "runtime/bosses/boss_05_tato_atlas.json",
+    "runtime/bosses/boss_06_bubble_dragon_family_atlas.json",
+    "runtime/bosses/boss_07_nightink_atlas.json",
+    "runtime/enemies/README.md",
+    "runtime/enemies/enemy_01_vacuum_drone.json",
+    "runtime/enemies/enemy_02_clockwork_mouse.json",
+    "runtime/enemies/enemy_03_pigeon_scout.json",
+    "runtime/enemies/enemy_04_bubble_slime.json",
+    "runtime/enemies/enemy_05_battery_beetle.json",
+    "runtime/enemies/enemy_06_miner_mole.json",
+    "runtime/enemies/enemy_07_baby_bubble_dragon.json",
+    "runtime/enemies/enemy_08_shadow_fuzz.json",
+    "runtime/snowball/README.md",
+    "runtime/snowball/snowball_existing_44f.json",
+    "ui/GENERATION_NOTES.md"
+  ]
+}

@@ -96,6 +96,26 @@ final class NativeUITests: XCTestCase {
         XCTAssertLessThanOrEqual(cost, 30)
     }
 
+    func testSuppliedTitleArtworkHasWorkingStartContinueAndUtilityControls() {
+        app.launch()
+        let artwork = app.images["menu-title-artwork"]
+        XCTAssertTrue(artwork.waitForExistence(timeout: 10))
+        XCTAssertEqual(artwork.frame.width / artwork.frame.height, 1672.0 / 941.0, accuracy: 0.01)
+        for id in ["menu-stages", "menu-continue", "menu-crew", "menu-settings"] {
+            let button = app.buttons[id]
+            XCTAssertTrue(button.isHittable)
+            XCTAssertGreaterThanOrEqual(button.frame.height, 48)
+            XCTAssertTrue(app.windows.firstMatch.frame.contains(button.frame))
+        }
+        let picture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        picture.name = "New supplied title screen with native hit targets"; picture.lifetime = .keepAlways; add(picture)
+        app.buttons["menu-stages"].tap()
+        XCTAssertTrue(app.buttons["stage-home"].waitForExistence(timeout: 5))
+        app.buttons["panel-close"].tap()
+        app.buttons["menu-continue"].tap()
+        XCTAssertTrue(app.buttons["dialogue-next"].waitForExistence(timeout: 10))
+    }
+
     func testWindFruitTransformsSnowballAndSwitchesBackAfterNativeCombat() {
         launchGame(stage: "rooftop", nearFruit: true)
         let form = app.buttons["control-fruit"]

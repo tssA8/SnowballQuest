@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assets": [
+    {
+      "key": "title-screen",
+      "path": "presentation/title-screen.png",
+      "source": "snowballquest_title_screen_v3_cutecat.png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "94cef815f5b383f4c00e8198b628fd9e87305b62e040fbfabc87be7d43e87670"
+    }
+  ]
+}

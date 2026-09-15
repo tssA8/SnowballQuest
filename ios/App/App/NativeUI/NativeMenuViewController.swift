@@ -3,9 +3,10 @@ import SnowballCore
 
 final class NativeMenuViewController: UIViewController {
     private let store: NativeSaveStore
-    private let gradient = CAGradientLayer()
-    private let destination = NativeTheme.label("", size: 15)
-    private let status = NativeTheme.label("", size: 14)
+    private let titleArtwork = UIImageView()
+    private let startButton = UIButton(type: .custom)
+    private let continueButton = UIButton(type: .custom)
+    private let tools = UIStackView()
 
     init(store: NativeSaveStore = NativeSaveStore()) {
         #if DEBUG
@@ -44,73 +45,55 @@ final class NativeMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.accessibilityIdentifier = "native-menu"
-        gradient.colors = [NativeTheme.mint.cgColor, NativeTheme.cream.cgColor]
-        gradient.startPoint = CGPoint(x: 0, y: 0)
-        gradient.endPoint = CGPoint(x: 1, y: 1)
-        view.layer.insertSublayer(gradient, at: 0)
+        view.backgroundColor = UIColor(hex: 0x121c37)
+        titleArtwork.image = GameArt.image(key: "title-screen")
+        titleArtwork.contentMode = .scaleAspectFit
+        titleArtwork.accessibilityIdentifier = "menu-title-artwork"
+        titleArtwork.accessibilityLabel = "Snowball Quest：雪球與 SNOW-01 準備出勤"
+        titleArtwork.isAccessibilityElement = true
+        view.addSubview(titleArtwork)
 
-        let scroll = UIScrollView()
-        scroll.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(scroll)
-        let columns = UIStackView()
-        columns.axis = .horizontal
-        columns.alignment = .center
-        columns.spacing = 28
-        columns.translatesAutoresizingMaskIntoConstraints = false
-        scroll.addSubview(columns)
-
-        let hero = UIStackView()
-        hero.axis = .vertical
-        hero.spacing = 10
-        hero.alignment = .leading
-        hero.addArrangedSubview(NativeTheme.label("SNOW-01 ・ 星貓巡邏隊", size: 12, weight: .bold))
-        let title = NativeTheme.label("雪球大冒險", size: 37, weight: .heavy)
-        title.accessibilityTraits = .header
-        hero.addArrangedSubview(title)
-        let image = UIImageView(image: GameArt.image(key: "snowball", frame: 0))
-        image.contentMode = .scaleAspectFit
-        image.accessibilityLabel = "準備出發的白貓雪球"
-        image.isAccessibilityElement = true
-        image.widthAnchor.constraint(equalToConstant: 110).isActive = true
-        image.heightAnchor.constraint(equalToConstant: 88).isActive = true
-        hero.addArrangedSubview(image)
-        hero.addArrangedSubview(NativeTheme.label("吃果實、救朋友，\n一起找到回家的路。", size: 16))
-        hero.addArrangedSubview(status)
-
-        let actions = UIStackView()
-        actions.axis = .vertical
-        actions.spacing = 9
-        actions.addArrangedSubview(destination)
-        actions.addArrangedSubview(NativeTheme.button("繼續出勤", symbol: "play.fill", primary: true, id: "menu-continue") { [weak self] in
+        // The supplied illustration already contains the labels. Accessible native
+        // controls follow those exact image rectangles, including letterboxing.
+        startButton.accessibilityIdentifier = "menu-stages"
+        startButton.accessibilityLabel = "開始出勤，選擇關卡"
+        startButton.accessibilityHint = "開啟出勤星圖，不會刪除進度"
+        startButton.addAction(UIAction { [weak self] _ in self?.showStages() }, for: .touchUpInside)
+        continueButton.accessibilityIdentifier = "menu-continue"
+        continueButton.accessibilityLabel = "繼續出勤"
+        continueButton.addAction(UIAction { [weak self] _ in
             guard let self else { return }
             self.launch(self.store.state.currentStage, restart: false)
-        })
-        actions.addArrangedSubview(NativeTheme.button("出勤星圖", symbol: "map.fill", id: "menu-stages") { [weak self] in self?.showStages() })
-        actions.addArrangedSubview(NativeTheme.button("飛船同伴", symbol: "person.3.fill", id: "menu-crew") { [weak self] in self?.showCrew() })
-        actions.addArrangedSubview(NativeTheme.button("設定與操作", symbol: "slider.horizontal.3", id: "menu-settings") { [weak self] in self?.showSettings() })
-        columns.addArrangedSubview(hero)
-        columns.addArrangedSubview(actions)
-
-        let safe = view.safeAreaLayoutGuide
-        NSLayoutConstraint.activate([
-            scroll.leadingAnchor.constraint(equalTo: safe.leadingAnchor, constant: 20),
-            scroll.trailingAnchor.constraint(equalTo: safe.trailingAnchor, constant: -20),
-            scroll.topAnchor.constraint(equalTo: safe.topAnchor, constant: 12),
-            scroll.bottomAnchor.constraint(equalTo: safe.bottomAnchor, constant: -12),
-            columns.leadingAnchor.constraint(equalTo: scroll.contentLayoutGuide.leadingAnchor),
-            columns.trailingAnchor.constraint(equalTo: scroll.contentLayoutGuide.trailingAnchor),
-            columns.topAnchor.constraint(equalTo: scroll.contentLayoutGuide.topAnchor),
-            columns.bottomAnchor.constraint(equalTo: scroll.contentLayoutGuide.bottomAnchor),
-            columns.widthAnchor.constraint(equalTo: scroll.frameLayoutGuide.widthAnchor),
-            columns.heightAnchor.constraint(greaterThanOrEqualTo: scroll.frameLayoutGuide.heightAnchor),
-            hero.widthAnchor.constraint(equalTo: columns.widthAnchor, multiplier: 0.48)
-        ])
+        }, for: .touchUpInside)
+        for button in [startButton, continueButton] {
+            button.layer.cornerRadius = 12
+            button.addAction(UIAction { [weak button] _ in button?.backgroundColor = .white.withAlphaComponent(0.16) }, for: .touchDown)
+            button.addAction(UIAction { [weak button] _ in button?.backgroundColor = .clear }, for: [.touchUpInside, .touchUpOutside, .touchCancel, .touchDragExit])
+            view.addSubview(button)
+        }
+        tools.axis = .horizontal; tools.spacing = 8; tools.distribution = .fillEqually
+        tools.addArrangedSubview(NativeTheme.button("同伴", symbol: "person.3.fill", id: "menu-crew") { [weak self] in self?.showCrew() })
+        tools.addArrangedSubview(NativeTheme.button("設定", symbol: "slider.horizontal.3", id: "menu-settings") { [weak self] in self?.showSettings() })
+        view.addSubview(tools)
         refreshStatus()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        gradient.frame = view.bounds
+        guard let image = titleArtwork.image else { return }
+        let scale = min(view.bounds.width / image.size.width, view.bounds.height / image.size.height)
+        let width = image.size.width * scale, height = image.size.height * scale
+        let picture = CGRect(x: (view.bounds.width - width) / 2, y: (view.bounds.height - height) / 2, width: width, height: height)
+        titleArtwork.frame = picture
+        func hitArea(_ source: CGRect) -> CGRect {
+            let box = CGRect(x: picture.minX + source.minX * scale, y: picture.minY + source.minY * scale,
+                             width: source.width * scale, height: source.height * scale)
+            return box.insetBy(dx: -max(0, 48 - box.width) / 2, dy: -max(0, 48 - box.height) / 2)
+        }
+        startButton.frame = hitArea(CGRect(x: 527, y: 757, width: 305, height: 99))
+        continueButton.frame = hitArea(CGRect(x: 862, y: 757, width: 307, height: 99))
+        let safe = view.safeAreaLayoutGuide.layoutFrame
+        tools.frame = CGRect(x: safe.minX + 10, y: safe.minY + 8, width: min(220, safe.width * 0.32), height: 48)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -120,8 +103,7 @@ final class NativeMenuViewController: UIViewController {
 
     private func refreshStatus() {
         let stage = StageDefinition.find(store.state.currentStage)
-        destination.text = "第 \(stage.index) 關  \(stage.title)"
-        status.text = "已救回 \(store.state.cleared.count) / 7 位朋友"
+        continueButton.accessibilityValue = "第 \(stage.index) 關，\(stage.title)；已救回 \(store.state.cleared.count) 位朋友"
     }
 
     private func launch(_ id: StageID, restart: Bool) {

@@ -49,12 +49,14 @@ final class ElementalArtTests: XCTestCase {
         for stage in StageDefinition.all where stage.fruit != nil {
             try withGame(stage.id) { scene, store in
                 let crop = CGRect(x: -55, y: -4, width: 110, height: 84)
+                scene.player.texture = GameArt.texture(key: "snowball", frame: 0)
+                scene.appearance.update(fruit: nil, frame: 0, elapsed: 0, reducedMotion: true)
                 let before = try render(scene.player, crop: crop, view: view).pngData()
                 scene.player.position = CGPoint(x: 500, y: 128)
                 advance(scene, frames: 1)
                 XCTAssertEqual(scene.fruit, stage.fruit)
                 XCTAssertEqual(scene.appearance.fruit, stage.fruit)
-                XCTAssertFalse(scene.appearance.isHidden)
+                XCTAssertFalse(scene.appearance.elementalLayer.isHidden)
                 XCTAssertEqual(store.state.run.trial, stage.fruit)
                 // Compare the SAME atlas frame with and without the real wearable form.
                 scene.player.texture = GameArt.texture(key: "snowball", frame: 0)
@@ -70,6 +72,7 @@ final class ElementalArtTests: XCTestCase {
             let view = SKView(frame: CGRect(x: 0, y: 0, width: 240, height: 180))
             var pictures = Set<Data>()
             var originalFace: Data?
+            var missionGear: Data?
             for expected in [nil] + Fruit.allCases.map({ Optional($0) }) {
                 XCTAssertEqual(scene.fruit, expected)
                 XCTAssertEqual(scene.appearance.fruit, expected)
@@ -80,11 +83,16 @@ final class ElementalArtTests: XCTestCase {
                 let face = try render(scene.player, crop: CGRect(x: -7, y: 20, width: 14, height: 12), view: view).pngData()
                 if expected == nil { originalFace = face }
                 else { XCTAssertEqual(face, originalFace, "Elemental costumes must leave Snowball's eyes and muzzle unobscured") }
+                let collar = try XCTUnwrap(scene.appearance.childNode(withName: "mission-collar"))
+                let gear = try render(collar, crop: CGRect(x: -12, y: -9, width: 24, height: 12), view: view).pngData()
+                if expected == nil { missionGear = gear }
+                else { XCTAssertEqual(gear, missionGear, "The dark mission collar and gold bell must never change with element") }
                 scene.cycleFruit()
             }
             XCTAssertEqual(pictures.count, 6, "Forms must have distinct pixels, not only different HUD labels")
             XCTAssertNil(scene.fruit)
-            XCTAssertTrue(scene.appearance.isHidden)
+            XCTAssertTrue(scene.appearance.elementalLayer.isHidden)
+            XCTAssertFalse(scene.appearance.isHidden, "Base form still wears the mission collar")
         }
     }
 
@@ -99,7 +107,7 @@ final class ElementalArtTests: XCTestCase {
                     advance(scene, frames: 1)
                     XCTAssertTrue(approved.contains { $0 === scene.player.texture }, "An animation must never swap in a different cat")
                     XCTAssertEqual(scene.appearance.fruit, .wind)
-                    XCTAssertFalse(scene.appearance.isHidden)
+                    XCTAssertFalse(scene.appearance.elementalLayer.isHidden)
                 }
             }
         }
@@ -126,6 +134,20 @@ final class ElementalArtTests: XCTestCase {
             scene.resumeGame(); advance(scene, frames: 150)
             XCTAssertNil(shot.parent)
             XCTAssertTrue(scene.children.compactMap { $0 as? ElementalProjectileVisual }.isEmpty)
+        }
+    }
+
+    func testEveryArtPackEffectIsBundledWithTheExpectedCellAndTransparentMargin() throws {
+        for fruit in Fruit.allCases {
+            let count = fruit == .lightning ? 8 : 6
+            for frame in 0..<count {
+                let image = try XCTUnwrap(GameArt.image(key: "element-\(fruit.rawValue)", frame: frame))
+                XCTAssertEqual(image.size, CGSize(width: 128, height: 128))
+                let cg = try XCTUnwrap(image.cgImage)
+                XCTAssertNotEqual(cg.alphaInfo, .none)
+                XCTAssertEqual(GameArt.texture(key: "element-\(fruit.rawValue)", frame: frame).filteringMode, .nearest)
+            }
+            XCTAssertNil(GameArt.image(key: "element-\(fruit.rawValue)", frame: count))
         }
     }
 

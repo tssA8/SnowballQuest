@@ -1,0 +1,897 @@
+{
+  "version": 1,
+  "assets": [
+    {
+      "key": "element-fire",
+      "path": "elements/fire.png",
+      "frameSize": 128,
+      "frameCount": 6,
+      "width": 768,
+      "height": 128,
+      "sha256": "9f4d0c19d55848da937efeefb7afea7fcef8211717786637a524a443445da5a3",
+      "sourceSHA256": "5b14ff53955ea32fa04bf04bc74f9359ba65147f94e354a2cea925860114dbed",
+      "frames": [
+        {
+          "name": "spark",
+          "sourceBox": [
+            57,
+            886,
+            199,
+            1008
+          ],
+          "alphaBounds": [
+            13,
+            13,
+            130,
+            108
+          ],
+          "destination": [
+            6,
+            17,
+            116,
+            94
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        },
+        {
+          "name": "shot",
+          "sourceBox": [
+            231,
+            850,
+            424,
+            1011
+          ],
+          "alphaBounds": [
+            14,
+            22,
+            182,
+            149
+          ],
+          "destination": [
+            6,
+            20,
+            116,
+            88
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        },
+        {
+          "name": "slash",
+          "sourceBox": [
+            450,
+            850,
+            690,
+            1012
+          ],
+          "alphaBounds": [
+            7,
+            21,
+            213,
+            150
+          ],
+          "destination": [
+            6,
+            27,
+            116,
+            73
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 4
+        },
+        {
+          "name": "impact",
+          "sourceBox": [
+            711,
+            847,
+            1074,
+            1012
+          ],
+          "alphaBounds": [
+            19,
+            11,
+            352,
+            154
+          ],
+          "destination": [
+            6,
+            39,
+            116,
+            50
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        },
+        {
+          "name": "smoke",
+          "sourceBox": [
+            1098,
+            872,
+            1308,
+            1012
+          ],
+          "alphaBounds": [
+            12,
+            17,
+            197,
+            123
+          ],
+          "destination": [
+            6,
+            31,
+            116,
+            66
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        },
+        {
+          "name": "dust",
+          "sourceBox": [
+            1310,
+            910,
+            1490,
+            1008
+          ],
+          "alphaBounds": [
+            11,
+            14,
+            151,
+            76
+          ],
+          "destination": [
+            6,
+            38,
+            116,
+            51
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 366
+        }
+      ]
+    },
+    {
+      "key": "element-wind",
+      "path": "elements/wind.png",
+      "frameSize": 128,
+      "frameCount": 6,
+      "width": 768,
+      "height": 128,
+      "sha256": "8ebdde5b8d7d28ffcc6e004806a95d94d6fc956f2f52c484e2553f6a307e0a4c",
+      "sourceSHA256": "fed50299f21807a1305364431a1cc59d45162eb870535049bdd7642ae10d4ce9",
+      "frames": [
+        {
+          "name": "swirl",
+          "sourceBox": [
+            17,
+            884,
+            230,
+            1014
+          ],
+          "alphaBounds": [
+            10,
+            22,
+            190,
+            116
+          ],
+          "destination": [
+            6,
+            33,
+            116,
+            61
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 15
+        },
+        {
+          "name": "ribbon",
+          "sourceBox": [
+            216,
+            884,
+            458,
+            1014
+          ],
+          "alphaBounds": [
+            13,
+            24,
+            223,
+            110
+          ],
+          "destination": [
+            6,
+            40,
+            116,
+            48
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 3
+        },
+        {
+          "name": "shot",
+          "sourceBox": [
+            460,
+            874,
+            843,
+            1018
+          ],
+          "alphaBounds": [
+            2,
+            23,
+            376,
+            134
+          ],
+          "destination": [
+            6,
+            47,
+            116,
+            34
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 580
+        },
+        {
+          "name": "vortex",
+          "sourceBox": [
+            846,
+            852,
+            1044,
+            1020
+          ],
+          "alphaBounds": [
+            15,
+            16,
+            177,
+            161
+          ],
+          "destination": [
+            6,
+            12,
+            116,
+            104
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 244
+        },
+        {
+          "name": "leaves",
+          "sourceBox": [
+            1025,
+            877,
+            1210,
+            1018
+          ],
+          "alphaBounds": [
+            4,
+            22,
+            170,
+            126
+          ],
+          "destination": [
+            6,
+            27,
+            116,
+            73
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        },
+        {
+          "name": "impact",
+          "sourceBox": [
+            1220,
+            876,
+            1528,
+            1020
+          ],
+          "alphaBounds": [
+            6,
+            12,
+            288,
+            129
+          ],
+          "destination": [
+            6,
+            40,
+            116,
+            48
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        }
+      ]
+    },
+    {
+      "key": "element-water",
+      "path": "elements/water.png",
+      "frameSize": 128,
+      "frameCount": 6,
+      "width": 768,
+      "height": 128,
+      "sha256": "32ac2474985478635745d4ba683723f247a863e649084702cc3586c58e21c11b",
+      "sourceSHA256": "92bea2645cf562c41659b0767a941b24fcf062cbcc97de47647f636f05a91903",
+      "frames": [
+        {
+          "name": "drop",
+          "sourceBox": [
+            30,
+            848,
+            141,
+            996
+          ],
+          "alphaBounds": [
+            25,
+            38,
+            89,
+            103
+          ],
+          "destination": [
+            7,
+            6,
+            114,
+            116
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        },
+        {
+          "name": "impact",
+          "sourceBox": [
+            155,
+            832,
+            381,
+            1005
+          ],
+          "alphaBounds": [
+            28,
+            28,
+            209,
+            135
+          ],
+          "destination": [
+            6,
+            29,
+            116,
+            69
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        },
+        {
+          "name": "slash",
+          "sourceBox": [
+            386,
+            813,
+            626,
+            1008
+          ],
+          "alphaBounds": [
+            36,
+            42,
+            210,
+            165
+          ],
+          "destination": [
+            6,
+            23,
+            116,
+            82
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        },
+        {
+          "name": "crest",
+          "sourceBox": [
+            634,
+            803,
+            884,
+            1012
+          ],
+          "alphaBounds": [
+            32,
+            9,
+            235,
+            185
+          ],
+          "destination": [
+            6,
+            13,
+            116,
+            101
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        },
+        {
+          "name": "shot",
+          "sourceBox": [
+            901,
+            825,
+            1280,
+            1010
+          ],
+          "alphaBounds": [
+            19,
+            40,
+            353,
+            145
+          ],
+          "destination": [
+            6,
+            46,
+            116,
+            36
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        },
+        {
+          "name": "bubbles",
+          "sourceBox": [
+            1281,
+            830,
+            1530,
+            1015
+          ],
+          "alphaBounds": [
+            20,
+            46,
+            213,
+            143
+          ],
+          "destination": [
+            6,
+            35,
+            116,
+            58
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        }
+      ]
+    },
+    {
+      "key": "element-lightning",
+      "path": "elements/lightning.png",
+      "frameSize": 128,
+      "frameCount": 8,
+      "width": 1024,
+      "height": 128,
+      "sha256": "ba5ab97a7fcd0bdb8b79f578893c2b8b91480608bfdbfb78897b24b93641de33",
+      "sourceSHA256": "204ce62583d42312c2670310b6d7de11929914c1ebf4cf24de22103a4c1cdab5",
+      "frames": [
+        {
+          "name": "gold-spark",
+          "sourceBox": [
+            87,
+            860,
+            184,
+            1006
+          ],
+          "alphaBounds": [
+            14,
+            38,
+            71,
+            96
+          ],
+          "destination": [
+            7,
+            6,
+            114,
+            116
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        },
+        {
+          "name": "blue-spark",
+          "sourceBox": [
+            190,
+            858,
+            300,
+            1006
+          ],
+          "alphaBounds": [
+            26,
+            33,
+            94,
+            105
+          ],
+          "destination": [
+            9,
+            6,
+            110,
+            116
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        },
+        {
+          "name": "sparks",
+          "sourceBox": [
+            319,
+            840,
+            508,
+            1006
+          ],
+          "alphaBounds": [
+            6,
+            40,
+            169,
+            127
+          ],
+          "destination": [
+            6,
+            33,
+            116,
+            62
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        },
+        {
+          "name": "bolt",
+          "sourceBox": [
+            514,
+            836,
+            665,
+            1012
+          ],
+          "alphaBounds": [
+            11,
+            25,
+            111,
+            160
+          ],
+          "destination": [
+            21,
+            6,
+            86,
+            116
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        },
+        {
+          "name": "fork",
+          "sourceBox": [
+            667,
+            831,
+            841,
+            1012
+          ],
+          "alphaBounds": [
+            11,
+            20,
+            166,
+            168
+          ],
+          "destination": [
+            6,
+            8,
+            116,
+            111
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        },
+        {
+          "name": "shot",
+          "sourceBox": [
+            842,
+            835,
+            1061,
+            1016
+          ],
+          "alphaBounds": [
+            21,
+            25,
+            199,
+            155
+          ],
+          "destination": [
+            6,
+            21,
+            116,
+            85
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        },
+        {
+          "name": "impact",
+          "sourceBox": [
+            1062,
+            826,
+            1256,
+            1020
+          ],
+          "alphaBounds": [
+            6,
+            25,
+            173,
+            168
+          ],
+          "destination": [
+            6,
+            14,
+            116,
+            99
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        },
+        {
+          "name": "cloud",
+          "sourceBox": [
+            1257,
+            820,
+            1514,
+            1020
+          ],
+          "alphaBounds": [
+            2,
+            31,
+            209,
+            179
+          ],
+          "destination": [
+            6,
+            22,
+            116,
+            83
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        }
+      ]
+    },
+    {
+      "key": "element-earth",
+      "path": "elements/earth.png",
+      "frameSize": 128,
+      "frameCount": 6,
+      "width": 768,
+      "height": 128,
+      "sha256": "e339c99cb6bceb37376ed3937b80966c563cdd486e5606c49fac40204577446a",
+      "sourceSHA256": "4f2570d4a64bc25ff1c635e2a2dcd2ee7132d4e5deb9fe865dbd76a2c6a5d27c",
+      "frames": [
+        {
+          "name": "stones",
+          "sourceBox": [
+            24,
+            881,
+            320,
+            1007
+          ],
+          "alphaBounds": [
+            22,
+            9,
+            277,
+            96
+          ],
+          "destination": [
+            6,
+            44,
+            116,
+            40
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        },
+        {
+          "name": "dust",
+          "sourceBox": [
+            321,
+            880,
+            478,
+            1007
+          ],
+          "alphaBounds": [
+            3,
+            5,
+            144,
+            101
+          ],
+          "destination": [
+            6,
+            24,
+            116,
+            79
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 88
+        },
+        {
+          "name": "small-dust",
+          "sourceBox": [
+            468,
+            880,
+            616,
+            1007
+          ],
+          "alphaBounds": [
+            4,
+            27,
+            144,
+            99
+          ],
+          "destination": [
+            6,
+            34,
+            116,
+            60
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        },
+        {
+          "name": "crack",
+          "sourceBox": [
+            614,
+            882,
+            829,
+            1012
+          ],
+          "alphaBounds": [
+            2,
+            13,
+            201,
+            103
+          ],
+          "destination": [
+            6,
+            38,
+            116,
+            52
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 9
+        },
+        {
+          "name": "ridge",
+          "sourceBox": [
+            830,
+            875,
+            1158,
+            1018
+          ],
+          "alphaBounds": [
+            5,
+            4,
+            316,
+            110
+          ],
+          "destination": [
+            6,
+            44,
+            116,
+            40
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 0
+        },
+        {
+          "name": "impact",
+          "sourceBox": [
+            1150,
+            850,
+            1535,
+            1020
+          ],
+          "alphaBounds": [
+            9,
+            13,
+            344,
+            146
+          ],
+          "destination": [
+            6,
+            41,
+            116,
+            46
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "removedGutterPixels": 11
+        }
+      ]
+    }
+  ]
+}

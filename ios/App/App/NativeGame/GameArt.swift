@@ -15,7 +15,7 @@ enum GameArt {
     }
     private static func prepare() {
         guard !prepared else { return }; prepared = true
-        for (file, list) in [("manifest.json", "textures"), ("adventure/manifest.json", "assets")] {
+        for (file, list) in [("manifest.json", "textures"), ("adventure/manifest.json", "assets"), ("elements/manifest.json", "assets"), ("presentation/manifest.json", "assets")] {
             guard let url = resource(file), let bytes = try? Data(contentsOf: url),
                   let object = (try? JSONSerialization.jsonObject(with: bytes)) as? [String: Any],
                   let assets = object[list] as? [[String: Any]] else { continue }

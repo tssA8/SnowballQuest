@@ -57,30 +57,30 @@ enum ElementInk {
 
     /// Small, recognizable silhouettes. The same glyph is worn and shed by its element.
     static func glyph(_ fruit: Fruit?, size: CGFloat, bright: Bool = false) -> SKNode {
-        let node = SKNode(), p = palette(fruit)
-        let path: CGPath
-        switch fruit {
-        case .fire:
-            path = polygon([(-5,-6),(-7,0),(-3,5),(-2,1),(2,10),(4,3),(7,-1),(5,-6),(0,-8)])
-        case .wind:
-            path = polygon([(-7,-4),(-3,3),(8,7),(4,-2),(-3,-6)])
-        case .water:
-            let drop = CGMutablePath(); drop.move(to: CGPoint(x: 0, y: 10))
-            drop.addCurve(to: CGPoint(x: 0, y: -8), control1: CGPoint(x: 2, y: 4), control2: CGPoint(x: 13, y: -7))
-            drop.addCurve(to: CGPoint(x: 0, y: 10), control1: CGPoint(x: -13, y: -7), control2: CGPoint(x: -2, y: 4))
-            drop.closeSubpath(); path = drop
-        case .lightning:
-            path = polygon([(1,11),(-7,0),(-1,0),(-3,-10),(8,3),(2,3)])
-        case .earth:
-            path = polygon([(0,10),(7,2),(5,-7),(-5,-7),(-7,2)])
-        case nil:
-            path = polygon([(0,10),(3,3),(10,0),(3,-3),(0,-10),(-3,-3),(-10,0),(-3,3)])
+        if let fruit {
+            let frame: Int
+            switch fruit {
+            case .fire: frame = 0
+            case .wind: frame = 4
+            case .water: frame = 0
+            case .lightning: frame = 2
+            case .earth: frame = 0
+            }
+            return effect(fruit, frame: frame, size: CGSize(width: size, height: size))
         }
+        let node = SKNode(), p = palette(fruit)
+        let path = polygon([(0,10),(3,3),(10,0),(3,-3),(0,-10),(-3,-3),(-10,0),(-3,3)])
         fill(path, on: node, color: bright ? p.light : p.main, outline: p.dark, width: 1.2)
         let gleam = fill(path, on: node, color: p.white.withAlphaComponent(0.85))
         gleam.setScale(0.42); gleam.position = CGPoint(x: -1, y: 1.5)
         node.setScale(size / 20)
         return node
+    }
+
+    static func effect(_ fruit: Fruit, frame: Int, size: CGSize) -> SKSpriteNode {
+        let sprite = GameArt.sprite("element-\(fruit.rawValue)", frame: frame, size: size)
+        sprite.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        return sprite
     }
 }
 
@@ -103,14 +103,8 @@ final class ElementalProjectileVisual: SKNode {
         name = "projectile-\(fruit?.rawValue ?? "base")"
         addChild(art); art.setScale(radius / 26)
         let p = ElementInk.palette(fruit)
-        switch fruit {
-        case .fire: buildFire(p)
-        case .wind: buildWind(p)
-        case .water: buildWater(p)
-        case .lightning: buildLightning(p)
-        case .earth: buildEarth(p)
-        case nil: buildStarlight(p)
-        }
+        if let fruit { buildPixelEffect(fruit, palette: p) }
+        else { buildStarlight(p) }
         let count = reducedMotion ? 3 : 7
         for index in 0..<count {
             let mote = ElementInk.glyph(fruit, size: CGFloat(5 + index % 3 * 2), bright: index % 2 == 0)
@@ -126,52 +120,24 @@ final class ElementalProjectileVisual: SKNode {
 
     required init?(coder: NSCoder) { fatalError("init(coder:) is unavailable") }
 
-    private func buildFire(_ p: ElementInk.Palette) {
-        let silhouette = ElementInk.polygon([(26,0),(17,15),(4,22),(-10,15),(-27,28),(-21,12),
-            (-48,15),(-38,5),(-75,1),(-51,-8),(-59,-20),(-31,-13),(-17,-25),(1,-19),(18,-12)])
-        let shell = ElementInk.fill(silhouette, on: art, color: p.main, outline: p.dark, width: 2)
-        flowing.append(shell)
-        let middle = ElementInk.fill(ElementInk.polygon([(22,0),(9,13),(-8,10),(-28,17),(-19,3),
-            (-53,0),(-30,-6),(-34,-12),(-8,-9),(6,-13)]), on: art, color: p.light)
-        flowing.append(middle)
-        let core = ElementInk.fill(ElementInk.polygon([(23,0),(8,7),(-15,4),(-33,0),(-12,-5),(6,-7)]),
-                                   on: art, color: p.white)
-        core.zPosition = 1
-    }
-
-    private func buildWind(_ p: ElementInk.Palette) {
-        for index in 0..<3 {
-            let ribbon = CGMutablePath()
-            ribbon.move(to: CGPoint(x: 25, y: 0))
-            ribbon.addCurve(to: CGPoint(x: -58, y: 13), control1: CGPoint(x: 6, y: 39), control2: CGPoint(x: -42, y: 36))
-            ribbon.addCurve(to: CGPoint(x: 15, y: 5), control1: CGPoint(x: -25, y: 29), control2: CGPoint(x: 4, y: 22))
-            ribbon.addCurve(to: CGPoint(x: -67, y: -12), control1: CGPoint(x: -1, y: -12), control2: CGPoint(x: -43, y: -19))
-            ribbon.addCurve(to: CGPoint(x: 25, y: 0), control1: CGPoint(x: -29, y: -28), control2: CGPoint(x: 10, y: -22))
-            ribbon.closeSubpath()
-            let band = ElementInk.fill(ribbon, on: art, color: index == 1 ? p.white : p.main,
-                                       outline: index == 1 ? p.light : p.dark, width: 1)
-            band.setScale(1 - CGFloat(index) * 0.22)
-            band.yScale *= index == 2 ? -1 : 1
-            band.position.x = -CGFloat(index) * 13
-            flowing.append(band)
+    private func buildPixelEffect(_ fruit: Fruit, palette: ElementInk.Palette) {
+        // Source-sheet key artwork with animated layers, not purported extra drawn frames.
+        let frames: [Int]
+        switch fruit {
+        case .fire: frames = [1, 1]
+        case .wind: frames = [0, 1]
+        case .water: frames = [2, 4]
+        case .lightning: frames = [5, 4]; buildLightning(palette)
+        case .earth: frames = [4, 0]
         }
-    }
-
-    private func buildWater(_ p: ElementInk.Palette) {
-        let wave = CGMutablePath(); wave.move(to: CGPoint(x: 23, y: -2))
-        wave.addCurve(to: CGPoint(x: -5, y: 26), control1: CGPoint(x: 25, y: 23), control2: CGPoint(x: 5, y: 32))
-        wave.addCurve(to: CGPoint(x: -1, y: 7), control1: CGPoint(x: -28, y: 20), control2: CGPoint(x: -17, y: 2))
-        wave.addCurve(to: CGPoint(x: -62, y: 7), control1: CGPoint(x: -10, y: 20), control2: CGPoint(x: -36, y: 8))
-        wave.addCurve(to: CGPoint(x: -67, y: -17), control1: CGPoint(x: -31, y: 5), control2: CGPoint(x: -30, y: -12))
-        wave.addCurve(to: CGPoint(x: 23, y: -2), control1: CGPoint(x: -17, y: -29), control2: CGPoint(x: 13, y: -20))
-        wave.closeSubpath()
-        flowing.append(ElementInk.fill(wave, on: art, color: p.main, outline: p.dark, width: 2))
-        let foam = CGMutablePath(); foam.move(to: CGPoint(x: -50, y: -12))
-        foam.addCurve(to: CGPoint(x: 19, y: 1), control1: CGPoint(x: -16, y: -19), control2: CGPoint(x: 18, y: -10))
-        foam.addCurve(to: CGPoint(x: -7, y: 17), control1: CGPoint(x: 19, y: 27), control2: CGPoint(x: -16, y: 30))
-        let edge = ElementInk.fill(foam, on: art, color: .clear, outline: p.white, width: 4)
-        flowing.append(edge)
-        ElementInk.line([CGPoint(x: -49, y: -5),CGPoint(x: -18, y: -10),CGPoint(x: 5, y: -4)], on: art, color: p.light, width: 3)
+        for (index, frame) in frames.enumerated() {
+            let sprite = ElementInk.effect(fruit, frame: frame,
+                size: CGSize(width: index == 0 ? 98 : 83, height: index == 0 ? 68 : 44))
+            sprite.position = CGPoint(x: index == 0 ? -20 : -48, y: fruit == .water && index == 1 ? -10 : 0)
+            sprite.zPosition = index == 0 ? 2 : 1
+            sprite.alpha = index == 0 ? 1 : 0.8
+            art.addChild(sprite); flowing.append(sprite)
+        }
     }
 
     private func buildLightning(_ p: ElementInk.Palette) {
@@ -183,19 +149,6 @@ final class ElementalProjectileVisual: SKNode {
         }
         ElementInk.fill(ElementInk.polygon([(26,0),(9,11),(-5,5),(-15,0),(-5,-5),(9,-11)]),
                         on: art, color: p.light, outline: p.main, width: 2)
-    }
-
-    private func buildEarth(_ p: ElementInk.Palette) {
-        for index in 0..<3 {
-            let rock = SKNode(); art.addChild(rock); rock.zPosition = CGFloat(index) * 0.1
-            let body = ElementInk.polygon([(24,0),(10,18),(-12,16),(-25,0),(-11,-18),(11,-14)])
-            ElementInk.fill(body, on: rock, color: p.main, outline: p.dark, width: 2)
-            ElementInk.fill(ElementInk.polygon([(24,0),(10,18),(-4,4),(10,-6)]), on: rock, color: p.light)
-            ElementInk.fill(ElementInk.polygon([(-12,16),(-4,4),(10,18)]), on: rock, color: p.white)
-            ElementInk.fill(ElementInk.polygon([(-25,0),(-11,-18),(10,-6),(-4,4)]), on: rock, color: p.dark)
-            rock.position = CGPoint(x: -CGFloat(index) * 25, y: index == 1 ? 12 : -CGFloat(index) * 5)
-            rock.setScale(1 - CGFloat(index) * 0.23); flowing.append(rock)
-        }
     }
 
     private func buildStarlight(_ p: ElementInk.Palette) {
@@ -265,12 +218,35 @@ final class ElementalBurst: SKNode {
             shards.append(shard); addChild(shard)
         }
         if kind == .melee || kind == .launch {
+            if let fruit {
+                let frame: Int
+                switch fruit {
+                case .fire: frame = 2
+                case .wind: frame = 0
+                case .water: frame = 2
+                case .lightning: frame = 5
+                case .earth: frame = 5
+                }
+                slash.addChild(ElementInk.effect(fruit, frame: frame, size: CGSize(width: 76, height: 76)))
+            } else {
             let arc = CGMutablePath(); arc.move(to: CGPoint(x: -16, y: 34))
             arc.addQuadCurve(to: CGPoint(x: -17, y: -32), control: CGPoint(x: 48, y: 5))
             arc.addQuadCurve(to: CGPoint(x: -5, y: 26), control: CGPoint(x: 25, y: 4))
             arc.closeSubpath()
             ElementInk.fill(arc, on: slash, color: p.white, outline: p.main, width: 2)
+            }
             addChild(slash); slash.zPosition = 1
+        } else if kind == .impact, let fruit {
+            let frame: Int
+            switch fruit {
+            case .fire: frame = 3
+            case .wind: frame = 5
+            case .water: frame = 1
+            case .lightning: frame = 6
+            case .earth: frame = 5
+            }
+            slash.addChild(ElementInk.effect(fruit, frame: frame, size: CGSize(width: 85, height: 68)))
+            addChild(slash)
         }
         update(delta: 0)
     }
@@ -288,7 +264,8 @@ final class ElementalBurst: SKNode {
             shard.zRotation = angle + (reducedMotion ? 0 : travel * 0.8)
             shard.alpha = CGFloat(pow(1 - progress, 0.8))
         }
-        slash.zRotation = -0.45 + (reducedMotion ? 0 : travel * 0.8)
+        slash.zRotation = kind == .impact ? 0 : -0.45 + (reducedMotion ? 0 : travel * 0.8)
+        if kind == .impact { slash.setScale(0.6 + travel * 0.8) }
         slash.alpha = CGFloat(1 - progress)
     }
 

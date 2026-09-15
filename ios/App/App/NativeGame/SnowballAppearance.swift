@@ -6,12 +6,11 @@ import SnowballCore
 final class SnowballAppearance: SKNode {
     private(set) var fruit: Fruit?
     private var configured = false
-    private let outline = SKSpriteNode()
-    private let mantle = SKNode()
+    let elementalLayer = SKNode()
     private let neck = SKNode()
     private let ears = SKNode()
     private let tail = SKNode()
-    private var flutter: [SKNode] = []
+    private let paws = SKNode()
 
     /// Hand-checked landmarks in the approved 64px atlas, measured up from the feet.
     /// The old head-height heuristic put the collar across the muzzle on side poses.
@@ -53,114 +52,81 @@ final class SnowballAppearance: SKNode {
     override init() {
         super.init()
         name = "snowball-appearance"
-        outline.anchorPoint = CGPoint(x: 0.5, y: 0)
-        outline.size = CGSize(width: 67, height: 66)
-        outline.colorBlendFactor = 1; outline.zPosition = -3
-        addChild(outline)
-        mantle.zPosition = -2; tail.zPosition = -1
-        neck.zPosition = 2; ears.zPosition = 2
-        [mantle, tail, neck, ears].forEach { addChild($0) }
+        neck.name = "mission-collar"; neck.zPosition = 2
+        elementalLayer.name = "elemental-overlays"; elementalLayer.zPosition = 3
+        addChild(neck); addChild(elementalLayer)
+        [ears, tail, paws].forEach { elementalLayer.addChild($0) }
+        buildMissionGear()
     }
 
     required init?(coder: NSCoder) { fatalError("init(coder:) is unavailable") }
 
     func update(fruit: Fruit?, frame: Int, elapsed: Double, reducedMotion: Bool) {
         if !configured || self.fruit != fruit {
-            configured = true; self.fruit = fruit; rebuild()
+            configured = true; self.fruit = fruit; rebuildElement()
         }
-        isHidden = fruit == nil
-        guard fruit != nil else { return }
-        outline.texture = GameArt.texture(key: "snowball", frame: frame)
         let pose = Self.landmarks[min(max(frame, 0), Self.landmarks.count - 1)]
-        // Tucked/rolling poses conceal the neck and ears. Do not leave floating accessories.
         let tucked = (24...27).contains(frame) || frame >= 41
-        [neck, mantle, tail].forEach { $0.isHidden = tucked }
         neck.isHidden = tucked || frame == 20
-        ears.isHidden = tucked || (36...39).contains(frame) // The victory crown occupies the ears.
-        neck.position = pose.neck
-        neck.xScale = pose.profile ? 0.72 : 1
-        mantle.position = neck.position
-        mantle.yScale = min(1, pose.neck.y / 20)
+        neck.position = pose.neck; neck.xScale = pose.profile ? 0.72 : 1
+        elementalLayer.isHidden = fruit == nil
+        ears.isHidden = tucked || (36...39).contains(frame)
+        paws.isHidden = tucked
+        tail.isHidden = tucked
         for (index, tuft) in ears.children.enumerated() {
             tuft.position = index == 0 ? pose.leftEar : pose.rightEar
         }
-        tail.position = CGPoint(x: pose.profile ? -18 : -15, y: pose.neck.y + 2)
-        let time = reducedMotion ? 0 : elapsed
-        for (index, piece) in flutter.enumerated() {
-            piece.zRotation = CGFloat(sin(time * 6 + Double(index) * 1.5)) * 0.09
+        tail.position = CGPoint(x: pose.profile ? -22 : -18, y: pose.neck.y + 2)
+        // Effects hug the feet; no colored scarf or face mask replaces mission gear.
+        let lifted = (10...19).contains(frame)
+        for (index, paw) in paws.children.enumerated() {
+            let x: CGFloat = pose.profile ? (index == 0 ? 9 : -10) : (index == 0 ? 7 : -7)
+            paw.position = CGPoint(x: x, y: lifted ? (index == 0 ? 10 : 6) : 3)
         }
-        outline.alpha = reducedMotion ? 0.36 : 0.3 + CGFloat(sin(time * 3)) * 0.06
+        let time = reducedMotion ? 0 : elapsed
+        tail.zRotation = CGFloat(sin(time * 5)) * 0.14
+        for (index, effect) in paws.children.enumerated() {
+            effect.alpha = reducedMotion ? 0.85 : 0.8 + CGFloat(sin(time * 8 + Double(index))) * 0.15
+        }
     }
 
-    private func rebuild() {
-        [mantle, neck, ears, tail].forEach { $0.removeAllChildren() }
-        flutter.removeAll()
-        guard let fruit else { return }
-        let p = ElementInk.palette(fruit)
-        outline.color = p.main
-
-        // Soft neck band entirely BELOW the chin: no upturned corners across the whiskers.
+    private func buildMissionGear() {
         let band = CGMutablePath()
         band.move(to: CGPoint(x: -10, y: 0))
         band.addQuadCurve(to: CGPoint(x: 10, y: 0), control: CGPoint(x: 0, y: -3))
-        band.addQuadCurve(to: CGPoint(x: 8, y: -3), control: CGPoint(x: 10, y: -2))
-        band.addQuadCurve(to: CGPoint(x: -8, y: -3), control: CGPoint(x: 0, y: -5))
+        band.addQuadCurve(to: CGPoint(x: 8, y: -2), control: CGPoint(x: 10, y: -2))
+        band.addQuadCurve(to: CGPoint(x: -8, y: -2), control: CGPoint(x: 0, y: -4))
         band.addQuadCurve(to: CGPoint(x: -10, y: 0), control: CGPoint(x: -10, y: -2))
         band.closeSubpath()
-        ElementInk.fill(band, on: neck, color: p.main, outline: p.dark, width: 0.7)
-        let crest = ElementInk.glyph(fruit, size: 6, bright: true)
-        crest.position = CGPoint(x: 0, y: -5); crest.zPosition = 1; neck.addChild(crest)
-
-        switch fruit {
-        case .fire:
-            let mane = ElementInk.fill(ElementInk.polygon([(-13,4),(-21,7),(-16,-2),(-24,-2),
-                (-17,-8),(-21,-14),(-11,-12),(-8,-18),(1,-12),(8,-14),(15,-4),(12,4)]),
-                on: mantle, color: p.main, outline: p.dark, width: 1.3)
-            flutter.append(mane)
-            addEarPair(.fire, size: 7)
-            let flame = ElementInk.glyph(.fire, size: 19, bright: true)
-            tail.addChild(flame); flutter.append(flame)
-        case .wind:
-            let scarf = ElementInk.fill(ElementInk.polygon([(-7,1),(-23,5),(-38,1),(-32,-3),
-                (-46,-7),(-28,-9),(-16,-5),(-5,-4)]), on: mantle, color: p.main, outline: p.dark)
-            ElementInk.fill(ElementInk.polygon([(-13,-3),(-26,-7),(-37,-7),(-26,-12),(-11,-9)]),
-                            on: mantle, color: p.light, outline: p.dark)
-            flutter.append(scarf)
-            addEarPair(.wind, size: 8)
-            let feather = ElementInk.glyph(.wind, size: 17, bright: true)
-            feather.zRotation = -0.5; tail.addChild(feather)
-        case .water:
-            let fin = ElementInk.fill(ElementInk.polygon([(-10,2),(-21,4),(-16,-2),(-25,-8),
-                (-14,-7),(-15,-16),(-6,-8),(7,-12),(12,-1)]), on: mantle, color: p.main, outline: p.dark)
-            flutter.append(fin); addEarPair(.water, size: 7)
-            for side in [CGFloat(-1), CGFloat(1)] {
-                let droplet = ElementInk.glyph(.water, size: 16, bright: true)
-                droplet.position.x = side * 4; droplet.zRotation = side * 0.6
-                tail.addChild(droplet)
-            }
-        case .lightning:
-            let collar = ElementInk.fill(ElementInk.polygon([(-13,3),(-21,0),(-16,-6),(-23,-11),
-                (-11,-10),(-6,-16),(3,-10),(13,-11),(11,2)]), on: mantle, color: p.dark, outline: p.main)
-            flutter.append(collar); addEarPair(.lightning, size: 8)
-            let bolt = ElementInk.glyph(.lightning, size: 20, bright: true)
-            bolt.zRotation = -0.4; tail.addChild(bolt)
-        case .earth:
-            for side in [CGFloat(-1), CGFloat(1)] {
-                let shoulder = ElementInk.glyph(.earth, size: 16)
-                shoulder.position = CGPoint(x: side * 13, y: -5)
-                shoulder.zRotation = side * 0.6; mantle.addChild(shoulder)
-            }
-            addEarPair(.earth, size: 7)
-            let crystal = ElementInk.glyph(.earth, size: 15, bright: true)
-            tail.addChild(crystal)
-        }
+        ElementInk.fill(band, on: neck, color: UIColor(hex: 0x493c48))
+        let bell = SKShapeNode(ellipseOf: CGSize(width: 5, height: 5))
+        bell.position = CGPoint(x: 0, y: -4); bell.zPosition = 1
+        bell.fillColor = UIColor(hex: 0xefbb66); bell.strokeColor = UIColor(hex: 0x8d612d); bell.lineWidth = 0.6
+        neck.addChild(bell)
+        ElementInk.line([CGPoint(x: -1.3, y: -4.8), CGPoint(x: 1.3, y: -4.8)], on: neck,
+                        color: UIColor(hex: 0x493c48), width: 0.65).zPosition = 2
     }
 
-    private func addEarPair(_ fruit: Fruit, size: CGFloat) {
-        for side in [CGFloat(-1), CGFloat(1)] {
-            let tuft = ElementInk.glyph(fruit, size: size, bright: true)
-            tuft.zRotation = -side * 0.35
-            ears.addChild(tuft)
+    private func rebuildElement() {
+        [ears, tail, paws].forEach { $0.removeAllChildren() }
+        guard let fruit else { return }
+        let pawFrame: Int, tailFrame: Int
+        switch fruit {
+        case .fire: pawFrame = 3; tailFrame = 1
+        case .wind: pawFrame = 0; tailFrame = 1
+        case .water: pawFrame = 1; tailFrame = 0
+        case .lightning: pawFrame = 3; tailFrame = 4
+        case .earth: pawFrame = 4; tailFrame = 0
+        }
+        for _ in 0..<2 {
+            paws.addChild(ElementInk.effect(fruit, frame: pawFrame, size: CGSize(width: 16, height: 12)))
+        }
+        let tailEffect = ElementInk.effect(fruit, frame: tailFrame, size: CGSize(width: 21, height: 24))
+        if fruit == .fire { tailEffect.zRotation = 0.5 }
+        tail.addChild(tailEffect)
+        // Small edge accents, embedded in the ear silhouette rather than floating horns.
+        if fruit == .lightning || fruit == .wind {
+            for _ in 0..<2 { ears.addChild(ElementInk.glyph(fruit, size: 6, bright: true)) }
         }
     }
 }
