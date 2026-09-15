@@ -27,6 +27,7 @@ phones.sort(key=lambda d: (d['name'].startswith('iPhone 17 Pro'), d['name']), re
 print(phones[0]['udid'])
 PY
 )
+set +e
 xcodebuild -project ios/App/App.xcodeproj -scheme App \
   -configuration Debug -sdk iphonesimulator \
   -destination "platform=iOS Simulator,id=$simulator_id" \
@@ -34,3 +35,11 @@ xcodebuild -project ios/App/App.xcodeproj -scheme App \
   -resultBundlePath test-results/native-ios/NativeTests.xcresult \
   -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO test \
   2>&1 | tee test-results/native-ios/xcode-tests.log
+test_status=${PIPESTATUS[0]}
+set -e
+if [ -d test-results/native-ios/NativeTests.xcresult ]; then
+  xcrun xcresulttool export attachments \
+    --path test-results/native-ios/NativeTests.xcresult \
+    --output-path test-results/native-ios/screenshots
+fi
+exit "$test_status"

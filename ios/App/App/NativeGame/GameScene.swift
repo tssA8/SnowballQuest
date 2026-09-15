@@ -716,7 +716,9 @@ final class GameScene: SKScene {
 
     private func updatePlayerArt() {
         if clock < poseUntil && !poseFrames.isEmpty {
-            let frame = min(poseFrames.count - 1, Int((clock - poseStarted) / max(0.01, poseUntil - poseStarted) * Double(poseFrames.count)))
+            let duration: Double = max(0.01, poseUntil - poseStarted)
+            let progress: Double = (clock - poseStarted) / duration
+            let frame = min(poseFrames.count - 1, Int(progress * Double(poseFrames.count)))
             player.texture = GameArt.texture(key: "snowball-combat", frame: poseFrames[max(0, frame)])
         } else {
             let frame = !grounded ? (velocity.dy > 10 ? 17 : 18) : abs(velocity.dx) > 20 ? 4 + Int(clock * 11) % 6 : Int(clock * 3) % 4
