@@ -1,0 +1,3 @@
+# Native resource integrity hashes must match on Windows and macOS checkouts.
+ios/App/App/GameAssets/**/*.json text eol=lf
+scripts/*.sh text eol=lf
