@@ -29,6 +29,7 @@ jobs:
           python3 -m pip install cryptography==50.0.1
           python3 -m unittest discover -s tests -p 'test_*.py'
       - name: Test native Swift game on iPhone simulator
+        timeout-minutes: 20
         run: bash scripts/check-native-ios.sh
       - name: Validate unsigned native iPhone archive
         run: python3 scripts/ios-release.py --mode check --build-number 4

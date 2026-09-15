@@ -16,24 +16,35 @@ print(f'Verified {len(manifest)} native assets.')
 PY
 xcrun simctl list devices available --json > test-results/native-ios/simulators.json
 simulator_id=$(python3 - <<'PY'
-import json
+import json, subprocess
 from pathlib import Path
 devices = json.loads(Path('test-results/native-ios/simulators.json').read_text())['devices']
-phones = [d for runtime, items in devices.items() if 'iOS' in runtime for d in items
+sdk = subprocess.check_output(['xcrun', '--sdk', 'iphonesimulator', '--show-sdk-version'], text=True).strip()
+runtime = 'com.apple.CoreSimulator.SimRuntime.iOS-' + sdk.replace('.', '-')
+phones = [d for d in devices.get(runtime, [])
           if d.get('isAvailable') and d['name'].startswith('iPhone')]
 if not phones:
-    raise SystemExit('No available iPhone simulator')
-phones.sort(key=lambda d: (d['name'].startswith('iPhone 17 Pro'), d['name']), reverse=True)
+    raise SystemExit(f'No available iPhone simulator matching selected SDK {sdk}')
+phones.sort(key=lambda d: (d['name'] == 'iPhone 17 Pro', d['name']), reverse=True)
+Path('test-results/native-ios/selected-simulator.json').write_text(json.dumps({'runtime': runtime, **phones[0]}, indent=2))
 print(phones[0]['udid'])
 PY
 )
+python3 - "$simulator_id" <<'PY'
+import subprocess, sys
+print('Booting the simulator and waiting for system services before launching tests.', flush=True)
+subprocess.run(['xcrun', 'simctl', 'bootstatus', sys.argv[1], '-b'], check=True, timeout=240)
+PY
 set +e
 xcodebuild -project ios/App/App.xcodeproj -scheme App \
   -configuration Debug -sdk iphonesimulator \
   -destination "platform=iOS Simulator,id=$simulator_id" \
   -derivedDataPath build/native-ios-tests \
   -resultBundlePath test-results/native-ios/NativeTests.xcresult \
-  -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO test \
+  -parallel-testing-enabled NO \
+  -test-timeouts-enabled YES -default-test-execution-time-allowance 120 \
+  -maximum-test-execution-time-allowance 300 \
+  CODE_SIGN_IDENTITY=- CODE_SIGNING_ALLOWED=YES test \
   2>&1 | tee test-results/native-ios/xcode-tests.log
 test_status=${PIPESTATUS[0]}
 set -e
